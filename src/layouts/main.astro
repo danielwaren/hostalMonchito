@@ -1,0 +1,149 @@
+---
+import '../styles/globals.css';
+import { AppSidebar } from "@/components/app-sidebar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import { Toaster } from 'sonner'
+
+// Props del layout
+export interface Props {
+  title?: string;
+  breadcrumbTitle?: string;
+}
+
+// Destructurar props con valores por defecto
+const { 
+  title = "Hostal Monchito", 
+  breadcrumbTitle
+} = Astro.props;
+
+// Función para obtener el título de la página basado en la URL
+function getPageTitle(pathname: string): string {
+  const routes: Record<string, string> = {
+    '/': 'Dashboard',
+    '/nuevoGasto': 'Nuevo gasto',
+    '/detalleGasto': 'Detalles de gastos',
+    '/nuevaVenta': 'Nueva venta',
+    '/detalleVenta': 'Detalles de ventas',
+
+  };
+  
+  // Si hay una coincidencia exacta
+  if (routes[pathname]) {
+    return routes[pathname];
+  }
+  
+  // Para rutas dinámicas o con parámetros
+  for (const [route, pageTitle] of Object.entries(routes)) {
+    if (pathname.startsWith(route) && route !== '/') {
+      return pageTitle;
+    }
+  }
+  
+  // Fallback: convertir pathname a título
+  return pathname
+    .split('/')
+    .filter(Boolean)
+    .map(segment => 
+      segment.replace(/-/g, ' ')
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+    )
+    .join(' / ');
+}
+
+// Obtener el título actual de la página
+const currentPageTitle = breadcrumbTitle || getPageTitle(Astro.url.pathname);
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body class="min-h-screen bg-background font-sans antialiased">
+        <div class="flex h-screen overflow-hidden">
+            <!-- Sidebar fijo -->
+            <div class="fixed flex left-0 top-0 h-full z-10">
+                <AppSidebar client:visible />
+            </div>
+           
+            <!-- Contenido principal con margen para el sidebar -->
+            <div class="flex flex-col flex-1 ml-[--sidebar-width] h-full">
+                <!-- Header fijo -->
+                <header class="h-16 border-b flex items-center px-4 bg-background sticky top-0 z-20">
+                    <div class="flex items-center gap-2">
+                        <Separator
+                            orientation="vertical"
+                            className="mr-2 data-[orientation=vertical]:h-4"
+                        />
+                        <Breadcrumb>
+                            <BreadcrumbList>
+                                <BreadcrumbItem className="hidden md:block">
+                                    <BreadcrumbLink href="/">
+                                        Dashboard
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator className="hidden md:block" />
+                                <BreadcrumbItem>
+                                    <BreadcrumbPage>{currentPageTitle}</BreadcrumbPage>
+                                </BreadcrumbItem>
+                            </BreadcrumbList>
+                        </Breadcrumb>
+                    </div>
+                </header>
+               
+                <!-- Área de contenido con scroll -->
+                <main class="flex-1 overflow-y-auto p-6">
+                    <div class="max-w-full">
+                        <slot />
+                    </div>
+                </main>
+            </div>
+        </div>
+        <Toaster client:load />
+    </body>
+</html>
+<style>
+    html,
+    body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+   
+    /* Variable CSS para el ancho del sidebar - ajusta según tu sidebar */
+    :root {
+        --sidebar-width: 280px;
+    }
+   
+    /* Responsive: ocultar sidebar en móviles */
+    @media (max-width: 768px) {
+        :root {
+            --sidebar-width: 0px;
+        }
+       
+        .fixed.left-0 {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+       
+        /* Mostrar sidebar cuando esté activo en móvil */
+        .sidebar-active .fixed.left-0 {
+            transform: translateX(0);
+        }
+    }
+</style>

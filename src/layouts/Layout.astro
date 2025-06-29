@@ -1,3 +1,9 @@
+---
+import '../styles/globals.css';
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import Sidebar from '@/components/Sidebar';
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -7,8 +13,13 @@
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
 	</head>
-	<body>
-		<slot />
+	<body class="min-h-screen bg-background font-sans antialiased">
+		<SidebarProvider client:only="react">
+			<Sidebar client:only="react"/>		
+			<main class="flex w-full h-screen flex-col justify-center items-center p-4">
+				<slot />
+			</main>
+		</SidebarProvider>
 	</body>
 </html>
 
