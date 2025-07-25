@@ -71,6 +71,10 @@ const data = {
           title: "Calculador",
           url: "/Convertidor",
         },
+        {
+          title: "Armar Pizza",
+          url: "/ArmarPizza",
+        },
       ],
     },
     {
@@ -143,6 +147,29 @@ const data = {
         {
           title: "Limits",
           url: "#",
+        },
+      ],
+    },
+    {
+      title: "Facturas",
+      url: "#",
+      icon: Settings2,
+      items: [
+        {
+          title: "Ingresar Factura",
+          url: "/facturas",
+        },
+        {
+          title: "Detalles de Facturas",
+          url: "/tablafacturas",
+        },
+        {
+          title: "Ingresar clientes",
+          url: "/clientes",
+        },
+        {
+          title: "Clientes",
+          url: "/detalleCliente",
         },
       ],
     },

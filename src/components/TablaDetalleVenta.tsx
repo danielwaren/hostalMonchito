@@ -18,7 +18,7 @@ interface Venta {
   [key: string]: any;
 }
 
-export default function VentasTableShadcn({ initialVentas = [], caption = "Lista de ventas recientes" }: { initialVentas?: Venta[], caption?: string }) {
+export default function VentasTableSh adcn({ initialVentas = [], caption = "Lista de ventas recientes" }: { initialVentas?: Venta[], caption?: string }) {
   const [ventas, setVentas] = useState(initialVentas);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [form, setForm] = useState<Partial<Venta>>({});
