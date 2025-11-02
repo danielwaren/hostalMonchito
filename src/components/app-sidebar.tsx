@@ -75,6 +75,10 @@ const data = {
           title: "Armar Pizza",
           url: "/ArmarPizza",
         },
+        {
+          title: "Detalle servicios",
+          url: "/DetalleServicios",
+        }
       ],
     },
     {
