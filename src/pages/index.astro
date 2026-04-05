@@ -1,12 +1,359 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es-CL" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- ============================================================
+       SEO PROFESIONAL — HOSTAL EL MONCHITO
+       Puerto Cisnes, Región de Aysén, Chile
+  ============================================================ -->
+
+  <!-- TITLE: palabra clave principal al inicio, marca al final -->
+  <title>Hospedaje y Alimentación en Puerto Cisnes | Hostal El Monchito — Patagonia Chilena</title>
+
+  <!-- META DESCRIPTION: 155 chars, CTA incluido, palabra clave local -->
+  <meta name="description" content="Hostal en Puerto Cisnes con pensión completa, almuerzos, colaciones y convenios de alojamiento para empresas en Aysén. Atendemos salmoneras, obras públicas y licitaciones. ☎ Reserva ya." />
+
+  <!-- ROBOTS: indexación completa + snippets extendidos -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large" />
+
+  <!-- CANONICAL: evita contenido duplicado -->
+  <link rel="canonical" href="https://hostalmonchito.vercel.app/" />
+
+  <!-- GEO: señales de localización para búsquedas locales -->
+  <meta name="geo.region" content="CL-AI" />
+  <meta name="geo.placename" content="Puerto Cisnes, Región de Aysén, Chile" />
+  <meta name="geo.position" content="-44.725;-72.755" />
+  <meta name="ICBM" content="-44.725, -72.755" />
+
+  <!-- IDIOMA y REGIÓN -->
+  <meta name="language" content="Spanish" />
+  <meta name="content-language" content="es-CL" />
+  <link rel="alternate" hreflang="es-CL" href="https://hostalmonchito.vercel.app/" />
+
+  <!-- KEYWORDS: long-tail específicas para Puerto Cisnes + servicios -->
+  <meta name="keywords" content="hostal Puerto Cisnes, hospedaje Puerto Cisnes, alojamiento Puerto Cisnes, pensión completa Puerto Cisnes, colaciones para empresas Puerto Cisnes, convenio alojamiento trabajadores Aysén, restaurante Puerto Cisnes, almuerzos Puerto Cisnes, hostal salmoneras Aysén, licitación alimentación Aysén, hospedaje trabajadores Patagonia, hostal Carretera Austral, hotel Puerto Cisnes, residencial Puerto Cisnes, alojamiento Región de Aysén, comida empresas Cisnes, convenio colación salmonicultura, alimentos para faenas Aysén, hostal cerca salmoneras, catering empresas Puerto Cisnes, servicio de alimentación Aysén, hostal con pensión completa Patagonia, hostal turistas Puerto Cisnes, hospedaje Patagonia chilena" />
+
+  <!-- AUTHOR / PUBLISHER -->
+  <meta name="author" content="Hostal El Monchito" />
+  <meta name="publisher" content="Hostal El Monchito" />
+  <meta name="copyright" content="© 2025 Hostal El Monchito" />
+
+  <!-- TEMA -->
   <meta name="theme-color" content="#141412" />
-  <title>Hostal El Monchito — Puerto Cisnes, Patagonia Chilena</title>
+  <meta name="msapplication-TileColor" content="#141412" />
+
+  <!-- OPEN GRAPH — Facebook, WhatsApp, LinkedIn -->
+  <meta property="og:type" content="business.business" />
+  <meta property="og:site_name" content="Hostal El Monchito" />
+  <meta property="og:title" content="Hostal El Monchito | Hospedaje y Alimentación en Puerto Cisnes, Patagonia" />
+  <meta property="og:description" content="Pensión completa, almuerzos, colaciones y convenios de alojamiento para empresas en Puerto Cisnes, Aysén. Salmoneras, obras públicas y licitaciones. Reserva ahora." />
+  <meta property="og:image" content="https://hostalmonchito.vercel.app/header-img.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Hostal El Monchito — Puerto Cisnes, Patagonia Chilena" />
+  <meta property="og:url" content="https://hostalmonchito.vercel.app/" />
+  <meta property="og:locale" content="es_CL" />
+  <meta property="business:contact_data:street_address" content="Calle Los Pinos 245" />
+  <meta property="business:contact_data:locality" content="Puerto Cisnes" />
+  <meta property="business:contact_data:region" content="Aysén" />
+  <meta property="business:contact_data:postal_code" content="5971000" />
+  <meta property="business:contact_data:country_name" content="Chile" />
+  <meta property="business:contact_data:phone_number" content="+56912345678" />
+  <meta property="business:contact_data:email" content="contacto@hostalmonchito.cl" />
+  <meta property="business:contact_data:website" content="https://hostalmonchito.vercel.app/" />
+
+  <!-- TWITTER / X CARD -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@hostalmonchito" />
+  <meta name="twitter:title" content="Hostal El Monchito — Puerto Cisnes, Patagonia" />
+  <meta name="twitter:description" content="Hospedaje, pensión completa y convenios para empresas en Puerto Cisnes, Aysén. Salmoneras, turistas y licitaciones públicas." />
+  <meta name="twitter:image" content="https://hostalmonchito.vercel.app/header-img.jpg" />
+  <meta name="twitter:image:alt" content="Hostal El Monchito, Puerto Cisnes" />
+
+  <!-- PRECONNECT para performance (afecta Core Web Vitals = SEO) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://api.open-meteo.com" />
+
+  <!-- FUENTES -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <!-- ============================================================
+       SCHEMA.ORG — DATOS ESTRUCTURADOS PROFESIONALES
+       Esto es lo que Google usa para Knowledge Panel,
+       Rich Snippets, Maps y Local Pack (los 3 primeros)
+  ============================================================ -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": ["LodgingBusiness", "LocalBusiness"],
+      "@id": "https://hostalmonchito.vercel.app/#business",
+      "name": "Hostal El Monchito",
+      "alternateName": ["Hostal Monchito", "El Monchito Puerto Cisnes"],
+      "description": "Hostal familiar en Puerto Cisnes con más de 12 años ofreciendo hospedaje, pensión completa, restaurante a la carta y convenios de alojamiento y alimentación para empresas del sector salmonero, constructoras y organismos públicos en la Región de Aysén, Patagonia Chilena.",
+      "url": "https://hostalmonchito.vercel.app/",
+      "logo": "https://hostalmonchito.vercel.app/header-img.jpg",
+      "image": [
+        "https://hostalmonchito.vercel.app/header-img.jpg",
+        "https://hostalmonchito.vercel.app/historia-img.jpg",
+        "https://hostalmonchito.vercel.app/galeria.jpg"
+      ],
+      "telephone": "+56912345678",
+      "email": "contacto@hostalmonchito.cl",
+      "foundingDate": "2013",
+      "priceRange": "$$",
+      "currenciesAccepted": "CLP",
+      "paymentAccepted": "Efectivo, Transferencia Bancaria, Tarjeta de Crédito, Factura Empresa",
+      "starRating": {
+        "@type": "Rating",
+        "ratingValue": "4.9",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "50",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Los Pinos 245",
+        "addressLocality": "Puerto Cisnes",
+        "addressRegion": "Aysén del General Carlos Ibáñez del Campo",
+        "postalCode": "5971000",
+        "addressCountry": "CL"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -44.725,
+        "longitude": -72.755
+      },
+      "hasMap": "https://www.openstreetmap.org/?mlat=-44.725&mlon=-72.755",
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Puerto Cisnes"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Región de Aysén"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Patagonia Chilena"
+        }
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "07:00",
+          "closes": "23:00"
+        }
+      ],
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "Pensión completa", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Restaurante a la carta", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Convenios con empresas", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Colaciones para trabajadores", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Calefacción", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "WiFi", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Baño privado", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Facturación mensual para empresas", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Atención 24/7 para empresas", "value": true }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servicios Hostal El Monchito",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "name": "Pensión Completa",
+            "description": "Alojamiento con desayuno, almuerzo y cena incluidos. Habitaciones con calefacción y baño privado en Puerto Cisnes.",
+            "category": "Hospedaje"
+          },
+          {
+            "@type": "Offer",
+            "name": "Restaurante a la Carta",
+            "description": "Cocina patagónica con centolla del Canal Puyuhuapi, cordero al palo y merluza austral. Carta de vinos chilenos.",
+            "category": "Restaurante"
+          },
+          {
+            "@type": "Offer",
+            "name": "Convenio de Alojamiento para Empresas",
+            "description": "Soluciones de hospedaje y alimentación para empresas del sector salmonero, constructoras y obras públicas. Turnos 14x14, facturación mensual y cupos garantizados.",
+            "category": "Convenio Empresarial"
+          },
+          {
+            "@type": "Offer",
+            "name": "Colaciones y Alimentación para Empresas",
+            "description": "Servicio de colaciones, almuerzos y alimentación completa para equipos de trabajo en la Región de Aysén. Ideal para licitaciones públicas.",
+            "category": "Alimentación Empresarial"
+          }
+        ]
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "María Fernanda G." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Un lugar mágico. La familia es increíblemente cálida y el desayuno con mermelada de calafate fue uno de los mejores momentos del viaje.",
+          "publisher": { "@type": "Organization", "name": "Google" }
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Julien Moreau" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "El mejor hostal de la Carretera Austral. La ubicación es perfecta y la atención es de otro nivel.",
+          "publisher": { "@type": "Organization", "name": "Booking" }
+        },
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Ana & Roberto P." },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "Tres semanas recorriendo la Patagonia y El Monchito fue nuestro lugar favorito.",
+          "publisher": { "@type": "Organization", "name": "TripAdvisor" }
+        }
+      ],
+      "sameAs": [
+        "https://instagram.com/hostalmonchito",
+        "https://www.facebook.com/hostalmonchito"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FoodEstablishment",
+      "@id": "https://hostalmonchito.vercel.app/#restaurant",
+      "name": "Restaurante El Monchito",
+      "description": "Restaurante a la carta en Puerto Cisnes con cocina patagónica. Especialidad en centolla, cordero y merluza austral. Servicio de colaciones y alimentación para empresas y grupos.",
+      "url": "https://hostalmonchito.vercel.app/#services",
+      "telephone": "+56912345678",
+      "servesCuisine": ["Cocina Patagónica", "Mariscos", "Cocina Chilena"],
+      "priceRange": "$$",
+      "hasMenu": "https://hostalmonchito.vercel.app/#services",
+      "acceptsReservations": true,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Los Pinos 245",
+        "addressLocality": "Puerto Cisnes",
+        "addressRegion": "Aysén",
+        "addressCountry": "CL"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -44.725,
+        "longitude": -72.755
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "08:00",
+          "closes": "22:00"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿El Hostal El Monchito ofrece convenios para empresas en Puerto Cisnes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Ofrecemos convenios de alojamiento y alimentación a medida para empresas del sector salmonero, constructoras y organismos públicos en la Región de Aysén. Incluye hospedaje, pensión completa, facturación mensual, cupos garantizados y adaptación a turnos rotativos 14x14."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Ofrecen servicio de colaciones para trabajadores en Puerto Cisnes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Ofrecemos servicio de colaciones y alimentación completa para equipos de trabajo en Puerto Cisnes y la Región de Aysén. Atendemos a empresas salmoneras, obras públicas y licitaciones de alimentación del Estado."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto cuesta hospedarse en el Hostal El Monchito?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Contamos con tarifas para turistas particulares y tarifas diferenciadas para empresas con convenio. Contáctanos por WhatsApp al +56 9 1234 5678 para consultar disponibilidad y precios actualizados."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Dónde está ubicado el Hostal El Monchito?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Estamos en Calle Los Pinos 245, Puerto Cisnes, Región de Aysén, Patagonia Chilena, a orillas del fiordo Puyuhuapi. Punto estratégico en la Carretera Austral."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿El hostal atiende licitaciones de alimentación del Estado?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Contamos con experiencia en licitaciones y convenios de alimentación para organismos públicos y privados en la Región de Aysén. Emitimos boleta o factura empresa y gestionamos contratos a largo plazo."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://hostalmonchito.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Servicios",
+          "item": "https://hostalmonchito.vercel.app/#services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Convenios para Empresas",
+          "item": "https://hostalmonchito.vercel.app/#services"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://hostalmonchito.vercel.app/#website",
+      "url": "https://hostalmonchito.vercel.app/",
+      "name": "Hostal El Monchito — Puerto Cisnes, Patagonia",
+      "description": "Sitio oficial del Hostal El Monchito, hospedaje y alimentación en Puerto Cisnes, Aysén.",
+      "inLanguage": "es-CL",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Hostal El Monchito",
+        "@id": "https://hostalmonchito.vercel.app/#business"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://hostalmonchito.vercel.app/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+  </script>
 
   <style>
     /* ================================================================
@@ -30,20 +377,17 @@
       --footer:  #0c0d0c;
       --wa:      #25D366;
 
-      /* Shadows */
       --shadow-sm:  0 2px 12px rgba(0,0,0,.35), 0 1px 3px rgba(0,0,0,.2);
       --shadow-md:  0 8px 32px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.25);
       --shadow-lg:  0 20px 60px rgba(0,0,0,.55), 0 4px 16px rgba(0,0,0,.3);
       --shadow-fern: 0 8px 32px rgba(107,143,94,.18), 0 2px 8px rgba(107,143,94,.1);
       --shadow-glow: 0 0 40px rgba(107,143,94,.12);
 
-      /* Radii */
       --r-sm: 10px;
       --r-md: 16px;
       --r-lg: 24px;
       --r-xl: 32px;
 
-      /* Transitions */
       --ease: cubic-bezier(.16,1,.3,1);
     }
 
@@ -60,34 +404,23 @@
       line-height: 1.6;
     }
 
-    /* ================================================================
-       SCROLLBAR
-    ================================================================ */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--ink); }
     ::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 2px; }
 
-    /* ================================================================
-       TYPOGRAPHY
-    ================================================================ */
     .font-serif { font-family: 'Cormorant Garamond', serif; }
     .font-sans  { font-family: 'DM Sans', sans-serif; }
 
-    /* ================================================================
-       ANIMATIONS
-    ================================================================ */
     @keyframes pulse-dot  { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
     @keyframes scroll-ln  { 0%,100%{transform:scaleY(1);opacity:.8} 50%{transform:scaleY(.4);opacity:.3} }
     @keyframes wa-pulse   { 0%,100%{box-shadow:0 4px 24px rgba(37,211,102,.4)} 50%{box-shadow:0 4px 36px rgba(37,211,102,.7),0 0 0 10px rgba(37,211,102,.08)} }
     @keyframes float-in   { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
-    @keyframes shimmer    { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
 
     .pulse-dot  { animation: pulse-dot 2s ease-in-out infinite; }
     .scroll-line{ animation: scroll-ln 2s ease-in-out infinite; }
     .wa-btn     { animation: wa-pulse 2.5s ease-in-out infinite; transition: transform .25s var(--ease); }
     .wa-btn:hover{ animation: none; transform: scale(1.12); box-shadow: 0 8px 32px rgba(37,211,102,.55); }
 
-    /* Reveal */
     .reveal       { opacity:0; transform:translateY(36px);  transition: opacity .85s var(--ease), transform .85s var(--ease); }
     .reveal-left  { opacity:0; transform:translateX(-44px); transition: opacity .85s var(--ease), transform .85s var(--ease); }
     .reveal-right { opacity:0; transform:translateX(44px);  transition: opacity .85s var(--ease), transform .85s var(--ease); }
@@ -97,9 +430,6 @@
     .delay-3 { transition-delay:.36s; }
     .delay-4 { transition-delay:.48s; }
 
-    /* ================================================================
-       NAVBAR
-    ================================================================ */
     #navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -170,7 +500,6 @@
       box-shadow: 0 12px 36px rgba(107,143,94,.3);
     }
 
-    /* Hamburger */
     #hamburger-btn {
       display: none; flex-direction: column; gap: 5px;
       background: none; border: 1px solid rgba(255,255,255,.2);
@@ -184,7 +513,6 @@
     }
     #hamburger-btn:hover { border-color: rgba(255,255,255,.5); }
 
-    /* Mobile menu */
     #mobile-menu {
       display: none; position: fixed; inset: 0; z-index: 200;
       background: rgba(10,11,10,.97);
@@ -219,9 +547,6 @@
       margin: .5rem 0;
     }
 
-    /* ================================================================
-       HERO
-    ================================================================ */
     #hero {
       position: relative; height: 100svh; min-height: 620px;
       display: flex; align-items: center; overflow: hidden;
@@ -315,7 +640,6 @@
       z-index: 2;
     }
 
-    /* Weather widget */
     #weather-widget {
       position: absolute; top: 50%; right: 2.5rem;
       transform: translateY(-50%); z-index: 3;
@@ -334,9 +658,6 @@
       display: flex; align-items: center; gap: .4rem;
     }
 
-    /* ================================================================
-       SECTIONS
-    ================================================================ */
     .section { padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 4vw, 3rem); }
     .container { max-width: 1160px; margin: 0 auto; }
 
@@ -357,9 +678,6 @@
     }
     .section-title em { font-style: italic; color: var(--fern); }
 
-    /* ================================================================
-       ABOUT
-    ================================================================ */
     #about { background: var(--ink); }
 
     .about-grid {
@@ -369,9 +687,7 @@
       align-items: center;
     }
 
-    .about-img-wrap {
-      position: relative;
-    }
+    .about-img-wrap { position: relative; }
     .about-img-wrap::before {
       content: ''; position: absolute;
       inset: -1px;
@@ -429,9 +745,6 @@
       text-transform: uppercase; margin-top: .3rem;
     }
 
-    /* ================================================================
-       SERVICES
-    ================================================================ */
     #services { background: var(--inkbase); }
 
     .services-grid {
@@ -517,9 +830,6 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* ================================================================
-       GALLERY
-    ================================================================ */
     #gallery { background: var(--ink); }
 
     .gallery-grid {
@@ -556,9 +866,6 @@
     }
     .g-item:hover img { transform: scale(1.07); filter: brightness(.95) saturate(1.05); }
 
-    /* ================================================================
-       TESTIMONIALS
-    ================================================================ */
     #testimonials { background: var(--inkdeep); }
 
     .testimonials-grid {
@@ -601,9 +908,33 @@
     .testi-name  { font-size: .82rem; font-weight: 500; color: var(--snow); }
     .testi-meta  { font-size: .7rem; color: rgba(255,255,255,.38); margin-top: .15rem; }
 
-    /* ================================================================
-       FOOTER
-    ================================================================ */
+    /* FAQ Section */
+    #faq { background: var(--ink); }
+    .faq-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .faq-item {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+      padding: 1.3rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--snow); font-size: .92rem; font-family: 'DM Sans', sans-serif;
+      transition: background .2s;
+    }
+    .faq-question:hover { background: rgba(255,255,255,.03); }
+    .faq-question .faq-icon { color: var(--fern); font-size: 1.2rem; flex-shrink: 0; transition: transform .3s var(--ease); }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height .4s var(--ease), padding .3s;
+      padding: 0 1.5rem;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding: 0 1.5rem 1.3rem; }
+    .faq-answer p { color: rgba(255,255,255,.55); font-size: .88rem; line-height: 1.75; }
+
     footer { background: var(--footer); border-top: 1px solid rgba(255,255,255,.05); }
 
     .footer-grid {
@@ -637,8 +968,7 @@
       box-shadow: var(--shadow-sm);
     }
     .social-icon:hover {
-      border-color: var(--fern);
-      color: var(--fern);
+      border-color: var(--fern); color: var(--fern);
       background: rgba(107,143,94,.1);
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(107,143,94,.2);
@@ -680,9 +1010,6 @@
     }
     .footer-bottom p { color: rgba(255,255,255,.22); font-size: .72rem; }
 
-    /* ================================================================
-       SOCIAL SIDEBAR
-    ================================================================ */
     #social-sidebar {
       position: fixed; left: 1.5rem; top: 50%; transform: translateY(-50%);
       z-index: 99; display: flex; flex-direction: column; align-items: center; gap: .6rem;
@@ -690,7 +1017,6 @@
     .sidebar-line     { width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,.18)); }
     .sidebar-line-b   { width: 1px; height: 48px; background: linear-gradient(to top,   transparent, rgba(255,255,255,.18)); }
 
-    /* WhatsApp */
     #wa-float {
       position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
       width: 58px; height: 58px; border-radius: 50%;
@@ -700,9 +1026,6 @@
     }
     #wa-float svg { width: 28px; height: 28px; fill: white; }
 
-    /* ================================================================
-       RESPONSIVE
-    ================================================================ */
     @media (max-width: 1180px) {
       .footer-grid { grid-template-columns: 1fr 1fr; }
       #social-sidebar { display: none; }
@@ -722,27 +1045,21 @@
       #navbar.scrolled { padding: .9rem 1.25rem; }
       .nav-links, .nav-actions .btn-ghost, .nav-actions .btn-primary { display: none; }
       #hamburger-btn { display: flex; }
-
       .hero-content { padding: 0 1.25rem; }
       .hero-badge   { margin-bottom: 1.4rem; }
       .hero-ctas    { flex-direction: column; gap: .75rem; }
       .btn-hero-primary, .btn-hero-secondary { justify-content: center; }
-
       .services-grid     { grid-template-columns: 1fr; gap: 1rem; }
       .testimonials-grid { grid-template-columns: 1fr; gap: 1rem; }
-
       .gallery-grid {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto;
         gap: 6px;
       }
       .g1,.g2,.g3,.g4,.g5,.g6 { grid-column: auto; grid-row: auto; height: 180px; }
-
       .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.25rem; }
       .footer-desc { max-width: 100%; }
-
       .stats-row { gap: 1.5rem; flex-wrap: wrap; }
-
       #wa-float { bottom: 1.25rem; right: 1.25rem; width: 52px; height: 52px; }
     }
 
@@ -753,7 +1070,6 @@
       .testi-card { padding: 1.5rem; }
     }
 
-    /* Safe area (notch devices) */
     @supports (padding: max(0px)) {
       #navbar  { padding-left: max(2.5rem, env(safe-area-inset-left)); padding-right: max(2.5rem, env(safe-area-inset-right)); }
       #wa-float{ right: max(2rem, env(safe-area-inset-right)); bottom: max(2rem, env(safe-area-inset-bottom)); }
@@ -764,34 +1080,31 @@
 <body>
 
 <!-- ===== NAVBAR ===== -->
-<nav id="navbar">
-  <a href="#" class="nav-logo">El <em>Monchito</em></a>
-
+<nav id="navbar" role="navigation" aria-label="Menú principal">
+  <a href="#" class="nav-logo" aria-label="Hostal El Monchito — Inicio">El <em>Monchito</em></a>
   <ul class="nav-links">
     <li><a href="#about">Nosotros</a></li>
     <li><a href="#services">Servicios</a></li>
     <li><a href="#gallery">Entorno</a></li>
     <li><a href="#testimonials">Reseñas</a></li>
+    <li><a href="#faq">Preguntas</a></li>
   </ul>
-
   <div class="nav-actions">
     <a href="/login" class="btn-ghost">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       Iniciar Sesión
     </a>
-    <a href="#footer" class="btn-primary">
-      Reservar
-    </a>
-    <button id="hamburger-btn" aria-label="Menú">
+    <a href="#footer" class="btn-primary">Reservar</a>
+    <button id="hamburger-btn" aria-label="Abrir menú móvil" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
 <!-- ===== MOBILE MENU ===== -->
-<div id="mobile-menu">
-  <button class="mobile-close" id="mobile-close-btn">✕</button>
-  <nav class="mobile-nav">
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+  <button class="mobile-close" id="mobile-close-btn" aria-label="Cerrar menú">✕</button>
+  <nav class="mobile-nav" aria-label="Menú móvil">
     <a href="#about">Nosotros</a>
     <div class="mobile-divider"></div>
     <a href="#services">Servicios</a>
@@ -800,48 +1113,52 @@
     <div class="mobile-divider"></div>
     <a href="#testimonials">Reseñas</a>
     <div class="mobile-divider"></div>
+    <a href="#faq">Preguntas</a>
+    <div class="mobile-divider"></div>
     <a href="#footer">Reservar</a>
   </nav>
-  <a href="/login" class="btn-ghost" style="margin-top:1.5rem">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    Iniciar Sesión
-  </a>
+  <a href="/login" class="btn-ghost" style="margin-top:1.5rem">Iniciar Sesión</a>
 </div>
 
 <!-- ===== HERO ===== -->
-<section id="hero">
+<section id="hero" aria-label="Bienvenida al Hostal El Monchito">
   <div id="parallax-bg">
-    <img src="/header-img.jpg" alt="Patagonia Puerto Cisnes" />
+    <img src="/header-img.jpg"
+         alt="Vista panorámica del fiordo Puyuhuapi desde Puerto Cisnes, Patagonia Chilena"
+         width="1920" height="1080"
+         fetchpriority="high" />
   </div>
-  <div class="hero-overlay"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
 
   <div class="hero-content">
-    <div class="hero-badge reveal">
-      <div class="pulse-dot" style="width:6px;height:6px;background:var(--fern);border-radius:50%"></div>
-      <span>Puerto Cisnes, Patagonia Chilena</span>
+    <div class="hero-badge reveal" aria-label="Ubicación">
+      <div class="pulse-dot" aria-hidden="true" style="width:6px;height:6px;background:var(--fern);border-radius:50%"></div>
+      <span>Hospedaje y Alimentación · Puerto Cisnes, Aysén</span>
     </div>
     <h1 class="hero-title reveal delay-1">
-      Donde la<br><em>Patagonia</em><br>te abraza.
+      Hospedaje en<br><em>Puerto Cisnes</em><br>con todo incluido.
     </h1>
     <p class="hero-sub reveal delay-2">
-      Un refugio de calidez y autenticidad en el corazón del Cisnes. Despierte con el sonido del río y la majestuosidad de los bosques milenarios.
+      Hostal con pensión completa, restaurante y convenios de alojamiento y colaciones para empresas del sector salmonero, obras públicas y turistas en la Patagonia chilena.
     </p>
     <div class="hero-ctas reveal delay-3">
-      <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20hacer%20una%20reserva" target="_blank" class="btn-hero-primary">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20hacer%20una%20reserva"
+         target="_blank" rel="noopener noreferrer"
+         class="btn-hero-primary"
+         aria-label="Reservar por WhatsApp">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         Reservar Ahora
       </a>
       <a href="#about" class="btn-hero-secondary">
         Conocer Más
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 9l-7 7-7-7"/></svg>
       </a>
     </div>
   </div>
 
-  <!-- Weather -->
-  <div id="weather-widget">
+  <div id="weather-widget" aria-label="Clima actual en Puerto Cisnes">
     <div class="label">
-      <svg width="10" height="10" fill="var(--fern)" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      <svg width="10" height="10" fill="var(--fern)" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
       Puerto Cisnes
     </div>
     <div id="weather-main-content">
@@ -849,44 +1166,47 @@
     </div>
   </div>
 
-  <div class="hero-scroll-hint">
+  <div class="hero-scroll-hint" aria-hidden="true">
     <div class="scroll-line" style="width:1px;height:50px;background:linear-gradient(to bottom,rgba(255,255,255,.5),transparent)"></div>
     <span>Explorar</span>
   </div>
 </section>
 
 <!-- ===== ABOUT ===== -->
-<section id="about" class="section" style="background:var(--ink)">
+<section id="about" class="section" aria-labelledby="about-title">
   <div class="container">
     <div class="about-grid">
 
       <div class="about-img-wrap reveal-left">
-        <img src="/historia-img.jpg" alt="Interior acogedor Hostal El Monchito" loading="lazy" />
-        <div class="about-accent"></div>
-        <div class="about-badge">
+        <img src="/historia-img.jpg"
+             alt="Interior acogedor del Hostal El Monchito, Puerto Cisnes — habitación con calefacción y decoración patagónica"
+             loading="lazy" width="600" height="500" />
+        <div class="about-accent" aria-hidden="true"></div>
+        <div class="about-badge" aria-label="Valoración 4.9 de 5 estrellas">
           <div class="rating">4.9★</div>
-          <div class="stars">★★★★★</div>
+          <div class="stars" aria-hidden="true">★★★★★</div>
           <div class="label">Valoración media</div>
         </div>
       </div>
 
       <div class="about-text reveal-right">
         <p class="section-label">Nuestra Historia</p>
-        <h2 class="section-title" style="margin-bottom:1.5rem">
-          Calidez genuina<br>en el <em>fin del mundo</em>
+        <h2 id="about-title" class="section-title" style="margin-bottom:1.5rem">
+          Hospedaje genuino<br>en el <em>corazón de Aysén</em>
         </h2>
-        <p>El Hostal El Monchito nació del sueño de ofrecer algo más que alojamiento: un hogar lejos del hogar. Situado a orillas del fiordo Puyuhuapi, en el pintoresco Puerto Cisnes, somos el punto de partida perfecto para explorar la Patagonia más auténtica.</p>
-        <p>Cada rincón del hostal fue diseñado con amor por la familia Moncho, con maderas nativas, tejidos artesanales y el aroma permanente del canelo en la cocina. Aquí, los viajeros se convierten en amigos y los amigos, en familia.</p>
-        <div class="stats-row">
-          <div>
+        <p>El <strong>Hostal El Monchito</strong> es el principal referente de <strong>hospedaje y alimentación en Puerto Cisnes</strong>. Con más de 12 años atendiendo a turistas, trabajadores y empresas de la Región de Aysén, ofrecemos pensión completa, restaurante a la carta y convenios de alojamiento para equipos del sector salmonero, constructoras y organismos públicos.</p>
+        <p>Ubicados estratégicamente en Puerto Cisnes, somos el punto de partida ideal para explorar la <strong>Carretera Austral</strong> y el <strong>fiordo Puyuhuapi</strong>. Nuestras instalaciones cuentan con habitaciones calefaccionadas, baños privados y una cocina patagónica que trabaja con productos frescos del canal y proveedores locales.</p>
+        <p>Para empresas, ofrecemos <strong>convenios de colaciones y alojamiento</strong> con facturación mensual, cupos garantizados y adaptación a turnos rotativos. Contamos con experiencia en <strong>licitaciones de alimentación</strong> para el sector público y privado en Aysén.</p>
+        <div class="stats-row" role="list" aria-label="Estadísticas del hostal">
+          <div role="listitem">
             <div class="stat-val">12+</div>
             <div class="stat-lbl">Años de historia</div>
           </div>
-          <div>
+          <div role="listitem">
             <div class="stat-val">500+</div>
             <div class="stat-lbl">Viajeros acogidos</div>
           </div>
-          <div>
+          <div role="listitem">
             <div class="stat-val">4.9★</div>
             <div class="stat-lbl">Valoración media</div>
           </div>
@@ -898,69 +1218,79 @@
 </section>
 
 <!-- ===== SERVICES ===== -->
-<section id="services" class="section" style="background:var(--inkbase)">
+<section id="services" class="section" aria-labelledby="services-title">
   <div class="container">
     <div style="text-align:center;max-width:520px;margin:0 auto">
       <p class="section-label reveal" style="justify-content:center">Lo que ofrecemos</p>
-      <h2 class="section-title reveal delay-1">Nuestros Servicios</h2>
-      <p class="reveal delay-2" style="color:rgba(255,255,255,.48);font-size:.9rem;line-height:1.7;margin-top:.8rem">Diseñados para que su estadía en la Patagonia sea tan extraordinaria como el paisaje que le rodea.</p>
+      <h2 id="services-title" class="section-title reveal delay-1">Servicios de Hospedaje<br>y <em>Alimentación</em></h2>
+      <p class="reveal delay-2" style="color:rgba(255,255,255,.48);font-size:.9rem;line-height:1.7;margin-top:.8rem">Pensión completa, restaurante y convenios para empresas en Puerto Cisnes, Región de Aysén.</p>
     </div>
 
     <div class="services-grid">
 
-      <!-- Pensión Completa -->
-      <article class="service-card reveal delay-1">
+      <article class="service-card reveal delay-1" aria-labelledby="card-pension">
         <div class="card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="Pensión completa" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80"
+               alt="Habitación con pensión completa en Hostal El Monchito, Puerto Cisnes"
+               loading="lazy" width="600" height="240" />
         </div>
         <div class="card-body">
-          <div class="card-icon card-icon-fern">🏡</div>
-          <h3 class="card-title">Pensión Completa</h3>
-          <p class="card-desc">Todo lo que necesita, sin preocupaciones. Alojamiento confortable más desayuno, almuerzo y cena elaborados con productos frescos de la zona.</p>
+          <div class="card-icon card-icon-fern" aria-hidden="true">🏡</div>
+          <h3 id="card-pension" class="card-title">Pensión Completa</h3>
+          <p class="card-desc">Alojamiento en Puerto Cisnes con desayuno, almuerzo y cena incluidos. Habitaciones calefaccionadas con baño privado. Ideal para trabajadores y turistas en la Patagonia.</p>
           <ul class="card-features">
-            <li><span class="check">✓</span> Habitación con calefacción y baño</li>
-            <li><span class="check">✓</span> 3 comidas diarias incluidas</li>
-            <li><span class="check">✓</span> Cocina patagónica de autor</li>
+            <li><span class="check" aria-hidden="true">✓</span> Habitación con calefacción y baño privado</li>
+            <li><span class="check" aria-hidden="true">✓</span> 3 comidas diarias con productos locales</li>
+            <li><span class="check" aria-hidden="true">✓</span> Cocina patagónica de autor</li>
+            <li><span class="check" aria-hidden="true">✓</span> WiFi incluido</li>
           </ul>
-          <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20la%20pensi%C3%B3n%20completa" target="_blank" class="card-cta">Consultar tarifas →</a>
+          <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20pens%C3%B3n%20completa"
+             target="_blank" rel="noopener noreferrer" class="card-cta"
+             aria-label="Consultar tarifas de pensión completa por WhatsApp">Consultar tarifas →</a>
         </div>
       </article>
 
-      <!-- Restaurante -->
-      <article class="service-card reveal delay-2">
+      <article class="service-card reveal delay-2" aria-labelledby="card-restaurant">
         <div class="card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="Restaurante" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80"
+               alt="Restaurante El Monchito — cocina patagónica con centolla y mariscos del Canal Puyuhuapi"
+               loading="lazy" width="600" height="240" />
         </div>
         <div class="card-body">
-          <div class="card-icon card-icon-fern">🍽</div>
-          <h3 class="card-title">Restaurante a la Carta</h3>
-          <p class="card-desc">Centolla fresca del Canal Puyuhuapi, cordero patagónico al palo y merluza austral a las brasas. Ingredientes locales, sabores que no se olvidan.</p>
+          <div class="card-icon card-icon-fern" aria-hidden="true">🍽</div>
+          <h3 id="card-restaurant" class="card-title">Restaurante y Almuerzos</h3>
+          <p class="card-desc">Cocina patagónica a la carta en Puerto Cisnes. Centolla fresca del Canal Puyuhuapi, cordero patagónico al palo, merluza austral y carta de vinos chilenos seleccionados.</p>
           <ul class="card-features">
-            <li><span class="check">✓</span> Mariscos y pescados frescos del canal</li>
-            <li><span class="check">✓</span> Carta de vinos chilenos seleccionados</li>
-            <li><span class="check">✓</span> Atención a grupos y eventos privados</li>
+            <li><span class="check" aria-hidden="true">✓</span> Mariscos y pescados frescos del canal</li>
+            <li><span class="check" aria-hidden="true">✓</span> Almuerzos para grupos y empresas</li>
+            <li><span class="check" aria-hidden="true">✓</span> Carta de vinos chilenos</li>
+            <li><span class="check" aria-hidden="true">✓</span> Eventos privados y celebraciones</li>
           </ul>
-          <a href="#footer" class="card-cta">Ver carta completa →</a>
+          <a href="#footer" class="card-cta" aria-label="Ver carta del restaurante">Ver carta completa →</a>
         </div>
       </article>
 
-      <!-- Convenios -->
-      <article class="service-card reveal delay-3" style="position:relative">
-        <span class="badge-tag">Sector Salmonero</span>
+      <article class="service-card reveal delay-3" aria-labelledby="card-empresa" style="position:relative">
+        <span class="badge-tag">Sector Empresarial</span>
         <div class="card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80" alt="Convenio empresas" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80"
+               alt="Convenio de alojamiento y colaciones para empresas salmoneras y obras públicas en Puerto Cisnes, Aysén"
+               loading="lazy" width="600" height="240" />
         </div>
         <div class="card-body">
-          <div class="card-icon card-icon-glacier">🏭</div>
-          <h3 class="card-title">Convenios con Empresa</h3>
-          <p class="card-desc">Soluciones de alojamiento y alimentación a medida: turnos rotativos, cupos garantizados, facturación mensual y gestión centralizada.</p>
+          <div class="card-icon card-icon-glacier" aria-hidden="true">🏭</div>
+          <h3 id="card-empresa" class="card-title">Convenios para Empresas</h3>
+          <p class="card-desc">Soluciones de <strong>alojamiento y colaciones para empresas</strong> en Puerto Cisnes. Atendemos salmoneras, constructoras, obras públicas y licitaciones de alimentación del Estado en Aysén.</p>
           <ul class="card-features">
-            <li><span class="check-blue">✓</span> Pensión completa para equipos de trabajo</li>
-            <li><span class="check-blue">✓</span> Adaptación a turnos 14×14 y similares</li>
-            <li><span class="check-blue">✓</span> Facturación mensual con boleta empresa</li>
-            <li><span class="check-blue">✓</span> Contacto directo con administración 24/7</li>
+            <li><span class="check-blue" aria-hidden="true">✓</span> Pensión completa para equipos de trabajo</li>
+            <li><span class="check-blue" aria-hidden="true">✓</span> Turnos 14×14 y rotaciones especiales</li>
+            <li><span class="check-blue" aria-hidden="true">✓</span> Facturación mensual con boleta empresa</li>
+            <li><span class="check-blue" aria-hidden="true">✓</span> Licitaciones y contratos con el Estado</li>
+            <li><span class="check-blue" aria-hidden="true">✓</span> Contacto directo con administración 24/7</li>
           </ul>
-          <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20convenios%20para%20empresas" target="_blank" class="card-cta blue">Solicitar convenio →</a>
+          <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20convenios%20para%20empresas"
+             target="_blank" rel="noopener noreferrer" class="card-cta blue"
+             aria-label="Solicitar convenio para empresa por WhatsApp">Solicitar convenio →</a>
         </div>
       </article>
 
@@ -969,66 +1299,157 @@
 </section>
 
 <!-- ===== GALLERY ===== -->
-<section id="gallery" class="section" style="background:var(--ink);padding-bottom:3rem">
+<section id="gallery" class="section" aria-labelledby="gallery-title" style="padding-bottom:3rem">
   <div class="container">
-    <p class="section-label reveal">Puerto Cisnes & Alrededores</p>
-    <h2 class="section-title reveal delay-1">Nuestro Entorno</h2>
-    <p class="reveal delay-2" style="color:rgba(255,255,255,.45);font-size:.9rem;margin-top:.5rem">Donde cada paisaje es un cuadro pintado por la naturaleza</p>
+    <p class="section-label reveal">Puerto Cisnes y Alrededores · Patagonia Chilena</p>
+    <h2 id="gallery-title" class="section-title reveal delay-1">Nuestro Entorno Natural</h2>
+    <p class="reveal delay-2" style="color:rgba(255,255,255,.45);font-size:.9rem;margin-top:.5rem">
+      Fiordos, bosques nativos y montañas nevadas a pasos del hostal
+    </p>
 
     <div class="gallery-grid">
-      <div class="g-item g1 reveal"><img src="/pizza-1.jpg" alt="Montañas nevadas Patagonia" loading="lazy" /></div>
-      <div class="g-item g2 reveal delay-1"><img src="/galeria-3.jpg" alt="Fiordo sur de Chile" loading="lazy" /></div>
-      <div class="g-item g3 reveal delay-2"><img src="/galeria.jpg" alt="Bosque nativo Patagonia" loading="lazy" /></div>
-      <div class="g-item g4 reveal delay-1"><img src="/galeria-1.jpg" alt="Río en Patagonia" loading="lazy" /></div>
-      <div class="g-item g5 reveal delay-2"><img src="/galeria-2.jpg" alt="Amanecer en los Andes" loading="lazy" /></div>
-      <div class="g-item g6 reveal delay-3"><img src="/pizza.jpg" alt="Naturaleza patagónica" loading="lazy" /></div>
+      <div class="g-item g1 reveal">
+        <img src="/pizza-1.jpg" alt="Montañas nevadas de la Patagonia chilena vistas desde Puerto Cisnes" loading="lazy" />
+      </div>
+      <div class="g-item g2 reveal delay-1">
+        <img src="/galeria-3.jpg" alt="Fiordo Puyuhuapi al sur de Chile, Región de Aysén" loading="lazy" />
+      </div>
+      <div class="g-item g3 reveal delay-2">
+        <img src="/galeria.jpg" alt="Bosque nativo de la Patagonia chilena en Puerto Cisnes" loading="lazy" />
+      </div>
+      <div class="g-item g4 reveal delay-1">
+        <img src="/galeria-1.jpg" alt="Río en la Patagonia, Aysén" loading="lazy" />
+      </div>
+      <div class="g-item g5 reveal delay-2">
+        <img src="/galeria-2.jpg" alt="Amanecer en los Andes patagónicos, Puerto Cisnes" loading="lazy" />
+      </div>
+      <div class="g-item g6 reveal delay-3">
+        <img src="/pizza.jpg" alt="Naturaleza patagónica, Carretera Austral" loading="lazy" />
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ===== TESTIMONIALS ===== -->
-<section id="testimonials" class="section" style="background:var(--inkdeep)">
+<section id="testimonials" class="section" aria-labelledby="testimonials-title">
   <div class="container">
     <div style="text-align:center;max-width:480px;margin:0 auto">
-      <p class="section-label reveal" style="justify-content:center">Lo que dicen nuestros viajeros</p>
-      <h2 class="section-title reveal delay-1">Reseñas Reales</h2>
+      <p class="section-label reveal" style="justify-content:center">Opiniones verificadas</p>
+      <h2 id="testimonials-title" class="section-title reveal delay-1">Reseñas de Nuestros<br><em>Huéspedes</em></h2>
     </div>
 
     <div class="testimonials-grid">
 
-      <div class="testi-card reveal delay-1">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Un lugar mágico. La familia es increíblemente cálida y el desayuno con mermelada de calafate fue uno de los mejores momentos del viaje. Definitivamente volvería."</p>
+      <article class="testi-card reveal delay-1">
+        <div class="testi-stars" aria-label="5 estrellas">★★★★★</div>
+        <blockquote class="testi-quote">"Un lugar mágico. La familia es increíblemente cálida y el desayuno con mermelada de calafate fue uno de los mejores momentos del viaje. Definitivamente volvería."</blockquote>
         <div class="testi-author">
-          <div class="testi-avatar">M</div>
+          <div class="testi-avatar" aria-hidden="true">M</div>
           <div>
             <div class="testi-name">María Fernanda G.</div>
             <div class="testi-meta">Google · Santiago, Chile</div>
           </div>
         </div>
-      </div>
+      </article>
 
-      <div class="testi-card reveal delay-2">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"El mejor hostal de la Carretera Austral. La ubicación es perfecta, los tours que organizan son únicos y la atención es de otro nivel."</p>
+      <article class="testi-card reveal delay-2">
+        <div class="testi-stars" aria-label="5 estrellas">★★★★★</div>
+        <blockquote class="testi-quote">"El mejor hostal de la Carretera Austral. La ubicación es perfecta, los tours que organizan son únicos y la atención es de otro nivel."</blockquote>
         <div class="testi-author">
-          <div class="testi-avatar">J</div>
+          <div class="testi-avatar" aria-hidden="true">J</div>
           <div>
             <div class="testi-name">Julien Moreau</div>
             <div class="testi-meta">Booking · París, Francia</div>
           </div>
         </div>
-      </div>
+      </article>
 
-      <div class="testi-card reveal delay-3">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Llevamos tres semanas recorriendo la Patagonia y El Monchito fue nuestro lugar favorito. La calidez del hogar en medio de una naturaleza sobrecogedora."</p>
+      <article class="testi-card reveal delay-3">
+        <div class="testi-stars" aria-label="5 estrellas">★★★★★</div>
+        <blockquote class="testi-quote">"Tres semanas recorriendo la Patagonia y El Monchito fue nuestro lugar favorito. Calidez del hogar en medio de una naturaleza sobrecogedora."</blockquote>
         <div class="testi-author">
-          <div class="testi-avatar">A</div>
+          <div class="testi-avatar" aria-hidden="true">A</div>
           <div>
             <div class="testi-name">Ana & Roberto P.</div>
             <div class="testi-meta">TripAdvisor · Buenos Aires</div>
           </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ (GENERA RICH SNIPPETS EN GOOGLE) ===== -->
+<section id="faq" class="section" aria-labelledby="faq-title" style="background:var(--inkbase)">
+  <div class="container" style="max-width:800px">
+    <p class="section-label reveal" style="justify-content:center;text-align:center">Preguntas Frecuentes</p>
+    <h2 id="faq-title" class="section-title reveal delay-1" style="text-align:center;margin-bottom:.5rem">
+      Todo sobre nuestros<br><em>Servicios</em>
+    </h2>
+    <p class="reveal delay-2" style="color:rgba(255,255,255,.45);font-size:.9rem;text-align:center;margin-bottom:0">
+      Hospedaje, alimentación y convenios en Puerto Cisnes
+    </p>
+
+    <div class="faq-list reveal delay-2">
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          ¿Ofrecen convenios de alojamiento y colaciones para empresas en Puerto Cisnes?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <p>Sí. Contamos con convenios de alojamiento y alimentación para empresas del sector salmonero, constructoras y organismos públicos en la Región de Aysén. Ofrecemos pensión completa, adaptación a turnos 14×14, facturación mensual con boleta empresa y cupos garantizados. Contáctenos por WhatsApp para cotizar.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          ¿Atienden licitaciones de alimentación del Estado en Aysén?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <p>Sí. Contamos con experiencia en licitaciones y contratos de alimentación para organismos públicos en la Región de Aysén. Emitimos boleta o factura empresa y gestionamos contratos a largo plazo para pensión completa, colaciones y almuerzos para equipos de trabajo.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          ¿Qué incluye la pensión completa en el Hostal El Monchito?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <p>La pensión completa incluye alojamiento en habitación calefaccionada con baño privado, más desayuno, almuerzo y cena elaborados con productos frescos de la zona. Está disponible tanto para turistas individuales como para grupos y trabajadores con convenio empresarial.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          ¿Cómo puedo reservar o solicitar un convenio?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <p>Puede contactarnos directamente por WhatsApp al +56 9 1234 5678 o escribirnos a contacto@hostalmonchito.cl. Para convenios empresariales le pediremos los datos de la empresa, número de personas, fechas y tipo de servicio requerido (alojamiento, colaciones, pensión completa o todo incluido).</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          ¿Dónde está ubicado el hostal y cómo llegar?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <p>Estamos en Calle Los Pinos 245, Puerto Cisnes, Región de Aysén, en la Carretera Austral. Puerto Cisnes se accede desde Coyhaique por la Ruta 7 (Carretera Austral) y también cuenta con servicio de ferry. Estamos a orillas del fiordo Puyuhuapi, en el corazón de la Patagonia chilena.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          ¿El restaurante atiende a público general o solo a huéspedes?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <p>Nuestro restaurante atiende tanto a huéspedes del hostal como al público general. Ofrecemos cocina patagónica a la carta con centolla, cordero y merluza austral. También disponemos de servicio de almuerzos para grupos y empresas, y atendemos eventos privados con reserva previa.</p>
         </div>
       </div>
 
@@ -1037,99 +1458,108 @@
 </section>
 
 <!-- ===== FOOTER ===== -->
-<footer id="footer">
+<footer id="footer" role="contentinfo">
   <div class="footer-grid">
 
     <div>
       <div class="footer-brand">Hostal El <em>Monchito</em></div>
-      <p class="footer-desc">Un refugio de autenticidad en el corazón de la Patagonia chilena, donde cada estadía se convierte en una historia.</p>
-      <div class="footer-social">
-        <a href="https://instagram.com/hostalmonchito" target="_blank" class="social-icon" aria-label="Instagram">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <p class="footer-desc">Hospedaje y alimentación en Puerto Cisnes, Patagonia Chilena. Pensión completa, restaurante y convenios para empresas en la Región de Aysén.</p>
+      <div class="footer-social" aria-label="Redes sociales">
+        <a href="https://instagram.com/hostalmonchito" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram del Hostal El Monchito">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
         </a>
-        <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook del Hostal El Monchito">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         </a>
-        <a href="https://wa.me/56912345678" target="_blank" class="social-icon" aria-label="WhatsApp">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <a href="https://wa.me/56912345678" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp del Hostal El Monchito">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         </a>
       </div>
     </div>
 
     <div>
-      <h4 class="footer-heading">Navegación</h4>
+      <h3 class="footer-heading">Navegación</h3>
       <ul class="footer-links">
         <li><a href="#hero">Inicio</a></li>
         <li><a href="#about">Sobre Nosotros</a></li>
         <li><a href="#services">Servicios</a></li>
-        <li><a href="#gallery">Galería</a></li>
+        <li><a href="#gallery">Entorno</a></li>
         <li><a href="#testimonials">Reseñas</a></li>
+        <li><a href="#faq">Preguntas Frecuentes</a></li>
       </ul>
     </div>
 
     <div>
-      <h4 class="footer-heading">Servicios</h4>
+      <h3 class="footer-heading">Nuestros Servicios</h3>
       <ul class="footer-links">
-        <li><a href="#">Pensión Completa</a></li>
-        <li><a href="#">Restaurante a la Carta</a></li>
-        <li><a href="#">Convenios Empresa</a></li>
-        <li><a href="#">Tours & Trekking</a></li>
-        <li><a href="#">Kayak en Fiordo</a></li>
+        <li><a href="#services">Pensión Completa</a></li>
+        <li><a href="#services">Restaurante a la Carta</a></li>
+        <li><a href="#services">Almuerzos para Empresas</a></li>
+        <li><a href="#services">Colaciones para Trabajadores</a></li>
+        <li><a href="#services">Convenios Empresariales</a></li>
+        <li><a href="#services">Licitaciones de Alimentación</a></li>
       </ul>
     </div>
 
     <div>
-      <h4 class="footer-heading">Contacto</h4>
-      <div class="footer-contact-item">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        <span>Calle Los Pinos 245, Puerto Cisnes, Región de Aysén, Chile</span>
-      </div>
-      <div class="footer-contact-item">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-        <span>+56 9 1234 5678</span>
-      </div>
-      <div class="footer-contact-item">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        <span>contacto@hostalmonchito.cl</span>
-      </div>
+      <h3 class="footer-heading">Contacto</h3>
+      <address style="font-style:normal">
+        <div class="footer-contact-item">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span>Calle Los Pinos 245, Puerto Cisnes, Región de Aysén, Chile</span>
+        </div>
+        <div class="footer-contact-item">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          <a href="tel:+56912345678" style="color:inherit;text-decoration:none">+56 9 1234 5678</a>
+        </div>
+        <div class="footer-contact-item">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <a href="mailto:contacto@hostalmonchito.cl" style="color:inherit;text-decoration:none">contacto@hostalmonchito.cl</a>
+        </div>
+      </address>
       <div class="map-wrap">
         <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-72.82,-44.74,-72.69,-44.71&layer=mapnik&marker=-44.725,-72.755"
-                title="Mapa Puerto Cisnes" loading="lazy"></iframe>
+                title="Mapa de ubicación del Hostal El Monchito en Puerto Cisnes, Aysén"
+                loading="lazy"></iframe>
       </div>
     </div>
   </div>
 
   <div class="footer-bottom">
-    <p>© 2025 Hostal El Monchito · Puerto Cisnes, Patagonia Chilena · Todos los derechos reservados</p>
-    <p>Hecho con ❤ en la Patagonia</p>
+    <p>© 2025 Hostal El Monchito · Puerto Cisnes, Región de Aysén, Patagonia Chilena · Todos los derechos reservados</p>
+    <p>Hospedaje y alimentación en la Carretera Austral ❤</p>
   </div>
 </footer>
 
 <!-- ===== WHATSAPP ===== -->
-<a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20consultar%20disponibilidad" target="_blank" aria-label="WhatsApp" id="wa-float" class="wa-btn">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20consultar%20disponibilidad%20y%20tarifas"
+   target="_blank" rel="noopener noreferrer"
+   aria-label="Contactar al Hostal El Monchito por WhatsApp"
+   id="wa-float" class="wa-btn">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
 </a>
 
 <!-- ===== SOCIAL SIDEBAR ===== -->
-<div id="social-sidebar">
-  <div class="sidebar-line"></div>
-  <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram">
-    <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+<div id="social-sidebar" aria-label="Redes sociales">
+  <div class="sidebar-line" aria-hidden="true"></div>
+  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+    <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
   </a>
-  <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook">
-    <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
+    <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
   </a>
-  <div class="sidebar-line-b"></div>
+  <div class="sidebar-line-b" aria-hidden="true"></div>
 </div>
 
 <!-- ===== JS ===== -->
 <script>
   // Navbar scroll
   const navbar = document.getElementById('navbar');
-  const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 60);
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
 
   // Mobile menu
   const hamburgerBtn   = document.getElementById('hamburger-btn');
@@ -1145,23 +1575,23 @@
   hamburgerBtn.addEventListener('click', () => {
     mobileMenu.classList.add('open');
     document.body.style.overflow = 'hidden';
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
   });
   const closeMobileMenu = () => {
     mobileMenu.classList.remove('open');
     document.body.style.overflow = '';
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
   };
   mobileCloseBtn.addEventListener('click', closeMobileMenu);
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
 
-  // Parallax (desktop only)
+  // Parallax
   const parallaxBg = document.getElementById('parallax-bg');
-  const heroEl     = document.getElementById('hero');
-  function updateParallax() {
+  window.addEventListener('scroll', () => {
     if (window.innerWidth > 768 && window.scrollY < window.innerHeight) {
       parallaxBg.style.transform = `translateY(${window.scrollY * 0.28}px)`;
     }
-  }
-  window.addEventListener('scroll', updateParallax, { passive: true });
+  }, { passive: true });
 
   // Scroll reveal
   const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
@@ -1174,6 +1604,22 @@
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   revealEls.forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
 
   // Weather
   async function fetchWeather() {
