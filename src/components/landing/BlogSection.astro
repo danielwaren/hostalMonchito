@@ -1,0 +1,325 @@
+---
+// src/components/landing/BlogSection.astro
+
+const posts = await Astro.glob('../../pages/blog/*.md');
+
+const sorted = posts
+  .map(p => ({
+    url:         p.url ?? '#',
+    title:       p.frontmatter.title       ?? 'Sin título',
+    description: p.frontmatter.description ?? '',
+    pubDate:     p.frontmatter.pubDate     ?? '',
+    image:       p.frontmatter.image       ?? '',
+    category:    p.frontmatter.category    ?? 'Blog',
+    tags:        Array.isArray(p.frontmatter.tags) ? p.frontmatter.tags : [],
+    readingTime: p.frontmatter.readingTime ?? '',
+    featured:    p.frontmatter.featured    ?? false,
+    _ts:         p.frontmatter.dateISO ? new Date(p.frontmatter.dateISO).getTime() : 0,
+  }))
+  .sort((a, b) => b._ts - a._ts);
+
+const featured = sorted.find(p => p.featured) ?? sorted[0];
+const rest      = sorted.filter(p => p !== featured).slice(0, 5);
+
+function tagColor(cat) {
+  const c = cat.toLowerCase();
+  return (c.includes('salmon') || c.includes('industria') || c.includes('empresa') || c.includes('convenio'))
+    ? 'blue' : 'green';
+}
+---
+
+<section id="blog" class="section" aria-labelledby="blog-title">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="blog-header">
+      <div>
+        <p class="section-label reveal">Noticias &amp; Guías de Viaje</p>
+        <h2 id="blog-title" class="section-title reveal delay-1">
+          Desde la <em>Patagonia</em>
+        </h2>
+        <p class="reveal delay-2" style="color:rgba(255,255,255,.48);max-width:480px;margin-top:.8rem;font-size:.9rem;line-height:1.7">
+          Guías de destinos, consejos para trabajadores de la salmonicultura y todo lo que necesitas saber para vivir y explorar el sur de Chile.
+        </p>
+      </div>
+      <a href="/blog" class="btn-outline-fern reveal delay-2">
+        Ver todos los artículos
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Grid -->
+    {sorted.length === 0 ? (
+      <p style="color:rgba(255,255,255,.3);font-size:.8rem;text-align:center;padding:3rem 0;letter-spacing:.1em;">
+        Aún no hay artículos. Crea tu primer <code>.md</code> en <code>src/pages/blog/</code>.
+      </p>
+    ) : (
+      <div class="blog-grid">
+
+        <!-- CARD DESTACADA -->
+        {featured && (
+          <article class="blog-card blog-card--featured reveal delay-1" aria-labelledby="blog-featured">
+            <a href={featured.url} class="blog-card__img-wrap" tabindex="-1" aria-hidden="true">
+              <span class={`blog-card__tag blog-card__tag--${tagColor(featured.category)}`}>
+                {featured.category}
+              </span>
+              {featured.image
+                ? <img src={featured.image} alt={featured.title} loading="eager" width="900" height="300" />
+                : <div class="blog-card__img-placeholder" />
+              }
+            </a>
+            <div class="blog-card__body">
+              <div class="blog-card__meta">
+                <span class="blog-card__date">{featured.pubDate}</span>
+                {featured.readingTime && (
+                  <>
+                    <span class="blog-card__dot" aria-hidden="true" />
+                    <span class="blog-card__min">{featured.readingTime} min de lectura</span>
+                  </>
+                )}
+              </div>
+              <h3 id="blog-featured" class="blog-card__title">{featured.title}</h3>
+              <p class="blog-card__excerpt">{featured.description}</p>
+              {featured.tags.length > 0 && (
+                <div class="blog-card__tags">
+                  {featured.tags.slice(0, 4).map(tag => (
+                    <span class={`blog-card__pill blog-card__pill--${tagColor(featured.category)}`}>{tag}</span>
+                  ))}
+                </div>
+              )}
+              <a href={featured.url} class="blog-card__cta" aria-label={`Leer artículo: ${featured.title}`}>
+                Leer artículo
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        )}
+
+        <!-- CARDS SECUNDARIAS -->
+        {rest.map((post, i) => (
+          <article class={`blog-card reveal delay-${(i % 3) + 1}`} aria-labelledby={`blog-card-${i}`}>
+            <a href={post.url} class="blog-card__img-wrap" tabindex="-1" aria-hidden="true">
+              <span class={`blog-card__tag blog-card__tag--${tagColor(post.category)}`}>
+                {post.category}
+              </span>
+              {post.image
+                ? <img src={post.image} alt={post.title} loading="lazy" width="600" height="200" />
+                : <div class="blog-card__img-placeholder" />
+              }
+            </a>
+            <div class="blog-card__body">
+              <div class="blog-card__meta">
+                <span class="blog-card__date">{post.pubDate}</span>
+                {post.readingTime && (
+                  <>
+                    <span class="blog-card__dot" aria-hidden="true" />
+                    <span class="blog-card__min">{post.readingTime} min</span>
+                  </>
+                )}
+              </div>
+              <h3 id={`blog-card-${i}`} class="blog-card__title">{post.title}</h3>
+              <p class="blog-card__excerpt">{post.description}</p>
+              {post.tags.length > 0 && (
+                <div class="blog-card__tags">
+                  {post.tags.slice(0, 2).map(tag => (
+                    <span class={`blog-card__pill blog-card__pill--${tagColor(post.category)}`}>{tag}</span>
+                  ))}
+                </div>
+              )}
+              <a href={post.url} class="blog-card__cta" aria-label={`Leer: ${post.title}`}>
+                Leer más
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        ))}
+
+      </div>
+    )}
+
+  </div>
+</section>
+
+<!-- Estilos copiados del globals.css — solo los de la sección blog -->
+<style is:global>
+
+  #blog { background: var(--inkbase); }
+.section { padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 4vw, 3rem); }
+    .container { max-width: 1160px; margin: 0 auto; }
+    .section-label { color: var(--fern); font-size: .62rem; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--fern); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; color: var(--snow); line-height: 1.1; }
+    .section-title em { font-style: italic; color: var(--fern); }
+
+  .blog-header {
+    display: flex; flex-wrap: wrap;
+    align-items: flex-end; justify-content: space-between;
+    gap: 1.5rem; margin-bottom: 3.5rem;
+  }
+
+  .btn-outline-fern {
+    display: inline-flex; align-items: center; gap: .45rem;
+    color: var(--fern); text-decoration: none;
+    border: 1px solid rgba(107,143,94,.35);
+    padding: .55rem 1.3rem; border-radius: var(--r-sm);
+    font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
+    transition: all .25s var(--ease); white-space: nowrap;
+  }
+  .btn-outline-fern:hover {
+    background: rgba(107,143,94,.1);
+    border-color: var(--fern);
+    color: var(--fern2);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .blog-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s;
+    box-shadow: 0 4px 24px rgba(0,0,0,.3);
+  }
+  .blog-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 64px rgba(0,0,0,.45), 0 8px 20px rgba(0,0,0,.25), var(--shadow-glow);
+    border-color: rgba(107,143,94,.2);
+  }
+
+  .blog-card--featured { grid-column: span 2; }
+
+  .blog-card__img-wrap {
+    overflow: hidden; position: relative; flex-shrink: 0;
+    display: block; text-decoration: none;
+  }
+  .blog-card__img-wrap img {
+    width: 100%; object-fit: cover; display: block;
+    filter: brightness(.82) saturate(.9);
+    transition: transform .7s var(--ease), filter .5s;
+  }
+  .blog-card--featured .blog-card__img-wrap img { height: 300px; }
+  .blog-card:not(.blog-card--featured) .blog-card__img-wrap img { height: 200px; }
+  .blog-card:hover .blog-card__img-wrap img {
+    transform: scale(1.06);
+    filter: brightness(.95) saturate(1.05);
+  }
+
+  /* Placeholder cuando no hay imagen */
+  .blog-card__img-placeholder {
+    width: 100%; background: rgba(255,255,255,.04);
+  }
+  .blog-card--featured .blog-card__img-placeholder { height: 300px; }
+  .blog-card:not(.blog-card--featured) .blog-card__img-placeholder { height: 200px; }
+
+  .blog-card__tag {
+    position: absolute; top: 1rem; left: 1rem; z-index: 2;
+    font-size: .58rem; font-weight: 500;
+    letter-spacing: .15em; text-transform: uppercase;
+    padding: .28rem .75rem; border-radius: 100px;
+    color: var(--snow); box-shadow: var(--shadow-sm);
+  }
+  .blog-card__tag--green { background: var(--sage); }
+  .blog-card__tag--blue  { background: var(--glacier); }
+
+  .blog-card__body {
+    padding: 1.6rem 1.8rem 2rem;
+    display: flex; flex-direction: column; flex: 1;
+  }
+
+  .blog-card__meta {
+    display: flex; align-items: center; gap: .8rem;
+    margin-bottom: .9rem;
+  }
+  .blog-card__date {
+    color: rgba(255,255,255,.38); font-size: .65rem;
+    letter-spacing: .1em; text-transform: uppercase;
+  }
+  .blog-card__min {
+    color: var(--fern); font-size: .65rem;
+    letter-spacing: .1em; text-transform: uppercase;
+  }
+  .blog-card__dot {
+    width: 3px; height: 3px;
+    background: rgba(255,255,255,.2);
+    border-radius: 50%; flex-shrink: 0;
+  }
+
+  .blog-card__title {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--snow); font-weight: 300; line-height: 1.2;
+    margin-bottom: .75rem;
+  }
+  .blog-card--featured .blog-card__title         { font-size: 1.55rem; }
+  .blog-card:not(.blog-card--featured) .blog-card__title { font-size: 1.15rem; }
+
+  .blog-card__excerpt {
+    color: rgba(255,255,255,.48); font-size: .82rem;
+    line-height: 1.72; flex: 1; margin-bottom: 1.3rem;
+  }
+
+  .blog-card__tags {
+    display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.2rem;
+  }
+  .blog-card__pill {
+    font-size: .62rem; padding: .22rem .65rem;
+    border-radius: 100px; letter-spacing: .06em;
+  }
+  .blog-card__pill--green {
+    background: rgba(107,143,94,.12);
+    border: 1px solid rgba(107,143,94,.22);
+    color: var(--fern);
+  }
+  .blog-card__pill--blue {
+    background: rgba(74,122,138,.12);
+    border: 1px solid rgba(74,122,138,.22);
+    color: var(--ice);
+  }
+
+  .blog-card__cta {
+    color: var(--fern); font-size: .7rem;
+    letter-spacing: .14em; text-transform: uppercase;
+    text-decoration: none; display: inline-flex;
+    align-items: center; gap: .4rem;
+    transition: gap .3s var(--ease), color .2s;
+    margin-top: auto;
+  }
+  .blog-card__cta:hover { gap: .7rem; color: var(--fern2); }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .blog-grid { grid-template-columns: 1fr 1fr; }
+    .blog-card--featured { grid-column: span 2; }
+  }
+
+  @media (max-width: 580px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .blog-card--featured { grid-column: span 1; }
+    .blog-card--featured .blog-card__img-wrap img,
+    .blog-card--featured .blog-card__img-placeholder { height: 220px; }
+    .blog-header { flex-direction: column; align-items: flex-start; }
+  }
+
+</style>
+
+<script>
+  if (!window.__revealObserver) {
+    window.__revealObserver = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          window.__revealObserver.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+    );
+  }
+  document.querySelectorAll('#blog .reveal').forEach(el =>
+    window.__revealObserver.observe(el)
+  );
+</script>

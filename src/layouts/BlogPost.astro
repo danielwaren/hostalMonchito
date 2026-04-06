@@ -1,0 +1,950 @@
+---
+import { Image } from 'astro:assets';
+import '../styles/globals.css';
+
+const {
+  title,
+  description,
+  pubDate,
+  image,
+  author        = 'Puerto Cisnes',
+  category      = 'Patagonia',
+  tags          = [],
+  readingTime   = '',
+} = Astro.props.frontmatter ?? Astro.props;
+
+const pageUrl   = Astro.url.href;
+const siteUrl   = Astro.site ?? 'https://puertocisnes.cl';
+const siteName  = 'Puerto Cisnes';
+const canonical = pageUrl;
+
+// JSON-LD Article schema
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  image: image ? [image] : [],
+  datePublished: pubDate,
+  author: { '@type': 'Organization', name: siteName, url: siteUrl },
+  publisher: {
+    '@type': 'Organization',
+    name: siteName,
+    url: siteUrl,
+    logo: { '@type': 'ImageObject', url: `${siteUrl}/favicon.svg` },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+});
+---
+
+<html lang="es">
+<head>
+  <!-- BASE -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="canonical" href={canonical} />
+
+  <!-- PRIMARY SEO -->
+  <title>{title} | {siteName}</title>
+  <meta name="description" content={description} />
+  <meta name="author" content={author} />
+  {tags.length > 0 && <meta name="keywords" content={tags.join(', ')} />}
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+
+  <!-- OPEN GRAPH -->
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content={siteName} />
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url"         content={canonical} />
+  {image && <meta property="og:image"       content={image} />}
+  {image && <meta property="og:image:width" content="1200" />}
+  {image && <meta property="og:image:height" content="630" />}
+  <meta property="article:published_time" content={pubDate} />
+  <meta property="article:author"         content={author} />
+  {tags.map(tag => <meta property="article:tag" content={tag} />)}
+
+  <!-- TWITTER CARD -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content={title} />
+  <meta name="twitter:description" content={description} />
+  {image && <meta name="twitter:image" content={image} />}
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json" set:html={jsonLd} />
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style is:global>
+  /* ═══════════════════════════════════════════
+     TOKENS
+  ═══════════════════════════════════════════ */
+  :root {
+    --bg:        #0b0f0d;
+    --bg-2:      #0f1510;
+    --bg-3:      #141c15;
+    --surface:   #192118;
+    --border:    rgba(116,198,157,0.12);
+    --accent:    #74c69d;
+    --accent-2:  #3a9d6e;
+    --accent-dim: rgba(116,198,157,0.18);
+    --gold:      #c9a84c;
+    --text:      #d8e4d8;
+    --text-2:    #9ab09a;
+    --text-3:    #5a7060;
+    --white:     #eef5ee;
+    --serif:     'Cormorant Garamond', Georgia, serif;
+    --sans:      'Lato', system-ui, sans-serif;
+    --mono:      'DM Mono', monospace;
+    --nav-h:     60px;
+    --radius:    6px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    /* subtle texture */
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(116,198,157,0.06) 0%, transparent 70%);
+  }
+
+  /* ═══════════════════════════════════════════
+     PROGRESS
+  ═══════════════════════════════════════════ */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent), var(--gold));
+    width: 0;
+    z-index: 200;
+    transition: width 0.08s linear;
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  /* ═══════════════════════════════════════════
+     NAV
+  ═══════════════════════════════════════════ */
+  .site-nav {
+    position: fixed;
+    top: 2px; left: 0; right: 0;
+    height: var(--nav-h);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(1.25rem, 4vw, 3rem);
+    background: rgba(11, 15, 13, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-logo::before {
+    content: '';
+    display: block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  .nav-link {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--accent); }
+
+  /* ═══════════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    margin-top: calc(var(--nav-h) + 2px);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* dark vignette overlay */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at center top, transparent 20%, rgba(11,15,13,0.5) 100%),
+      linear-gradient(to bottom, rgba(11,15,13,0.2) 0%, transparent 30%);
+    z-index: 1;
+  }
+
+  /* dramatic bottom gradient — blends into body bg */
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 75%;
+    background: linear-gradient(
+      to top,
+      var(--bg)         0%,
+      rgba(11,15,13,.9) 30%,
+      rgba(11,15,13,.5) 60%,
+      transparent       100%
+    );
+    z-index: 2;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 5;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.1s forwards;
+  }
+
+  .hero-eyebrow span {
+    display: block;
+    width: 28px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 6vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.0;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.25s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.4s forwards;
+  }
+
+  .hero-date {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--text-3);
+  }
+
+  .hero-reading {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--text-3);
+  }
+
+  .hero-desc {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.65;
+    color: rgba(216,228,216,0.7);
+    max-width: 560px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* scroll arrow */
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem;
+    right: clamp(1.25rem, 4vw, 3rem);
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-3);
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .scroll-cue svg { animation: nudge 2.4s ease infinite; }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateY(0); }
+    55%       { transform: translateY(6px); }
+  }
+
+  /* ═══════════════════════════════════════════
+     SHARE BAR
+  ═══════════════════════════════════════════ */
+  .share-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem clamp(1.25rem, 5vw, 4rem);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-2);
+  }
+
+  .share-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-right: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--text-2);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 0.32rem 0.9rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: all 0.18s;
+  }
+
+  .share-btn:hover {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .share-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+  /* ═══════════════════════════════════════════
+     PAGE GRID
+  ═══════════════════════════════════════════ */
+  .page-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 4vw, 3rem);
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .page-grid {
+      grid-template-columns: 1fr;
+    }
+    .sidebar {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     ARTICLE PROSE
+  ═══════════════════════════════════════════ */
+  .article-body {
+    padding: clamp(2.5rem, 5vw, 4rem) 0 4rem;
+  }
+
+  /* drop cap on first paragraph */
+  .article-body > p:first-of-type::first-letter {
+    font-family: var(--serif);
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 0.8;
+    float: left;
+    margin: 0.08em 0.12em 0 0;
+    color: var(--accent);
+  }
+
+  .article-body p {
+    font-family: var(--serif);
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.7em;
+    font-weight: 400;
+  }
+
+  .article-body h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+    font-weight: 600;
+    color: var(--white);
+    margin: 3em 0 0.8em;
+    line-height: 1.15;
+    position: relative;
+    padding-left: 1.25rem;
+  }
+
+  .article-body h2::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.15em; bottom: 0.15em;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent-2));
+    border-radius: 2px;
+  }
+
+  .article-body h3 {
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 2vw, 1.7rem);
+    font-weight: 600;
+    font-style: italic;
+    color: var(--accent);
+    margin: 2.2em 0 0.6em;
+    line-height: 1.2;
+  }
+
+  /* pull quote */
+  .article-body blockquote {
+    position: relative;
+    margin: 2.5em 0;
+    padding: 1.5rem 1.75rem 1.5rem 2.5rem;
+    border-left: none;
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .article-body blockquote::before {
+    content: '\201C';
+    position: absolute;
+    left: 0.4rem;
+    top: -0.3rem;
+    font-family: var(--serif);
+    font-size: 5rem;
+    color: var(--accent);
+    opacity: 0.35;
+    line-height: 1;
+  }
+
+  .article-body blockquote::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--accent), var(--gold));
+  }
+
+  .article-body blockquote p {
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--white);
+    margin: 0;
+  }
+
+  .article-body blockquote p::first-letter { all: revert; }
+
+  .article-body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: rgba(116,198,157,0.4);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
+  }
+  .article-body a:hover { text-decoration-color: var(--accent); }
+
+  .article-body ul, .article-body ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5em;
+  }
+
+  .article-body li {
+    font-family: var(--serif);
+    font-size: clamp(1.05rem, 1.5vw, 1.15rem);
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 0.4em;
+  }
+
+  .article-body li::marker { color: var(--accent); }
+
+  /* inline images in article */
+  .article-body img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    margin: 2rem 0;
+    border: 1px solid var(--border);
+  }
+
+  /* decorative divider */
+  .article-body hr {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    position: relative;
+  }
+
+  .article-body hr::after {
+    content: '✦';
+    position: absolute;
+    font-size: 0.7rem;
+    color: var(--text-3);
+    background: var(--bg);
+    padding: 0 0.75rem;
+  }
+
+  /* strong / em */
+  .article-body strong { color: var(--white); font-weight: 700; }
+  .article-body em     { color: var(--accent); font-style: italic; }
+
+  /* ═══════════════════════════════════════════
+     SIDEBAR
+  ═══════════════════════════════════════════ */
+  .sidebar {
+    padding: clamp(2rem, 4vw, 4rem) 0;
+    position: sticky;
+    top: calc(var(--nav-h) + 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* CTA */
+  .cta-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent), var(--gold));
+  }
+
+  .cta-card h3 {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--white);
+    margin-bottom: 0.65rem;
+  }
+
+  .cta-card p {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--text-2);
+    margin-bottom: 1.25rem;
+    font-family: var(--sans);
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 0.65rem 1.25rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .cta-btn:hover {
+    background: var(--accent-2);
+    transform: translateY(-1px);
+  }
+
+  /* SIDEBAR SECTION */
+  .sidebar-section {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+
+  .sidebar-heading {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .related-link {
+    display: block;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.18s, padding-left 0.18s;
+  }
+  .related-link:last-child { border-bottom: none; }
+  .related-link:hover { color: var(--accent); padding-left: 0.35rem; }
+
+  .related-link small {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  /* ═══════════════════════════════════════════
+     TAGS
+  ═══════════════════════════════════════════ */
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid rgba(116,198,157,0.2);
+    padding: 0.25rem 0.7rem;
+    border-radius: 100px;
+  }
+
+  /* ═══════════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════════ */
+  .site-footer {
+    margin-top: 4rem;
+    border-top: 1px solid var(--border);
+    padding: 2rem clamp(1.25rem, 4vw, 3rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: var(--bg-2);
+  }
+
+  .footer-brand {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  .footer-back {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-back:hover { color: var(--accent); }
+
+  /* ═══════════════════════════════════════════
+     RESPONSIVE TWEAKS
+  ═══════════════════════════════════════════ */
+  @media (max-width: 480px) {
+    .hero-title { line-height: 1.05; }
+    .share-bar  { gap: 0.5rem; }
+    .share-label { display: none; }
+    .sidebar { position: static; }
+  }
+  </style>
+</head>
+
+<body>
+
+  <!-- PROGRESS -->
+  <div id="progress" role="progressbar" aria-label="Progreso de lectura"></div>
+
+  <!-- NAV -->
+  <nav class="site-nav" aria-label="Navegación principal">
+    <a href="/" class="nav-logo" aria-label="Inicio Puerto Cisnes">Puerto Cisnes</a>
+    <div class="nav-links">
+      <a href="/blog"      class="nav-link">Blog</a>
+      <a href="/hospedaje" class="nav-link">Hospedaje</a>
+      <a href="/contacto"  class="nav-link">Contacto</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header
+    class="hero"
+    style={image ? `background-image:url('${image}')` : `background-color:var(--bg-3)`}
+    role="banner"
+  >
+    <div class="hero-inner">
+      <p class="hero-eyebrow">
+        <span></span>
+        {category} · {siteName}
+      </p>
+
+      <h1 class="hero-title">{title}</h1>
+
+      <div class="hero-meta-row">
+        <time class="hero-date" datetime={pubDate}>{pubDate}</time>
+        {readingTime && <span class="hero-reading">{readingTime} min de lectura</span>}
+        {description && <p class="hero-desc">{description}</p>}
+      </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <polyline points="19 12 12 19 5 12"/>
+      </svg>
+      Leer
+    </div>
+  </header>
+
+  <!-- SHARE BAR -->
+  <div class="share-bar" aria-label="Compartir artículo">
+    <span class="share-label">Compartir</span>
+
+    <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' — ' + pageUrl)}`}
+       target="_blank" rel="noopener noreferrer" class="share-btn"
+       aria-label="Compartir en WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.714l5.994-1.571A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.001-1.373l-.358-.213-3.714.974 1.001-3.622-.233-.372A9.795 9.795 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
+      </svg>
+      WhatsApp
+    </a>
+
+    <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`}
+       target="_blank" rel="noopener noreferrer" class="share-btn"
+       aria-label="Compartir en Facebook">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+      </svg>
+      Facebook
+    </a>
+
+    <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(title)}`}
+       target="_blank" rel="noopener noreferrer" class="share-btn"
+       aria-label="Compartir en X / Twitter">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      X
+    </a>
+  </div>
+
+  <!-- CONTENT GRID -->
+  <div class="page-grid">
+
+    <main id="main-content">
+      <article class="article-body" aria-label={title}>
+        <slot />
+
+        <!-- TAGS -->
+        {tags.length > 0 && (
+          <div class="tag-list" aria-label="Etiquetas">
+            {tags.map((tag: string) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        )}
+      </article>
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside aria-label="Sidebar" class="sidebar">
+
+      <!-- CTA -->
+      <div class="cta-card">
+        <h3>¿Buscas hospedaje en Puerto Cisnes?</h3>
+        <p>Pensión completa para empresas y turistas en la Región de Aysén. Habitaciones cómodas, atención personalizada y ubicación privilegiada.</p>
+        <a href="https://wa.me/56912345678"
+           target="_blank" rel="noopener noreferrer"
+           class="cta-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.714l5.994-1.571A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.001-1.373l-.358-.213-3.714.974 1.001-3.622-.233-.372A9.795 9.795 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
+          </svg>
+          Reservar ahora
+        </a>
+      </div>
+
+      <!-- RELATED -->
+      <div class="sidebar-section">
+        <p class="sidebar-heading">Artículos relacionados</p>
+        <a href="/blog/donde-alojar" class="related-link">
+          <small>Hospedaje</small>
+          Dónde alojar en Puerto Cisnes
+        </a>
+        <a href="/blog/trabajadores" class="related-link">
+          <small>Servicios</small>
+          Hospedaje para trabajadores en Aysén
+        </a>
+        <a href="/blog/gastronomia" class="related-link">
+          <small>Gastronomía</small>
+          Dónde comer en Puerto Cisnes
+        </a>
+        <a href="/blog/turismo" class="related-link">
+          <small>Turismo</small>
+          Qué hacer en la Región de Aysén
+        </a>
+      </div>
+
+      <!-- LOCATION -->
+      <div class="sidebar-section">
+        <p class="sidebar-heading">Ubicación</p>
+        <p style="font-family:var(--serif);font-size:0.95rem;line-height:1.7;color:var(--text-2);font-style:italic;">
+          Puerto Cisnes<br/>
+          Región de Aysén · Patagonia chilena
+        </p>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <span class="footer-brand">© {new Date().getFullYear()} Puerto Cisnes — Patagonia Chilena</span>
+    <a href="/blog" class="footer-back">← Volver al blog</a>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Progress bar
+    const bar = document.getElementById('progress');
+    if (bar) {
+      const update = () => {
+        const el = document.documentElement;
+        const pct = el.scrollTop / (el.scrollHeight - el.clientHeight) * 100;
+        bar.style.width = Math.min(pct, 100) + '%';
+      };
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    }
+
+    // Nav opacity on scroll
+    const nav = document.querySelector('.site-nav') as HTMLElement | null;
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.style.background = window.scrollY > 60
+          ? 'rgba(11,15,13,0.97)'
+          : 'rgba(11,15,13,0.82)';
+      }, { passive: true });
+    }
+
+    // Animate article paragraphs on scroll
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).style.opacity = '1';
+          (e.target as HTMLElement).style.transform = 'translateY(0)';
+          observer.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    document.querySelectorAll('.article-body > p, .article-body > h2, .article-body > h3, .article-body > blockquote').forEach(el => {
+      (el as HTMLElement).style.cssText += 'opacity:0;transform:translateY(14px);transition:opacity 0.55s ease,transform 0.55s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>

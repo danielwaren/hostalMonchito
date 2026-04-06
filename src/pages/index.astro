@@ -1,3 +1,7 @@
+--- 
+import BlogSection from '../../src/components/landing/BlogSection.astro';
+---
+
 <!DOCTYPE html>
 <html lang="es-CL" class="scroll-smooth">
 <head>
@@ -5,48 +9,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  <!-- ============================================================
-       SEO PROFESIONAL — HOSTAL EL MONCHITO
-       Puerto Cisnes, Región de Aysén, Chile
-  ============================================================ -->
-
-  <!-- TITLE: palabra clave principal al inicio, marca al final -->
   <title>Hospedaje y Alimentación en Puerto Cisnes | Hostal El Monchito — Patagonia Chilena</title>
-
-  <!-- META DESCRIPTION: 155 chars, CTA incluido, palabra clave local -->
   <meta name="description" content="Hostal en Puerto Cisnes con pensión completa, almuerzos, colaciones y convenios de alojamiento para empresas en Aysén. Atendemos salmoneras, obras públicas y licitaciones. ☎ Reserva ya." />
-
-  <!-- ROBOTS: indexación completa + snippets extendidos -->
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large" />
-
-  <!-- CANONICAL: evita contenido duplicado -->
   <link rel="canonical" href="https://hostalmonchito.vercel.app/" />
-
-  <!-- GEO: señales de localización para búsquedas locales -->
   <meta name="geo.region" content="CL-AI" />
   <meta name="geo.placename" content="Puerto Cisnes, Región de Aysén, Chile" />
   <meta name="geo.position" content="-44.725;-72.755" />
   <meta name="ICBM" content="-44.725, -72.755" />
-
-  <!-- IDIOMA y REGIÓN -->
   <meta name="language" content="Spanish" />
   <meta name="content-language" content="es-CL" />
   <link rel="alternate" hreflang="es-CL" href="https://hostalmonchito.vercel.app/" />
-
-  <!-- KEYWORDS: long-tail específicas para Puerto Cisnes + servicios -->
   <meta name="keywords" content="hostal Puerto Cisnes, hospedaje Puerto Cisnes, alojamiento Puerto Cisnes, pensión completa Puerto Cisnes, colaciones para empresas Puerto Cisnes, convenio alojamiento trabajadores Aysén, restaurante Puerto Cisnes, almuerzos Puerto Cisnes, hostal salmoneras Aysén, licitación alimentación Aysén, hospedaje trabajadores Patagonia, hostal Carretera Austral, hotel Puerto Cisnes, residencial Puerto Cisnes, alojamiento Región de Aysén, comida empresas Cisnes, convenio colación salmonicultura, alimentos para faenas Aysén, hostal cerca salmoneras, catering empresas Puerto Cisnes, servicio de alimentación Aysén, hostal con pensión completa Patagonia, hostal turistas Puerto Cisnes, hospedaje Patagonia chilena" />
-
-  <!-- AUTHOR / PUBLISHER -->
   <meta name="author" content="Hostal El Monchito" />
   <meta name="publisher" content="Hostal El Monchito" />
   <meta name="copyright" content="© 2025 Hostal El Monchito" />
-
-  <!-- TEMA -->
   <meta name="theme-color" content="#141412" />
   <meta name="msapplication-TileColor" content="#141412" />
-
-  <!-- OPEN GRAPH — Facebook, WhatsApp, LinkedIn -->
   <meta property="og:type" content="business.business" />
   <meta property="og:site_name" content="Hostal El Monchito" />
   <meta property="og:title" content="Hostal El Monchito | Hospedaje y Alimentación en Puerto Cisnes, Patagonia" />
@@ -65,28 +45,16 @@
   <meta property="business:contact_data:phone_number" content="+56912345678" />
   <meta property="business:contact_data:email" content="contacto@hostalmonchito.cl" />
   <meta property="business:contact_data:website" content="https://hostalmonchito.vercel.app/" />
-
-  <!-- TWITTER / X CARD -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@hostalmonchito" />
   <meta name="twitter:title" content="Hostal El Monchito — Puerto Cisnes, Patagonia" />
   <meta name="twitter:description" content="Hospedaje, pensión completa y convenios para empresas en Puerto Cisnes, Aysén. Salmoneras, turistas y licitaciones públicas." />
   <meta name="twitter:image" content="https://hostalmonchito.vercel.app/header-img.jpg" />
   <meta name="twitter:image:alt" content="Hostal El Monchito, Puerto Cisnes" />
-
-  <!-- PRECONNECT para performance (afecta Core Web Vitals = SEO) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://api.open-meteo.com" />
-
-  <!-- FUENTES -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
-
-  <!-- ============================================================
-       SCHEMA.ORG — DATOS ESTRUCTURADOS PROFESIONALES
-       Esto es lo que Google usa para Knowledge Panel,
-       Rich Snippets, Maps y Local Pack (los 3 primeros)
-  ============================================================ -->
   <script type="application/ld+json">
   [
     {
@@ -98,30 +66,14 @@
       "description": "Hostal familiar en Puerto Cisnes con más de 12 años ofreciendo hospedaje, pensión completa, restaurante a la carta y convenios de alojamiento y alimentación para empresas del sector salmonero, constructoras y organismos públicos en la Región de Aysén, Patagonia Chilena.",
       "url": "https://hostalmonchito.vercel.app/",
       "logo": "https://hostalmonchito.vercel.app/header-img.jpg",
-      "image": [
-        "https://hostalmonchito.vercel.app/header-img.jpg",
-        "https://hostalmonchito.vercel.app/historia-img.jpg",
-        "https://hostalmonchito.vercel.app/galeria.jpg"
-      ],
       "telephone": "+56912345678",
       "email": "contacto@hostalmonchito.cl",
       "foundingDate": "2013",
       "priceRange": "$$",
       "currenciesAccepted": "CLP",
       "paymentAccepted": "Efectivo, Transferencia Bancaria, Tarjeta de Crédito, Factura Empresa",
-      "starRating": {
-        "@type": "Rating",
-        "ratingValue": "4.9",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "50",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
+      "starRating": { "@type": "Rating", "ratingValue": "4.9", "bestRating": "5" },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "50", "bestRating": "5" },
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Calle Los Pinos 245",
@@ -130,204 +82,17 @@
         "postalCode": "5971000",
         "addressCountry": "CL"
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -44.725,
-        "longitude": -72.755
-      },
-      "hasMap": "https://www.openstreetmap.org/?mlat=-44.725&mlon=-72.755",
-      "areaServed": [
-        {
-          "@type": "City",
-          "name": "Puerto Cisnes"
-        },
-        {
-          "@type": "AdministrativeArea",
-          "name": "Región de Aysén"
-        },
-        {
-          "@type": "AdministrativeArea",
-          "name": "Patagonia Chilena"
-        }
-      ],
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-          "opens": "07:00",
-          "closes": "23:00"
-        }
-      ],
-      "amenityFeature": [
-        { "@type": "LocationFeatureSpecification", "name": "Pensión completa", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "Restaurante a la carta", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "Convenios con empresas", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "Colaciones para trabajadores", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "Calefacción", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "WiFi", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "Baño privado", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "Facturación mensual para empresas", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "Atención 24/7 para empresas", "value": true }
-      ],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Servicios Hostal El Monchito",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "name": "Pensión Completa",
-            "description": "Alojamiento con desayuno, almuerzo y cena incluidos. Habitaciones con calefacción y baño privado en Puerto Cisnes.",
-            "category": "Hospedaje"
-          },
-          {
-            "@type": "Offer",
-            "name": "Restaurante a la Carta",
-            "description": "Cocina patagónica con centolla del Canal Puyuhuapi, cordero al palo y merluza austral. Carta de vinos chilenos.",
-            "category": "Restaurante"
-          },
-          {
-            "@type": "Offer",
-            "name": "Convenio de Alojamiento para Empresas",
-            "description": "Soluciones de hospedaje y alimentación para empresas del sector salmonero, constructoras y obras públicas. Turnos 14x14, facturación mensual y cupos garantizados.",
-            "category": "Convenio Empresarial"
-          },
-          {
-            "@type": "Offer",
-            "name": "Colaciones y Alimentación para Empresas",
-            "description": "Servicio de colaciones, almuerzos y alimentación completa para equipos de trabajo en la Región de Aysén. Ideal para licitaciones públicas.",
-            "category": "Alimentación Empresarial"
-          }
-        ]
-      },
-      "review": [
-        {
-          "@type": "Review",
-          "author": { "@type": "Person", "name": "María Fernanda G." },
-          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-          "reviewBody": "Un lugar mágico. La familia es increíblemente cálida y el desayuno con mermelada de calafate fue uno de los mejores momentos del viaje.",
-          "publisher": { "@type": "Organization", "name": "Google" }
-        },
-        {
-          "@type": "Review",
-          "author": { "@type": "Person", "name": "Julien Moreau" },
-          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-          "reviewBody": "El mejor hostal de la Carretera Austral. La ubicación es perfecta y la atención es de otro nivel.",
-          "publisher": { "@type": "Organization", "name": "Booking" }
-        },
-        {
-          "@type": "Review",
-          "author": { "@type": "Person", "name": "Ana & Roberto P." },
-          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-          "reviewBody": "Tres semanas recorriendo la Patagonia y El Monchito fue nuestro lugar favorito.",
-          "publisher": { "@type": "Organization", "name": "TripAdvisor" }
-        }
-      ],
-      "sameAs": [
-        "https://instagram.com/hostalmonchito",
-        "https://www.facebook.com/hostalmonchito"
-      ]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FoodEstablishment",
-      "@id": "https://hostalmonchito.vercel.app/#restaurant",
-      "name": "Restaurante El Monchito",
-      "description": "Restaurante a la carta en Puerto Cisnes con cocina patagónica. Especialidad en centolla, cordero y merluza austral. Servicio de colaciones y alimentación para empresas y grupos.",
-      "url": "https://hostalmonchito.vercel.app/#services",
-      "telephone": "+56912345678",
-      "servesCuisine": ["Cocina Patagónica", "Mariscos", "Cocina Chilena"],
-      "priceRange": "$$",
-      "hasMenu": "https://hostalmonchito.vercel.app/#services",
-      "acceptsReservations": true,
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Calle Los Pinos 245",
-        "addressLocality": "Puerto Cisnes",
-        "addressRegion": "Aysén",
-        "addressCountry": "CL"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -44.725,
-        "longitude": -72.755
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-          "opens": "08:00",
-          "closes": "22:00"
-        }
-      ]
+      "geo": { "@type": "GeoCoordinates", "latitude": -44.725, "longitude": -72.755 },
+      "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "07:00", "closes": "23:00" }],
+      "sameAs": ["https://instagram.com/hostalmonchito","https://www.facebook.com/hostalmonchito"]
     },
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "¿El Hostal El Monchito ofrece convenios para empresas en Puerto Cisnes?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sí. Ofrecemos convenios de alojamiento y alimentación a medida para empresas del sector salmonero, constructoras y organismos públicos en la Región de Aysén. Incluye hospedaje, pensión completa, facturación mensual, cupos garantizados y adaptación a turnos rotativos 14x14."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Ofrecen servicio de colaciones para trabajadores en Puerto Cisnes?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sí. Ofrecemos servicio de colaciones y alimentación completa para equipos de trabajo en Puerto Cisnes y la Región de Aysén. Atendemos a empresas salmoneras, obras públicas y licitaciones de alimentación del Estado."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Cuánto cuesta hospedarse en el Hostal El Monchito?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Contamos con tarifas para turistas particulares y tarifas diferenciadas para empresas con convenio. Contáctanos por WhatsApp al +56 9 1234 5678 para consultar disponibilidad y precios actualizados."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Dónde está ubicado el Hostal El Monchito?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Estamos en Calle Los Pinos 245, Puerto Cisnes, Región de Aysén, Patagonia Chilena, a orillas del fiordo Puyuhuapi. Punto estratégico en la Carretera Austral."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿El hostal atiende licitaciones de alimentación del Estado?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sí. Contamos con experiencia en licitaciones y convenios de alimentación para organismos públicos y privados en la Región de Aysén. Emitimos boleta o factura empresa y gestionamos contratos a largo plazo."
-          }
-        }
-      ]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Inicio",
-          "item": "https://hostalmonchito.vercel.app/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Servicios",
-          "item": "https://hostalmonchito.vercel.app/#services"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Convenios para Empresas",
-          "item": "https://hostalmonchito.vercel.app/#services"
-        }
+        { "@type": "Question", "name": "¿El Hostal El Monchito ofrece convenios para empresas en Puerto Cisnes?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. Ofrecemos convenios de alojamiento y alimentación a medida para empresas del sector salmonero, constructoras y organismos públicos en la Región de Aysén. Incluye hospedaje, pensión completa, facturación mensual, cupos garantizados y adaptación a turnos rotativos 14x14." } },
+        { "@type": "Question", "name": "¿Ofrecen servicio de colaciones para trabajadores en Puerto Cisnes?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. Ofrecemos servicio de colaciones y alimentación completa para equipos de trabajo en Puerto Cisnes y la Región de Aysén." } },
+        { "@type": "Question", "name": "¿Dónde está ubicado el Hostal El Monchito?", "acceptedAnswer": { "@type": "Answer", "text": "Estamos en Calle Los Pinos 245, Puerto Cisnes, Región de Aysén, Patagonia Chilena, a orillas del fiordo Puyuhuapi." } }
       ]
     },
     {
@@ -336,29 +101,12 @@
       "@id": "https://hostalmonchito.vercel.app/#website",
       "url": "https://hostalmonchito.vercel.app/",
       "name": "Hostal El Monchito — Puerto Cisnes, Patagonia",
-      "description": "Sitio oficial del Hostal El Monchito, hospedaje y alimentación en Puerto Cisnes, Aysén.",
-      "inLanguage": "es-CL",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Hostal El Monchito",
-        "@id": "https://hostalmonchito.vercel.app/#business"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://hostalmonchito.vercel.app/?q={search_term_string}"
-        },
-        "query-input": "required name=search_term_string"
-      }
+      "inLanguage": "es-CL"
     }
   ]
   </script>
 
   <style>
-    /* ================================================================
-       RESET & ROOT
-    ================================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --forest:  #1a2e1a;
@@ -376,33 +124,17 @@
       --inkbase: #161614;
       --footer:  #0c0d0c;
       --wa:      #25D366;
-
-      --shadow-sm:  0 2px 12px rgba(0,0,0,.35), 0 1px 3px rgba(0,0,0,.2);
-      --shadow-md:  0 8px 32px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.25);
-      --shadow-lg:  0 20px 60px rgba(0,0,0,.55), 0 4px 16px rgba(0,0,0,.3);
+      --shadow-sm:   0 2px 12px rgba(0,0,0,.35), 0 1px 3px rgba(0,0,0,.2);
+      --shadow-md:   0 8px 32px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.25);
+      --shadow-lg:   0 20px 60px rgba(0,0,0,.55), 0 4px 16px rgba(0,0,0,.3);
       --shadow-fern: 0 8px 32px rgba(107,143,94,.18), 0 2px 8px rgba(107,143,94,.1);
       --shadow-glow: 0 0 40px rgba(107,143,94,.12);
-
-      --r-sm: 10px;
-      --r-md: 16px;
-      --r-lg: 24px;
-      --r-xl: 32px;
-
+      --r-sm: 10px; --r-md: 16px; --r-lg: 24px; --r-xl: 32px;
       --ease: cubic-bezier(.16,1,.3,1);
     }
 
-    html {
-      background: var(--ink);
-      color: var(--cloud);
-      font-family: 'DM Sans', sans-serif;
-      -webkit-text-size-adjust: 100%;
-      -webkit-tap-highlight-color: transparent;
-    }
-    body {
-      background: var(--ink);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
+    html { background: var(--ink); color: var(--cloud); font-family: 'DM Sans', sans-serif; -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--ink); overflow-x: hidden; line-height: 1.6; }
 
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--ink); }
@@ -430,6 +162,7 @@
     .delay-3 { transition-delay:.36s; }
     .delay-4 { transition-delay:.48s; }
 
+    /* NAVBAR */
     #navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -443,589 +176,293 @@
       padding: 1rem 2.5rem;
       box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 8px 32px rgba(0,0,0,.4);
     }
-
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem; font-weight: 300;
-      color: var(--snow); text-decoration: none;
-      letter-spacing: .02em;
-      transition: opacity .2s;
-    }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--snow); text-decoration: none; letter-spacing: .02em; transition: opacity .2s; }
     .nav-logo:hover { opacity: .8; }
     .nav-logo em { color: var(--fern); font-style: italic; }
-
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      color: rgba(255,255,255,.65); text-decoration: none;
-      font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
-      transition: color .2s;
-      position: relative;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px;
-      background: var(--fern); transform: scaleX(0); transition: transform .3s var(--ease);
-    }
+    .nav-links a { color: rgba(255,255,255,.65); text-decoration: none; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; transition: color .2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--fern); transform: scaleX(0); transition: transform .3s var(--ease); }
     .nav-links a:hover { color: var(--snow); }
     .nav-links a:hover::after { transform: scaleX(1); }
-
     .nav-actions { display: flex; align-items: center; gap: .6rem; }
-
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: .4rem;
-      color: rgba(255,255,255,.65); text-decoration: none;
-      border: 1px solid rgba(255,255,255,.2);
-      padding: .5rem 1.1rem; border-radius: var(--r-sm);
-      font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
-      transition: all .25s var(--ease);
-      backdrop-filter: blur(8px);
-    }
-    .btn-ghost:hover {
-      color: var(--snow);
-      border-color: rgba(255,255,255,.5);
-      background: rgba(255,255,255,.06);
-    }
-
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: .45rem;
-      color: var(--snow); text-decoration: none;
-      background: var(--sage);
-      padding: .55rem 1.3rem; border-radius: var(--r-sm);
-      font-size: .72rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
-      transition: all .25s var(--ease);
-      box-shadow: var(--shadow-fern);
-    }
-    .btn-primary:hover {
-      background: var(--fern2);
-      transform: translateY(-1px);
-      box-shadow: 0 12px 36px rgba(107,143,94,.3);
-    }
-
-    #hamburger-btn {
-      display: none; flex-direction: column; gap: 5px;
-      background: none; border: 1px solid rgba(255,255,255,.2);
-      border-radius: var(--r-sm); cursor: pointer;
-      padding: .55rem .65rem;
-      transition: border-color .2s;
-    }
-    #hamburger-btn span {
-      width: 20px; height: 1.5px; background: var(--snow); display: block;
-      transition: transform .3s var(--ease), opacity .3s;
-    }
+    .btn-ghost { display: inline-flex; align-items: center; gap: .4rem; color: rgba(255,255,255,.65); text-decoration: none; border: 1px solid rgba(255,255,255,.2); padding: .5rem 1.1rem; border-radius: var(--r-sm); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; transition: all .25s var(--ease); backdrop-filter: blur(8px); }
+    .btn-ghost:hover { color: var(--snow); border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.06); }
+    .btn-primary { display: inline-flex; align-items: center; gap: .45rem; color: var(--snow); text-decoration: none; background: var(--sage); padding: .55rem 1.3rem; border-radius: var(--r-sm); font-size: .72rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; transition: all .25s var(--ease); box-shadow: var(--shadow-fern); }
+    .btn-primary:hover { background: var(--fern2); transform: translateY(-1px); box-shadow: 0 12px 36px rgba(107,143,94,.3); }
+    #hamburger-btn { display: none; flex-direction: column; gap: 5px; background: none; border: 1px solid rgba(255,255,255,.2); border-radius: var(--r-sm); cursor: pointer; padding: .55rem .65rem; transition: border-color .2s; }
+    #hamburger-btn span { width: 20px; height: 1.5px; background: var(--snow); display: block; transition: transform .3s var(--ease), opacity .3s; }
     #hamburger-btn:hover { border-color: rgba(255,255,255,.5); }
 
-    #mobile-menu {
-      display: none; position: fixed; inset: 0; z-index: 200;
-      background: rgba(10,11,10,.97);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      flex-direction: column; align-items: center; justify-content: center; gap: .5rem;
-    }
+    /* MOBILE MENU */
+    #mobile-menu { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(10,11,10,.97); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); flex-direction: column; align-items: center; justify-content: center; gap: .5rem; }
     #mobile-menu.open { display: flex; animation: float-in .35s var(--ease); }
-
-    .mobile-close {
-      position: absolute; top: 1.5rem; right: 1.5rem;
-      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
-      border-radius: 50%; width: 40px; height: 40px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--snow); font-size: 1.1rem; cursor: pointer;
-      transition: background .2s;
-    }
+    .mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: var(--snow); font-size: 1.1rem; cursor: pointer; transition: background .2s; }
     .mobile-close:hover { background: rgba(255,255,255,.15); }
-
-    .mobile-nav a {
-      font-family: 'Cormorant Garamond', serif;
-      color: rgba(255,255,255,.7); text-decoration: none;
-      font-size: 2.6rem; font-weight: 300;
-      display: block; text-align: center; padding: .4rem 2rem;
-      transition: color .3s, transform .3s;
-    }
+    .mobile-nav a { font-family: 'Cormorant Garamond', serif; color: rgba(255,255,255,.7); text-decoration: none; font-size: 2.6rem; font-weight: 300; display: block; text-align: center; padding: .4rem 2rem; transition: color .3s, transform .3s; }
     .mobile-nav a:hover { color: var(--snow); transform: translateX(8px); }
+    .mobile-divider { width: 1px; height: 40px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,.2), transparent); margin: .5rem 0; }
 
-    .mobile-divider {
-      width: 1px; height: 40px;
-      background: linear-gradient(to bottom, transparent, rgba(255,255,255,.2), transparent);
-      margin: .5rem 0;
-    }
-
-    #hero {
-      position: relative; height: 100svh; min-height: 620px;
-      display: flex; align-items: center; overflow: hidden;
-    }
-
-    #parallax-bg {
-      position: absolute; inset: -10%; z-index: 0;
-    }
-    #parallax-bg img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-
-    .hero-overlay {
-      position: absolute; inset: 0; z-index: 1;
-      background:
-        radial-gradient(ellipse at 30% 50%, rgba(26,46,26,.7) 0%, transparent 70%),
-        linear-gradient(135deg, rgba(20,20,18,.8) 0%, rgba(20,20,18,.3) 60%, rgba(74,122,138,.25) 100%);
-    }
-
-    .hero-content {
-      position: relative; z-index: 2;
-      padding: 0 2.5rem;
-      max-width: min(800px, 92vw);
-    }
-
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: .4rem 1rem; border-radius: 100px;
-      margin-bottom: 1.8rem;
-    }
-    .hero-badge span {
-      color: var(--mist); font-size: .68rem;
-      letter-spacing: .18em; text-transform: uppercase;
-    }
-
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 8vw, 5.5rem);
-      font-weight: 300; color: var(--snow);
-      line-height: 1.05; margin-bottom: 1.4rem;
-    }
+    /* HERO */
+    #hero { position: relative; height: 100svh; min-height: 620px; display: flex; align-items: center; overflow: hidden; }
+    #parallax-bg { position: absolute; inset: -10%; z-index: 0; }
+    #parallax-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-overlay { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 30% 50%, rgba(26,46,26,.7) 0%, transparent 70%), linear-gradient(135deg, rgba(20,20,18,.8) 0%, rgba(20,20,18,.3) 60%, rgba(74,122,138,.25) 100%); }
+    .hero-content { position: relative; z-index: 2; padding: 0 2.5rem; max-width: min(800px, 92vw); }
+    .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: .4rem 1rem; border-radius: 100px; margin-bottom: 1.8rem; }
+    .hero-badge span { color: var(--mist); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 300; color: var(--snow); line-height: 1.05; margin-bottom: 1.4rem; }
     .hero-title em { font-style: italic; color: var(--mist); }
-
-    .hero-sub {
-      color: rgba(255,255,255,.68);
-      font-size: clamp(.88rem, 2vw, 1rem);
-      font-weight: 300; line-height: 1.75;
-      max-width: 460px; margin-bottom: 2.5rem;
-    }
-
+    .hero-sub { color: rgba(255,255,255,.68); font-size: clamp(.88rem, 2vw, 1rem); font-weight: 300; line-height: 1.75; max-width: 460px; margin-bottom: 2.5rem; }
     .hero-ctas { display: flex; flex-wrap: wrap; gap: .9rem; }
+    .btn-hero-primary { display: inline-flex; align-items: center; gap: .55rem; background: var(--sage); color: var(--snow); text-decoration: none; padding: .85rem 2rem; border-radius: var(--r-md); font-size: .78rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; transition: all .3s var(--ease); box-shadow: 0 4px 20px rgba(107,143,94,.35), 0 1px 3px rgba(0,0,0,.3); }
+    .btn-hero-primary:hover { background: var(--fern2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(107,143,94,.45), 0 2px 8px rgba(0,0,0,.3); }
+    .btn-hero-secondary { display: inline-flex; align-items: center; gap: .55rem; border: 1px solid rgba(255,255,255,.28); color: var(--snow); text-decoration: none; padding: .85rem 2rem; border-radius: var(--r-md); font-size: .78rem; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; transition: all .3s var(--ease); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    .btn-hero-secondary:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.5); transform: translateY(-2px); }
+    .hero-scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: .5rem; color: rgba(255,255,255,.45); font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; z-index: 2; }
 
-    .btn-hero-primary {
-      display: inline-flex; align-items: center; gap: .55rem;
-      background: var(--sage); color: var(--snow); text-decoration: none;
-      padding: .85rem 2rem; border-radius: var(--r-md);
-      font-size: .78rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
-      transition: all .3s var(--ease);
-      box-shadow: 0 4px 20px rgba(107,143,94,.35), 0 1px 3px rgba(0,0,0,.3);
-    }
-    .btn-hero-primary:hover {
-      background: var(--fern2);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(107,143,94,.45), 0 2px 8px rgba(0,0,0,.3);
-    }
+    /* WEATHER */
+    #weather-widget { position: absolute; top: 50%; right: 2.5rem; transform: translateY(-50%); z-index: 3; background: rgba(18,18,16,.65); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 1px solid rgba(255,255,255,.1); border-radius: var(--r-lg); padding: 1.4rem 1.6rem; min-width: 185px; box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.08); }
+    #weather-widget .label { color: var(--fern); font-size: .58rem; letter-spacing: .22em; text-transform: uppercase; margin-bottom: .9rem; display: flex; align-items: center; gap: .4rem; }
 
-    .btn-hero-secondary {
-      display: inline-flex; align-items: center; gap: .55rem;
-      border: 1px solid rgba(255,255,255,.28); color: var(--snow); text-decoration: none;
-      padding: .85rem 2rem; border-radius: var(--r-md);
-      font-size: .78rem; font-weight: 400; letter-spacing: .1em; text-transform: uppercase;
-      transition: all .3s var(--ease);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-    .btn-hero-secondary:hover {
-      background: rgba(255,255,255,.08);
-      border-color: rgba(255,255,255,.5);
-      transform: translateY(-2px);
-    }
-
-    .hero-scroll-hint {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: .5rem;
-      color: rgba(255,255,255,.45);
-      font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
-      z-index: 2;
-    }
-
-    #weather-widget {
-      position: absolute; top: 50%; right: 2.5rem;
-      transform: translateY(-50%); z-index: 3;
-      background: rgba(18,18,16,.65);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--r-lg);
-      padding: 1.4rem 1.6rem;
-      min-width: 185px;
-      box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.08);
-    }
-    #weather-widget .label {
-      color: var(--fern); font-size: .58rem;
-      letter-spacing: .22em; text-transform: uppercase; margin-bottom: .9rem;
-      display: flex; align-items: center; gap: .4rem;
-    }
-
+    /* SECTIONS */
     .section { padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 4vw, 3rem); }
     .container { max-width: 1160px; margin: 0 auto; }
-
-    .section-label {
-      color: var(--fern); font-size: .62rem; font-weight: 500;
-      letter-spacing: .28em; text-transform: uppercase; margin-bottom: 1rem;
-      display: flex; align-items: center; gap: .5rem;
-    }
-    .section-label::before {
-      content: ''; display: block; width: 24px; height: 1px; background: var(--fern);
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 300; color: var(--snow);
-      line-height: 1.1;
-    }
+    .section-label { color: var(--fern); font-size: .62rem; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--fern); }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; color: var(--snow); line-height: 1.1; }
     .section-title em { font-style: italic; color: var(--fern); }
 
+    /* ABOUT */
     #about { background: var(--ink); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(2.5rem, 6vw, 5rem);
-      align-items: center;
-    }
-
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
     .about-img-wrap { position: relative; }
-    .about-img-wrap::before {
-      content: ''; position: absolute;
-      inset: -1px;
-      border-radius: calc(var(--r-xl) + 2px);
-      background: linear-gradient(135deg, rgba(107,143,94,.3) 0%, rgba(74,122,138,.15) 100%);
-      z-index: -1;
-    }
-    .about-img-wrap img {
-      width: 100%; height: 500px; object-fit: cover;
-      border-radius: var(--r-xl);
-      display: block;
-      box-shadow: var(--shadow-lg);
-    }
-    .about-accent {
-      position: absolute; bottom: -1.2rem; right: -1.2rem;
-      width: 160px; height: 160px;
-      background: linear-gradient(135deg, var(--moss), var(--forest));
-      border-radius: var(--r-lg);
-      z-index: -2;
-      box-shadow: var(--shadow-md);
-    }
-    .about-badge {
-      position: absolute; top: 1.5rem; left: 1.5rem;
-      background: rgba(18,18,16,.8);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(107,143,94,.3);
-      border-radius: var(--r-md);
-      padding: .7rem 1rem;
-      box-shadow: var(--shadow-md), var(--shadow-fern);
-    }
+    .about-img-wrap::before { content: ''; position: absolute; inset: -1px; border-radius: calc(var(--r-xl) + 2px); background: linear-gradient(135deg, rgba(107,143,94,.3) 0%, rgba(74,122,138,.15) 100%); z-index: -1; }
+    .about-img-wrap img { width: 100%; height: 500px; object-fit: cover; border-radius: var(--r-xl); display: block; box-shadow: var(--shadow-lg); }
+    .about-accent { position: absolute; bottom: -1.2rem; right: -1.2rem; width: 160px; height: 160px; background: linear-gradient(135deg, var(--moss), var(--forest)); border-radius: var(--r-lg); z-index: -2; box-shadow: var(--shadow-md); }
+    .about-badge { position: absolute; top: 1.5rem; left: 1.5rem; background: rgba(18,18,16,.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(107,143,94,.3); border-radius: var(--r-md); padding: .7rem 1rem; box-shadow: var(--shadow-md), var(--shadow-fern); }
     .about-badge .rating { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--snow); line-height: 1; }
     .about-badge .stars  { color: var(--fern); font-size: .7rem; margin: .1rem 0; }
     .about-badge .label  { color: rgba(255,255,255,.5); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; }
+    .about-text p { color: rgba(255,255,255,.58); line-height: 1.85; font-size: .93rem; margin-bottom: 1.1rem; }
+    .stats-row { display: flex; gap: 2.5rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.07); }
+    .stat-val { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; color: var(--fern); line-height: 1; }
+    .stat-lbl { color: rgba(255,255,255,.38); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; margin-top: .3rem; }
 
-    .about-text p {
-      color: rgba(255,255,255,.58);
-      line-height: 1.85; font-size: .93rem;
-      margin-bottom: 1.1rem;
-    }
-
-    .stats-row {
-      display: flex; gap: 2.5rem;
-      margin-top: 2.5rem; padding-top: 2rem;
-      border-top: 1px solid rgba(255,255,255,.07);
-    }
-    .stat-val {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem; font-weight: 300;
-      color: var(--fern); line-height: 1;
-    }
-    .stat-lbl {
-      color: rgba(255,255,255,.38);
-      font-size: .65rem; letter-spacing: .1em;
-      text-transform: uppercase; margin-top: .3rem;
-    }
-
+    /* SERVICES */
     #services { background: var(--inkbase); }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-top: 3.5rem;
-    }
-
-    .service-card {
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: var(--r-xl);
-      overflow: hidden;
-      transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s;
-      box-shadow: 0 4px 24px rgba(0,0,0,.3), 0 1px 4px rgba(0,0,0,.2);
-    }
-    .service-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 64px rgba(0,0,0,.45), 0 8px 20px rgba(0,0,0,.25), var(--shadow-glow);
-      border-color: rgba(107,143,94,.2);
-    }
-
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3.5rem; }
+    .service-card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: var(--r-xl); overflow: hidden; transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s; box-shadow: 0 4px 24px rgba(0,0,0,.3), 0 1px 4px rgba(0,0,0,.2); }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 24px 64px rgba(0,0,0,.45), 0 8px 20px rgba(0,0,0,.25), var(--shadow-glow); border-color: rgba(107,143,94,.2); }
     .card-img-wrap { overflow: hidden; }
-    .card-img-wrap img {
-      width: 100%; height: 240px; object-fit: cover; display: block;
-      filter: brightness(.8) saturate(.9);
-      transition: transform .7s var(--ease), filter .5s;
-    }
-    .service-card:hover .card-img-wrap img {
-      transform: scale(1.07);
-      filter: brightness(.95) saturate(1.05);
-    }
-
+    .card-img-wrap img { width: 100%; height: 240px; object-fit: cover; display: block; filter: brightness(.8) saturate(.9); transition: transform .7s var(--ease), filter .5s; }
+    .service-card:hover .card-img-wrap img { transform: scale(1.07); filter: brightness(.95) saturate(1.05); }
     .card-body { padding: 1.8rem 1.8rem 2rem; }
-
-    .card-icon {
-      width: 38px; height: 38px;
-      border-radius: var(--r-sm);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; margin-bottom: 1.1rem;
-    }
+    .card-icon { width: 38px; height: 38px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-bottom: 1.1rem; }
     .card-icon-fern    { background: rgba(107,143,94,.15); border: 1px solid rgba(107,143,94,.25); }
     .card-icon-glacier { background: rgba(74,122,138,.15); border: 1px solid rgba(74,122,138,.25); }
-
-    .card-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; font-weight: 400;
-      color: var(--snow); margin-bottom: .6rem;
-    }
-
-    .card-desc {
-      color: rgba(255,255,255,.48);
-      font-size: .82rem; line-height: 1.72;
-      margin-bottom: 1.1rem;
-    }
-
+    .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--snow); margin-bottom: .6rem; }
+    .card-desc { color: rgba(255,255,255,.48); font-size: .82rem; line-height: 1.72; margin-bottom: 1.1rem; }
     .card-features { list-style: none; margin-bottom: 1.3rem; display: flex; flex-direction: column; gap: .38rem; }
-    .card-features li {
-      color: rgba(255,255,255,.42);
-      font-size: .76rem;
-      display: flex; align-items: center; gap: .5rem;
-    }
+    .card-features li { color: rgba(255,255,255,.42); font-size: .76rem; display: flex; align-items: center; gap: .5rem; }
     .card-features li .check { color: var(--fern); flex-shrink: 0; }
     .card-features li .check-blue { color: var(--ice); flex-shrink: 0; }
-
-    .card-cta {
-      color: var(--fern); font-size: .7rem;
-      letter-spacing: .15em; text-transform: uppercase;
-      text-decoration: none; display: inline-flex; align-items: center; gap: .4rem;
-      transition: gap .3s var(--ease), color .2s;
-    }
+    .card-cta { color: var(--fern); font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: .4rem; transition: gap .3s var(--ease), color .2s; }
     .card-cta.blue { color: var(--ice); }
     .card-cta:hover { gap: .7rem; color: var(--fern2); }
     .card-cta.blue:hover { color: var(--mist); }
+    .badge-tag { position: absolute; top: 1rem; right: 1rem; z-index: 2; background: var(--glacier); color: var(--snow); font-size: .58rem; letter-spacing: .15em; text-transform: uppercase; padding: .3rem .75rem; border-radius: 100px; font-weight: 500; box-shadow: var(--shadow-sm); }
 
-    .badge-tag {
-      position: absolute; top: 1rem; right: 1rem; z-index: 2;
-      background: var(--glacier); color: var(--snow);
-      font-size: .58rem; letter-spacing: .15em;
-      text-transform: uppercase; padding: .3rem .75rem;
-      border-radius: 100px; font-weight: 500;
-      box-shadow: var(--shadow-sm);
-    }
-
+    /* GALLERY */
     #gallery { background: var(--ink); }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: 260px 260px;
-      gap: 8px;
-      margin-top: 3rem;
-    }
+    .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: 260px 260px; gap: 8px; margin-top: 3rem; }
     .g1 { grid-column: 1/6;  grid-row: 1/2; }
     .g2 { grid-column: 6/9;  grid-row: 1/2; }
     .g3 { grid-column: 9/13; grid-row: 1/3; }
     .g4 { grid-column: 1/4;  grid-row: 2/3; }
     .g5 { grid-column: 4/6;  grid-row: 2/3; }
     .g6 { grid-column: 6/9;  grid-row: 2/3; }
-
-    .g-item {
-      overflow: hidden;
-      border-radius: var(--r-md);
-      box-shadow: var(--shadow-md);
-      position: relative;
-    }
-    .g-item::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,.4));
-      opacity: 0; transition: opacity .4s;
-      pointer-events: none;
-    }
+    .g-item { overflow: hidden; border-radius: var(--r-md); box-shadow: var(--shadow-md); position: relative; }
+    .g-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,.4)); opacity: 0; transition: opacity .4s; pointer-events: none; }
     .g-item:hover::after { opacity: 1; }
-    .g-item img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      filter: brightness(.82) saturate(.88);
-      transition: transform .75s var(--ease), filter .45s;
-    }
+    .g-item img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(.82) saturate(.88); transition: transform .75s var(--ease), filter .45s; }
     .g-item:hover img { transform: scale(1.07); filter: brightness(.95) saturate(1.05); }
 
+    /* TESTIMONIALS */
     #testimonials { background: var(--inkdeep); }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-top: 3.5rem;
-    }
-
-    .testi-card {
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: var(--r-xl);
-      padding: 2rem;
-      transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s;
-      box-shadow: 0 4px 20px rgba(0,0,0,.3);
-    }
-    .testi-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,.4), 0 4px 12px rgba(0,0,0,.2);
-      border-color: rgba(107,143,94,.18);
-    }
-
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3.5rem; }
+    .testi-card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: var(--r-xl); padding: 2rem; transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s; box-shadow: 0 4px 20px rgba(0,0,0,.3); }
+    .testi-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,.4), 0 4px 12px rgba(0,0,0,.2); border-color: rgba(107,143,94,.18); }
     .testi-stars { color: var(--fern); font-size: .78rem; letter-spacing: .1em; margin-bottom: 1.1rem; }
-
-    .testi-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem; font-weight: 300; font-style: italic;
-      color: var(--cloud); line-height: 1.72;
-      margin-bottom: 1.5rem;
-    }
-
+    .testi-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 300; font-style: italic; color: var(--cloud); line-height: 1.72; margin-bottom: 1.5rem; }
     .testi-author { display: flex; align-items: center; gap: .8rem; }
-    .testi-avatar {
-      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
-      background: var(--moss); display: flex; align-items: center; justify-content: center;
-      font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--snow);
-      box-shadow: var(--shadow-sm);
-    }
+    .testi-avatar { width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; background: var(--moss); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--snow); box-shadow: var(--shadow-sm); }
     .testi-name  { font-size: .82rem; font-weight: 500; color: var(--snow); }
     .testi-meta  { font-size: .7rem; color: rgba(255,255,255,.38); margin-top: .15rem; }
 
-    /* FAQ Section */
+    /* FAQ */
     #faq { background: var(--ink); }
     .faq-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
-    .faq-item {
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: var(--r-md);
-      overflow: hidden;
-    }
-    .faq-question {
-      width: 100%; text-align: left; background: none; border: none; cursor: pointer;
-      padding: 1.3rem 1.5rem;
-      display: flex; justify-content: space-between; align-items: center;
-      color: var(--snow); font-size: .92rem; font-family: 'DM Sans', sans-serif;
-      transition: background .2s;
-    }
+    .faq-item { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: var(--r-md); overflow: hidden; }
+    .faq-question { width: 100%; text-align: left; background: none; border: none; cursor: pointer; padding: 1.3rem 1.5rem; display: flex; justify-content: space-between; align-items: center; color: var(--snow); font-size: .92rem; font-family: 'DM Sans', sans-serif; transition: background .2s; }
     .faq-question:hover { background: rgba(255,255,255,.03); }
     .faq-question .faq-icon { color: var(--fern); font-size: 1.2rem; flex-shrink: 0; transition: transform .3s var(--ease); }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-answer {
-      max-height: 0; overflow: hidden;
-      transition: max-height .4s var(--ease), padding .3s;
-      padding: 0 1.5rem;
-    }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height .4s var(--ease), padding .3s; padding: 0 1.5rem; }
     .faq-item.open .faq-answer { max-height: 300px; padding: 0 1.5rem 1.3rem; }
     .faq-answer p { color: rgba(255,255,255,.55); font-size: .88rem; line-height: 1.75; }
 
-    footer { background: var(--footer); border-top: 1px solid rgba(255,255,255,.05); }
+    /* ================================================================
+       BLOG SECTION
+    ================================================================ */
+    #blog { background: var(--inkbase); }
 
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.6fr 1fr 1fr 1fr;
-      gap: 3rem;
-      padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
-      max-width: 1160px; margin: 0 auto;
+    .blog-header {
+      display: flex; flex-wrap: wrap;
+      align-items: flex-end; justify-content: space-between;
+      gap: 1.5rem; margin-bottom: 3.5rem;
     }
 
-    .footer-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem; font-weight: 300;
-      color: var(--snow); margin-bottom: 1rem;
+    .btn-outline-fern {
+      display: inline-flex; align-items: center; gap: .45rem;
+      color: var(--fern); text-decoration: none;
+      border: 1px solid rgba(107,143,94,.35);
+      padding: .55rem 1.3rem; border-radius: var(--r-sm);
+      font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
+      transition: all .25s var(--ease); white-space: nowrap;
     }
-    .footer-brand em { color: var(--fern); font-style: italic; }
-
-    .footer-desc {
-      color: rgba(255,255,255,.38); font-size: .82rem;
-      line-height: 1.72; max-width: 250px; margin-bottom: 1.5rem;
-    }
-
-    .footer-social { display: flex; gap: .6rem; }
-    .social-icon {
-      width: 34px; height: 34px; border-radius: var(--r-sm);
-      display: flex; align-items: center; justify-content: center;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color: rgba(255,255,255,.45); text-decoration: none;
-      transition: all .25s var(--ease);
-      box-shadow: var(--shadow-sm);
-    }
-    .social-icon:hover {
-      border-color: var(--fern); color: var(--fern);
+    .btn-outline-fern:hover {
       background: rgba(107,143,94,.1);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(107,143,94,.2);
+      border-color: var(--fern);
+      color: var(--fern2);
     }
 
-    .footer-heading {
-      color: var(--fern); font-size: .62rem;
-      letter-spacing: .22em; text-transform: uppercase; margin-bottom: 1.4rem;
+    /* Grid principal: 1 card destacada + 2 normales en fila 1,
+       3 normales en fila 2  */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
     }
+
+    /* Card base */
+    .blog-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s;
+      box-shadow: 0 4px 24px rgba(0,0,0,.3);
+    }
+    .blog-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(0,0,0,.45), 0 8px 20px rgba(0,0,0,.25), var(--shadow-glow);
+      border-color: rgba(107,143,94,.2);
+    }
+
+    /* Card destacada ocupa 2 columnas */
+    .blog-card--featured {
+      grid-column: span 2;
+    }
+
+    .blog-card__img-wrap {
+      overflow: hidden; position: relative; flex-shrink: 0;
+    }
+    .blog-card__img-wrap img {
+      width: 100%; object-fit: cover; display: block;
+      filter: brightness(.82) saturate(.9);
+      transition: transform .7s var(--ease), filter .5s;
+    }
+    .blog-card--featured .blog-card__img-wrap img { height: 300px; }
+    .blog-card:not(.blog-card--featured) .blog-card__img-wrap img { height: 200px; }
+    .blog-card:hover .blog-card__img-wrap img { transform: scale(1.06); filter: brightness(.95) saturate(1.05); }
+
+    .blog-card__tag {
+      position: absolute; top: 1rem; left: 1rem; z-index: 2;
+      font-size: .58rem; font-weight: 500;
+      letter-spacing: .15em; text-transform: uppercase;
+      padding: .28rem .75rem; border-radius: 100px;
+      color: var(--snow); box-shadow: var(--shadow-sm);
+    }
+    .blog-card__tag--green   { background: var(--sage); }
+    .blog-card__tag--blue    { background: var(--glacier); }
+
+    .blog-card__body {
+      padding: 1.6rem 1.8rem 2rem;
+      display: flex; flex-direction: column; flex: 1;
+    }
+
+    .blog-card__meta {
+      display: flex; align-items: center; gap: .8rem;
+      margin-bottom: .9rem;
+    }
+    .blog-card__date { color: rgba(255,255,255,.38); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; }
+    .blog-card__min  { color: var(--fern); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; }
+    .blog-card__dot  { width: 3px; height: 3px; background: rgba(255,255,255,.2); border-radius: 50%; flex-shrink: 0; }
+
+    .blog-card__title {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--snow); font-weight: 300; line-height: 1.2;
+      margin-bottom: .75rem;
+    }
+    .blog-card--featured .blog-card__title { font-size: 1.55rem; }
+    .blog-card:not(.blog-card--featured) .blog-card__title { font-size: 1.15rem; }
+
+    .blog-card__excerpt {
+      color: rgba(255,255,255,.48); font-size: .82rem;
+      line-height: 1.72; flex: 1; margin-bottom: 1.3rem;
+    }
+
+    .blog-card__tags {
+      display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.2rem;
+    }
+    .blog-card__pill {
+      font-size: .62rem; padding: .22rem .65rem; border-radius: 100px;
+      letter-spacing: .06em;
+    }
+    .blog-card__pill--green  { background: rgba(107,143,94,.12); border: 1px solid rgba(107,143,94,.22); color: var(--fern); }
+    .blog-card__pill--blue   { background: rgba(74,122,138,.12);  border: 1px solid rgba(74,122,138,.22);  color: var(--ice); }
+
+    .blog-card__cta {
+      color: var(--fern); font-size: .7rem;
+      letter-spacing: .14em; text-transform: uppercase;
+      text-decoration: none; display: inline-flex; align-items: center; gap: .4rem;
+      transition: gap .3s var(--ease), color .2s; margin-top: auto;
+    }
+    .blog-card__cta:hover { gap: .7rem; color: var(--fern2); }
+
+    /* FOOTER */
+    footer { background: var(--footer); border-top: 1px solid rgba(255,255,255,.05); }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 3rem; padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem); max-width: 1160px; margin: 0 auto; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--snow); margin-bottom: 1rem; }
+    .footer-brand em { color: var(--fern); font-style: italic; }
+    .footer-desc { color: rgba(255,255,255,.38); font-size: .82rem; line-height: 1.72; max-width: 250px; margin-bottom: 1.5rem; }
+    .footer-social { display: flex; gap: .6rem; }
+    .social-icon { width: 34px; height: 34px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: rgba(255,255,255,.45); text-decoration: none; transition: all .25s var(--ease); box-shadow: var(--shadow-sm); }
+    .social-icon:hover { border-color: var(--fern); color: var(--fern); background: rgba(107,143,94,.1); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(107,143,94,.2); }
+    .footer-heading { color: var(--fern); font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 1.4rem; }
     .footer-links { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
-    .footer-links a {
-      color: rgba(255,255,255,.45); text-decoration: none;
-      font-size: .85rem; transition: color .2s, padding-left .2s;
-    }
+    .footer-links a { color: rgba(255,255,255,.45); text-decoration: none; font-size: .85rem; transition: color .2s, padding-left .2s; }
     .footer-links a:hover { color: var(--snow); padding-left: 4px; }
-
-    .footer-contact-item {
-      display: flex; align-items: flex-start; gap: .7rem;
-      color: rgba(255,255,255,.42); font-size: .82rem;
-      line-height: 1.5; margin-bottom: .8rem;
-    }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: .7rem; color: rgba(255,255,255,.42); font-size: .82rem; line-height: 1.5; margin-bottom: .8rem; }
     .footer-contact-item svg { flex-shrink: 0; margin-top: 2px; opacity: .6; }
-
-    .map-wrap {
-      width: 100%; height: 145px;
-      border-radius: var(--r-md); overflow: hidden;
-      border: 1px solid rgba(255,255,255,.08);
-      box-shadow: var(--shadow-sm);
-      margin-top: .5rem;
-    }
+    .map-wrap { width: 100%; height: 145px; border-radius: var(--r-md); overflow: hidden; border: 1px solid rgba(255,255,255,.08); box-shadow: var(--shadow-sm); margin-top: .5rem; }
     .map-wrap iframe { width: 100%; height: 100%; border: none; filter: grayscale(1) brightness(.7); }
-
-    .footer-bottom {
-      max-width: 1160px; margin: 0 auto;
-      padding: 1.5rem clamp(1.25rem, 4vw, 3rem);
-      border-top: 1px solid rgba(255,255,255,.04);
-      display: flex; flex-wrap: wrap; align-items: center;
-      justify-content: space-between; gap: 1rem;
-    }
+    .footer-bottom { max-width: 1160px; margin: 0 auto; padding: 1.5rem clamp(1.25rem, 4vw, 3rem); border-top: 1px solid rgba(255,255,255,.04); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
     .footer-bottom p { color: rgba(255,255,255,.22); font-size: .72rem; }
 
-    #social-sidebar {
-      position: fixed; left: 1.5rem; top: 50%; transform: translateY(-50%);
-      z-index: 99; display: flex; flex-direction: column; align-items: center; gap: .6rem;
-    }
-    .sidebar-line     { width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,.18)); }
-    .sidebar-line-b   { width: 1px; height: 48px; background: linear-gradient(to top,   transparent, rgba(255,255,255,.18)); }
+    /* SOCIAL SIDEBAR */
+    #social-sidebar { position: fixed; left: 1.5rem; top: 50%; transform: translateY(-50%); z-index: 99; display: flex; flex-direction: column; align-items: center; gap: .6rem; }
+    .sidebar-line   { width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,.18)); }
+    .sidebar-line-b { width: 1px; height: 48px; background: linear-gradient(to top,   transparent, rgba(255,255,255,.18)); }
 
-    #wa-float {
-      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
-      width: 58px; height: 58px; border-radius: 50%;
-      background: var(--wa); display: flex; align-items: center; justify-content: center;
-      text-decoration: none;
-      box-shadow: 0 4px 24px rgba(37,211,102,.45);
-    }
+    /* WA FLOAT */
+    #wa-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 999; width: 58px; height: 58px; border-radius: 50%; background: var(--wa); display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 24px rgba(37,211,102,.45); }
     #wa-float svg { width: 28px; height: 28px; fill: white; }
 
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
     @media (max-width: 1180px) {
       .footer-grid { grid-template-columns: 1fr 1fr; }
       #social-sidebar { display: none; }
@@ -1038,6 +475,8 @@
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .about-img-wrap img { height: 380px; }
       .about-accent { display: none; }
+      .blog-card--featured { grid-column: span 2; }
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 768px) {
@@ -1046,21 +485,21 @@
       .nav-links, .nav-actions .btn-ghost, .nav-actions .btn-primary { display: none; }
       #hamburger-btn { display: flex; }
       .hero-content { padding: 0 1.25rem; }
-      .hero-badge   { margin-bottom: 1.4rem; }
-      .hero-ctas    { flex-direction: column; gap: .75rem; }
+      .hero-ctas { flex-direction: column; gap: .75rem; }
       .btn-hero-primary, .btn-hero-secondary { justify-content: center; }
       .services-grid     { grid-template-columns: 1fr; gap: 1rem; }
       .testimonials-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-        gap: 6px;
-      }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 6px; }
       .g1,.g2,.g3,.g4,.g5,.g6 { grid-column: auto; grid-row: auto; height: 180px; }
       .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.25rem; }
       .footer-desc { max-width: 100%; }
       .stats-row { gap: 1.5rem; flex-wrap: wrap; }
       #wa-float { bottom: 1.25rem; right: 1.25rem; width: 52px; height: 52px; }
+      /* Blog mobile */
+      .blog-grid { grid-template-columns: 1fr; }
+      .blog-card--featured { grid-column: span 1; }
+      .blog-card--featured .blog-card__img-wrap img { height: 220px; }
+      .blog-header { flex-direction: column; align-items: flex-start; }
     }
 
     @media (max-width: 480px) {
@@ -1071,8 +510,8 @@
     }
 
     @supports (padding: max(0px)) {
-      #navbar  { padding-left: max(2.5rem, env(safe-area-inset-left)); padding-right: max(2.5rem, env(safe-area-inset-right)); }
-      #wa-float{ right: max(2rem, env(safe-area-inset-right)); bottom: max(2rem, env(safe-area-inset-bottom)); }
+      #navbar   { padding-left: max(2.5rem, env(safe-area-inset-left)); padding-right: max(2.5rem, env(safe-area-inset-right)); }
+      #wa-float { right: max(2rem, env(safe-area-inset-right)); bottom: max(2rem, env(safe-area-inset-bottom)); }
       footer .footer-bottom { padding-left: max(1.25rem, env(safe-area-inset-left)); padding-right: max(1.25rem, env(safe-area-inset-right)); padding-bottom: max(1.5rem, env(safe-area-inset-bottom)); }
     }
   </style>
@@ -1088,6 +527,7 @@
     <li><a href="#gallery">Entorno</a></li>
     <li><a href="#testimonials">Reseñas</a></li>
     <li><a href="#faq">Preguntas</a></li>
+    <li><a href="#blog">Blog</a></li>
   </ul>
   <div class="nav-actions">
     <a href="/login" class="btn-ghost">
@@ -1115,6 +555,8 @@
     <div class="mobile-divider"></div>
     <a href="#faq">Preguntas</a>
     <div class="mobile-divider"></div>
+    <a href="#blog">Blog</a>
+    <div class="mobile-divider"></div>
     <a href="#footer">Reservar</a>
   </nav>
   <a href="/login" class="btn-ghost" style="margin-top:1.5rem">Iniciar Sesión</a>
@@ -1125,11 +567,9 @@
   <div id="parallax-bg">
     <img src="/header-img.jpg"
          alt="Vista panorámica del fiordo Puyuhuapi desde Puerto Cisnes, Patagonia Chilena"
-         width="1920" height="1080"
-         fetchpriority="high" />
+         width="1920" height="1080" fetchpriority="high" />
   </div>
   <div class="hero-overlay" aria-hidden="true"></div>
-
   <div class="hero-content">
     <div class="hero-badge reveal" aria-label="Ubicación">
       <div class="pulse-dot" aria-hidden="true" style="width:6px;height:6px;background:var(--fern);border-radius:50%"></div>
@@ -1143,8 +583,7 @@
     </p>
     <div class="hero-ctas reveal delay-3">
       <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20hacer%20una%20reserva"
-         target="_blank" rel="noopener noreferrer"
-         class="btn-hero-primary"
+         target="_blank" rel="noopener noreferrer" class="btn-hero-primary"
          aria-label="Reservar por WhatsApp">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         Reservar Ahora
@@ -1155,7 +594,6 @@
       </a>
     </div>
   </div>
-
   <div id="weather-widget" aria-label="Clima actual en Puerto Cisnes">
     <div class="label">
       <svg width="10" height="10" fill="var(--fern)" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
@@ -1165,7 +603,6 @@
       <p style="font-size:.78rem;color:rgba(255,255,255,.4)">Cargando clima…</p>
     </div>
   </div>
-
   <div class="hero-scroll-hint" aria-hidden="true">
     <div class="scroll-line" style="width:1px;height:50px;background:linear-gradient(to bottom,rgba(255,255,255,.5),transparent)"></div>
     <span>Explorar</span>
@@ -1176,7 +613,6 @@
 <section id="about" class="section" aria-labelledby="about-title">
   <div class="container">
     <div class="about-grid">
-
       <div class="about-img-wrap reveal-left">
         <img src="/historia-img.jpg"
              alt="Interior acogedor del Hostal El Monchito, Puerto Cisnes — habitación con calefacción y decoración patagónica"
@@ -1188,7 +624,6 @@
           <div class="label">Valoración media</div>
         </div>
       </div>
-
       <div class="about-text reveal-right">
         <p class="section-label">Nuestra Historia</p>
         <h2 id="about-title" class="section-title" style="margin-bottom:1.5rem">
@@ -1198,21 +633,11 @@
         <p>Ubicados estratégicamente en Puerto Cisnes, somos el punto de partida ideal para explorar la <strong>Carretera Austral</strong> y el <strong>fiordo Puyuhuapi</strong>. Nuestras instalaciones cuentan con habitaciones calefaccionadas, baños privados y una cocina patagónica que trabaja con productos frescos del canal y proveedores locales.</p>
         <p>Para empresas, ofrecemos <strong>convenios de colaciones y alojamiento</strong> con facturación mensual, cupos garantizados y adaptación a turnos rotativos. Contamos con experiencia en <strong>licitaciones de alimentación</strong> para el sector público y privado en Aysén.</p>
         <div class="stats-row" role="list" aria-label="Estadísticas del hostal">
-          <div role="listitem">
-            <div class="stat-val">12+</div>
-            <div class="stat-lbl">Años de historia</div>
-          </div>
-          <div role="listitem">
-            <div class="stat-val">500+</div>
-            <div class="stat-lbl">Viajeros acogidos</div>
-          </div>
-          <div role="listitem">
-            <div class="stat-val">4.9★</div>
-            <div class="stat-lbl">Valoración media</div>
-          </div>
+          <div role="listitem"><div class="stat-val">12+</div><div class="stat-lbl">Años de historia</div></div>
+          <div role="listitem"><div class="stat-val">500+</div><div class="stat-lbl">Viajeros acogidos</div></div>
+          <div role="listitem"><div class="stat-val">4.9★</div><div class="stat-lbl">Valoración media</div></div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -1225,14 +650,10 @@
       <h2 id="services-title" class="section-title reveal delay-1">Servicios de Hospedaje<br>y <em>Alimentación</em></h2>
       <p class="reveal delay-2" style="color:rgba(255,255,255,.48);font-size:.9rem;line-height:1.7;margin-top:.8rem">Pensión completa, restaurante y convenios para empresas en Puerto Cisnes, Región de Aysén.</p>
     </div>
-
     <div class="services-grid">
-
       <article class="service-card reveal delay-1" aria-labelledby="card-pension">
         <div class="card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80"
-               alt="Habitación con pensión completa en Hostal El Monchito, Puerto Cisnes"
-               loading="lazy" width="600" height="240" />
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="Habitación con pensión completa en Hostal El Monchito, Puerto Cisnes" loading="lazy" width="600" height="240" />
         </div>
         <div class="card-body">
           <div class="card-icon card-icon-fern" aria-hidden="true">🏡</div>
@@ -1244,17 +665,12 @@
             <li><span class="check" aria-hidden="true">✓</span> Cocina patagónica de autor</li>
             <li><span class="check" aria-hidden="true">✓</span> WiFi incluido</li>
           </ul>
-          <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20pens%C3%B3n%20completa"
-             target="_blank" rel="noopener noreferrer" class="card-cta"
-             aria-label="Consultar tarifas de pensión completa por WhatsApp">Consultar tarifas →</a>
+          <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20pens%C3%B3n%20completa" target="_blank" rel="noopener noreferrer" class="card-cta" aria-label="Consultar tarifas por WhatsApp">Consultar tarifas →</a>
         </div>
       </article>
-
       <article class="service-card reveal delay-2" aria-labelledby="card-restaurant">
         <div class="card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80"
-               alt="Restaurante El Monchito — cocina patagónica con centolla y mariscos del Canal Puyuhuapi"
-               loading="lazy" width="600" height="240" />
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="Restaurante El Monchito — cocina patagónica con centolla y mariscos del Canal Puyuhuapi" loading="lazy" width="600" height="240" />
         </div>
         <div class="card-body">
           <div class="card-icon card-icon-fern" aria-hidden="true">🍽</div>
@@ -1269,13 +685,10 @@
           <a href="#footer" class="card-cta" aria-label="Ver carta del restaurante">Ver carta completa →</a>
         </div>
       </article>
-
       <article class="service-card reveal delay-3" aria-labelledby="card-empresa" style="position:relative">
         <span class="badge-tag">Sector Empresarial</span>
         <div class="card-img-wrap">
-          <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80"
-               alt="Convenio de alojamiento y colaciones para empresas salmoneras y obras públicas en Puerto Cisnes, Aysén"
-               loading="lazy" width="600" height="240" />
+          <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80" alt="Convenio de alojamiento y colaciones para empresas salmoneras y obras públicas en Puerto Cisnes, Aysén" loading="lazy" width="600" height="240" />
         </div>
         <div class="card-body">
           <div class="card-icon card-icon-glacier" aria-hidden="true">🏭</div>
@@ -1288,12 +701,9 @@
             <li><span class="check-blue" aria-hidden="true">✓</span> Licitaciones y contratos con el Estado</li>
             <li><span class="check-blue" aria-hidden="true">✓</span> Contacto directo con administración 24/7</li>
           </ul>
-          <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20convenios%20para%20empresas"
-             target="_blank" rel="noopener noreferrer" class="card-cta blue"
-             aria-label="Solicitar convenio para empresa por WhatsApp">Solicitar convenio →</a>
+          <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20convenios%20para%20empresas" target="_blank" rel="noopener noreferrer" class="card-cta blue" aria-label="Solicitar convenio por WhatsApp">Solicitar convenio →</a>
         </div>
       </article>
-
     </div>
   </div>
 </section>
@@ -1303,32 +713,54 @@
   <div class="container">
     <p class="section-label reveal">Puerto Cisnes y Alrededores · Patagonia Chilena</p>
     <h2 id="gallery-title" class="section-title reveal delay-1">Nuestro Entorno Natural</h2>
-    <p class="reveal delay-2" style="color:rgba(255,255,255,.45);font-size:.9rem;margin-top:.5rem">
-      Fiordos, bosques nativos y montañas nevadas a pasos del hostal
-    </p>
-
+    <p class="reveal delay-2" style="color:rgba(255,255,255,.45);font-size:.9rem;margin-top:.5rem">Fiordos, bosques nativos y montañas nevadas a pasos del hostal</p>
     <div class="gallery-grid">
-      <div class="g-item g1 reveal">
-        <img src="/pizza-1.jpg" alt="Montañas nevadas de la Patagonia chilena vistas desde Puerto Cisnes" loading="lazy" />
+      <div class="g-item g1 reveal"><img src="/pizza-1.jpg" alt="Montañas nevadas de la Patagonia chilena vistas desde Puerto Cisnes" loading="lazy" /></div>
+      <div class="g-item g2 reveal delay-1"><img src="/galeria-3.jpg" alt="Fiordo Puyuhuapi al sur de Chile, Región de Aysén" loading="lazy" /></div>
+      <div class="g-item g3 reveal delay-2"><img src="/galeria.jpg" alt="Bosque nativo de la Patagonia chilena en Puerto Cisnes" loading="lazy" /></div>
+      <div class="g-item g4 reveal delay-1"><img src="/galeria-1.jpg" alt="Río en la Patagonia, Aysén" loading="lazy" /></div>
+      <div class="g-item g5 reveal delay-2"><img src="/galeria-2.jpg" alt="Amanecer en los Andes patagónicos, Puerto Cisnes" loading="lazy" /></div>
+      <div class="g-item g6 reveal delay-3"><img src="/pizza.jpg" alt="Naturaleza patagónica, Carretera Austral" loading="lazy" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" class="section" aria-labelledby="faq-title" style="background:var(--inkbase)">
+  <div class="container" style="max-width:800px">
+    <p class="section-label reveal" style="justify-content:center;text-align:center">Preguntas Frecuentes</p>
+    <h2 id="faq-title" class="section-title reveal delay-1" style="text-align:center;margin-bottom:.5rem">Todo sobre nuestros<br><em>Servicios</em></h2>
+    <p class="reveal delay-2" style="color:rgba(255,255,255,.45);font-size:.9rem;text-align:center;margin-bottom:0">Hospedaje, alimentación y convenios en Puerto Cisnes</p>
+    <div class="faq-list reveal delay-2">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">¿Ofrecen convenios de alojamiento y colaciones para empresas en Puerto Cisnes?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-answer" role="region"><p>Sí. Contamos con convenios de alojamiento y alimentación para empresas del sector salmonero, constructoras y organismos públicos en la Región de Aysén. Ofrecemos pensión completa, adaptación a turnos 14×14, facturación mensual con boleta empresa y cupos garantizados.</p></div>
       </div>
-      <div class="g-item g2 reveal delay-1">
-        <img src="/galeria-3.jpg" alt="Fiordo Puyuhuapi al sur de Chile, Región de Aysén" loading="lazy" />
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">¿Atienden licitaciones de alimentación del Estado en Aysén?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-answer" role="region"><p>Sí. Contamos con experiencia en licitaciones y contratos de alimentación para organismos públicos en la Región de Aysén. Emitimos boleta o factura empresa y gestionamos contratos a largo plazo para pensión completa, colaciones y almuerzos para equipos de trabajo.</p></div>
       </div>
-      <div class="g-item g3 reveal delay-2">
-        <img src="/galeria.jpg" alt="Bosque nativo de la Patagonia chilena en Puerto Cisnes" loading="lazy" />
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">¿Qué incluye la pensión completa en el Hostal El Monchito?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-answer" role="region"><p>La pensión completa incluye alojamiento en habitación calefaccionada con baño privado, más desayuno, almuerzo y cena elaborados con productos frescos de la zona.</p></div>
       </div>
-      <div class="g-item g4 reveal delay-1">
-        <img src="/galeria-1.jpg" alt="Río en la Patagonia, Aysén" loading="lazy" />
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">¿Cómo puedo reservar o solicitar un convenio?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-answer" role="region"><p>Puede contactarnos directamente por WhatsApp al +56 9 1234 5678 o escribirnos a contacto@hostalmonchito.cl. Para convenios empresariales le pediremos los datos de la empresa, número de personas, fechas y tipo de servicio requerido.</p></div>
       </div>
-      <div class="g-item g5 reveal delay-2">
-        <img src="/galeria-2.jpg" alt="Amanecer en los Andes patagónicos, Puerto Cisnes" loading="lazy" />
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">¿Dónde está ubicado el hostal y cómo llegar?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-answer" role="region"><p>Estamos en Calle Los Pinos 245, Puerto Cisnes, Región de Aysén, en la Carretera Austral. Puerto Cisnes se accede desde Coyhaique por la Ruta 7 y también cuenta con servicio de ferry.</p></div>
       </div>
-      <div class="g-item g6 reveal delay-3">
-        <img src="/pizza.jpg" alt="Naturaleza patagónica, Carretera Austral" loading="lazy" />
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">¿El restaurante atiende a público general o solo a huéspedes?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-answer" role="region"><p>Nuestro restaurante atiende tanto a huéspedes del hostal como al público general. Ofrecemos cocina patagónica a la carta con centolla, cordero y merluza austral. También atendemos eventos privados con reserva previa.</p></div>
       </div>
     </div>
   </div>
 </section>
+
+<BlogSection />
 
 <!-- ===== TESTIMONIALS ===== -->
 <section id="testimonials" class="section" aria-labelledby="testimonials-title">
@@ -1337,122 +769,31 @@
       <p class="section-label reveal" style="justify-content:center">Opiniones verificadas</p>
       <h2 id="testimonials-title" class="section-title reveal delay-1">Reseñas de Nuestros<br><em>Huéspedes</em></h2>
     </div>
-
     <div class="testimonials-grid">
-
       <article class="testi-card reveal delay-1">
         <div class="testi-stars" aria-label="5 estrellas">★★★★★</div>
         <blockquote class="testi-quote">"Un lugar mágico. La familia es increíblemente cálida y el desayuno con mermelada de calafate fue uno de los mejores momentos del viaje. Definitivamente volvería."</blockquote>
         <div class="testi-author">
           <div class="testi-avatar" aria-hidden="true">M</div>
-          <div>
-            <div class="testi-name">María Fernanda G.</div>
-            <div class="testi-meta">Google · Santiago, Chile</div>
-          </div>
+          <div><div class="testi-name">María Fernanda G.</div><div class="testi-meta">Google · Santiago, Chile</div></div>
         </div>
       </article>
-
       <article class="testi-card reveal delay-2">
         <div class="testi-stars" aria-label="5 estrellas">★★★★★</div>
         <blockquote class="testi-quote">"El mejor hostal de la Carretera Austral. La ubicación es perfecta, los tours que organizan son únicos y la atención es de otro nivel."</blockquote>
         <div class="testi-author">
           <div class="testi-avatar" aria-hidden="true">J</div>
-          <div>
-            <div class="testi-name">Julien Moreau</div>
-            <div class="testi-meta">Booking · París, Francia</div>
-          </div>
+          <div><div class="testi-name">Julien Moreau</div><div class="testi-meta">Booking · París, Francia</div></div>
         </div>
       </article>
-
       <article class="testi-card reveal delay-3">
         <div class="testi-stars" aria-label="5 estrellas">★★★★★</div>
         <blockquote class="testi-quote">"Tres semanas recorriendo la Patagonia y El Monchito fue nuestro lugar favorito. Calidez del hogar en medio de una naturaleza sobrecogedora."</blockquote>
         <div class="testi-author">
           <div class="testi-avatar" aria-hidden="true">A</div>
-          <div>
-            <div class="testi-name">Ana & Roberto P.</div>
-            <div class="testi-meta">TripAdvisor · Buenos Aires</div>
-          </div>
+          <div><div class="testi-name">Ana & Roberto P.</div><div class="testi-meta">TripAdvisor · Buenos Aires</div></div>
         </div>
       </article>
-
-    </div>
-  </div>
-</section>
-
-<!-- ===== FAQ (GENERA RICH SNIPPETS EN GOOGLE) ===== -->
-<section id="faq" class="section" aria-labelledby="faq-title" style="background:var(--inkbase)">
-  <div class="container" style="max-width:800px">
-    <p class="section-label reveal" style="justify-content:center;text-align:center">Preguntas Frecuentes</p>
-    <h2 id="faq-title" class="section-title reveal delay-1" style="text-align:center;margin-bottom:.5rem">
-      Todo sobre nuestros<br><em>Servicios</em>
-    </h2>
-    <p class="reveal delay-2" style="color:rgba(255,255,255,.45);font-size:.9rem;text-align:center;margin-bottom:0">
-      Hospedaje, alimentación y convenios en Puerto Cisnes
-    </p>
-
-    <div class="faq-list reveal delay-2">
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿Ofrecen convenios de alojamiento y colaciones para empresas en Puerto Cisnes?
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          <p>Sí. Contamos con convenios de alojamiento y alimentación para empresas del sector salmonero, constructoras y organismos públicos en la Región de Aysén. Ofrecemos pensión completa, adaptación a turnos 14×14, facturación mensual con boleta empresa y cupos garantizados. Contáctenos por WhatsApp para cotizar.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿Atienden licitaciones de alimentación del Estado en Aysén?
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          <p>Sí. Contamos con experiencia en licitaciones y contratos de alimentación para organismos públicos en la Región de Aysén. Emitimos boleta o factura empresa y gestionamos contratos a largo plazo para pensión completa, colaciones y almuerzos para equipos de trabajo.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿Qué incluye la pensión completa en el Hostal El Monchito?
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          <p>La pensión completa incluye alojamiento en habitación calefaccionada con baño privado, más desayuno, almuerzo y cena elaborados con productos frescos de la zona. Está disponible tanto para turistas individuales como para grupos y trabajadores con convenio empresarial.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿Cómo puedo reservar o solicitar un convenio?
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          <p>Puede contactarnos directamente por WhatsApp al +56 9 1234 5678 o escribirnos a contacto@hostalmonchito.cl. Para convenios empresariales le pediremos los datos de la empresa, número de personas, fechas y tipo de servicio requerido (alojamiento, colaciones, pensión completa o todo incluido).</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿Dónde está ubicado el hostal y cómo llegar?
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          <p>Estamos en Calle Los Pinos 245, Puerto Cisnes, Región de Aysén, en la Carretera Austral. Puerto Cisnes se accede desde Coyhaique por la Ruta 7 (Carretera Austral) y también cuenta con servicio de ferry. Estamos a orillas del fiordo Puyuhuapi, en el corazón de la Patagonia chilena.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          ¿El restaurante atiende a público general o solo a huéspedes?
-          <span class="faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="faq-answer" role="region">
-          <p>Nuestro restaurante atiende tanto a huéspedes del hostal como al público general. Ofrecemos cocina patagónica a la carta con centolla, cordero y merluza austral. También disponemos de servicio de almuerzos para grupos y empresas, y atendemos eventos privados con reserva previa.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -1460,7 +801,6 @@
 <!-- ===== FOOTER ===== -->
 <footer id="footer" role="contentinfo">
   <div class="footer-grid">
-
     <div>
       <div class="footer-brand">Hostal El <em>Monchito</em></div>
       <p class="footer-desc">Hospedaje y alimentación en Puerto Cisnes, Patagonia Chilena. Pensión completa, restaurante y convenios para empresas en la Región de Aysén.</p>
@@ -1476,7 +816,6 @@
         </a>
       </div>
     </div>
-
     <div>
       <h3 class="footer-heading">Navegación</h3>
       <ul class="footer-links">
@@ -1486,9 +825,9 @@
         <li><a href="#gallery">Entorno</a></li>
         <li><a href="#testimonials">Reseñas</a></li>
         <li><a href="#faq">Preguntas Frecuentes</a></li>
+        <li><a href="#blog">Blog</a></li>
       </ul>
     </div>
-
     <div>
       <h3 class="footer-heading">Nuestros Servicios</h3>
       <ul class="footer-links">
@@ -1500,7 +839,6 @@
         <li><a href="#services">Licitaciones de Alimentación</a></li>
       </ul>
     </div>
-
     <div>
       <h3 class="footer-heading">Contacto</h3>
       <address style="font-style:normal">
@@ -1524,7 +862,6 @@
       </div>
     </div>
   </div>
-
   <div class="footer-bottom">
     <p>© 2025 Hostal El Monchito · Puerto Cisnes, Región de Aysén, Patagonia Chilena · Todos los derechos reservados</p>
     <p>Hospedaje y alimentación en la Carretera Austral ❤</p>
@@ -1597,10 +934,7 @@
   const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   revealEls.forEach(el => observer.observe(el));

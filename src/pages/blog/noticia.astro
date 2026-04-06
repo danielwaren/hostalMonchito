@@ -1,0 +1,18 @@
+---
+import BlogPost from '../../layouts/BlogPost.astro';
+
+const data = {
+  title: "Test funcionando",
+  description: "Si ves esto, ya está OK",
+  pubDate: "2026",
+  image: "/img/blog1.webp"
+};
+---
+
+<BlogPost {...data}>
+  <h2>Hola 👋</h2>
+  <p>Si estás viendo esto, el blog funciona.</p>
+
+  <h2>Ahora sí</h2>
+  <p>Desde aquí construimos sin errores.</p>
+</BlogPost>
