@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import '../styles/globals.css';
+import NavBar from "../../src/components/landing/NavBar.astro";
 
 const {
   title,
@@ -750,84 +751,94 @@ const jsonLd = JSON.stringify({
   </style>
 </head>
 
-<body>
+<body class="bg-[#0b0f0d] text-[#d8e4d8] font-sans font-light min-h-screen antialiased
+             bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(116,198,157,0.06)_0%,transparent_70%)]">
 
   <!-- PROGRESS -->
-  <div id="progress" role="progressbar" aria-label="Progreso de lectura"></div>
+  <div id="progress"
+     class="fixed top-0 left-0 h-[2px] w-0 z-[200]
+            bg-gradient-to-r from-[#3a9d6e] via-[#74c69d] to-[#c9a84c]
+            shadow-[0_0_8px_#74c69d] transition-[width] duration-75">
+</div>
 
   <!-- NAV -->
-  <nav class="site-nav" aria-label="Navegación principal">
-    <a href="/" class="nav-logo" aria-label="Inicio Puerto Cisnes">Puerto Cisnes</a>
-    <div class="nav-links">
-      <a href="/blog"      class="nav-link">Blog</a>
-      <a href="/hospedaje" class="nav-link">Hospedaje</a>
-      <a href="/contacto"  class="nav-link">Contacto</a>
-    </div>
-  </nav>
+  <NavBar />
 
   <!-- HERO -->
   <header
-    class="hero"
-    style={image ? `background-image:url('${image}')` : `background-color:var(--bg-3)`}
-    role="banner"
-  >
-    <div class="hero-inner">
-      <p class="hero-eyebrow">
-        <span></span>
-        {category} · {siteName}
-      </p>
+  class="relative w-full min-h-screen flex flex-col justify-end overflow-hidden mt-[62px] bg-cover bg-center"
+  style={image ? `background-image:url('${image}')` : `background-color:#141c15`}
+>
 
-      <h1 class="hero-title">{title}</h1>
-
-      <div class="hero-meta-row">
-        <time class="hero-date" datetime={pubDate}>{pubDate}</time>
-        {readingTime && <span class="hero-reading">{readingTime} min de lectura</span>}
-        {description && <p class="hero-desc">{description}</p>}
-      </div>
-    </div>
-
-    <div class="scroll-cue" aria-hidden="true">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-        <line x1="12" y1="5" x2="12" y2="19"/>
-        <polyline points="19 12 12 19 5 12"/>
-      </svg>
-      Leer
-    </div>
-  </header>
-
-  <!-- SHARE BAR -->
-  <div class="share-bar" aria-label="Compartir artículo">
-    <span class="share-label">Compartir</span>
-
-    <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(title + ' — ' + pageUrl)}`}
-       target="_blank" rel="noopener noreferrer" class="share-btn"
-       aria-label="Compartir en WhatsApp">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.714l5.994-1.571A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.001-1.373l-.358-.213-3.714.974 1.001-3.622-.233-.372A9.795 9.795 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
-      </svg>
-      WhatsApp
-    </a>
-
-    <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`}
-       target="_blank" rel="noopener noreferrer" class="share-btn"
-       aria-label="Compartir en Facebook">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-      </svg>
-      Facebook
-    </a>
-
-    <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(title)}`}
-       target="_blank" rel="noopener noreferrer" class="share-btn"
-       aria-label="Compartir en X / Twitter">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-      </svg>
-      X
-    </a>
+  <!-- overlay -->
+  <div class="absolute inset-0 z-[1]
+       bg-[radial-gradient(ellipse_at_center_top,transparent_20%,rgba(11,15,13,0.5)_100%),linear-gradient(to_bottom,rgba(11,15,13,0.2)_0%,transparent_30%)]">
   </div>
+
+  <!-- bottom gradient -->
+  <div class="absolute bottom-0 left-0 right-0 h-[75%] z-[2]
+       bg-gradient-to-t from-[#0b0f0d] via-[rgba(11,15,13,0.5)] to-transparent">
+  </div>
+
+  <div class="relative z-[5] max-w-[900px]
+              px-[clamp(1.25rem,5vw,4rem)]
+              pt-[clamp(2rem,5vw,4rem)]
+              pb-[clamp(3rem,6vw,5rem)]">
+
+    <p class="flex items-center gap-2 font-mono text-[0.6rem] tracking-[0.25em] uppercase
+              text-[#74c69d] mb-5 opacity-0 translate-y-4 animate-[fadeUp_0.6s_0.1s_forwards]">
+      <span class="w-7 h-px bg-[#74c69d]"></span>
+      {category} · {siteName}
+    </p>
+
+    <h1 class="font-serif text-[clamp(2.6rem,6vw,5.5rem)] font-bold leading-[1]
+               text-[#eef5ee] tracking-[-0.01em] mb-6
+               opacity-0 translate-y-4 animate-[fadeUp_0.7s_0.25s_forwards]">
+      {title}
+    </h1>
+
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-4
+                opacity-0 translate-y-4 animate-[fadeUp_0.6s_0.4s_forwards]">
+
+      <time class="font-mono text-[0.65rem] tracking-[0.12em] text-[#5a7060]">
+        {pubDate}
+      </time>
+
+      {readingTime && (
+        <span class="font-mono text-[0.65rem] tracking-[0.1em] text-[#5a7060]">
+          {readingTime} min de lectura
+        </span>
+      )}
+
+      {description && (
+        <p class="font-serif italic text-[clamp(1rem,1.5vw,1.2rem)]
+                  text-[rgba(216,228,216,0.7)] max-w-[560px]">
+          {description}
+        </p>
+      )}
+    </div>
+  </div>
+</header>
+  <!-- SHARE BAR -->
+<div class="flex flex-wrap items-center gap-2
+            px-[clamp(1.25rem,5vw,4rem)] py-3
+            border-b border-[rgba(116,198,157,0.12)]
+            bg-[#0f1510]">
+
+  <span class="font-mono text-[0.58rem] tracking-[0.18em] uppercase text-[#5a7060]">
+    Compartir
+  </span>
+
+  <!-- botón -->
+  <a class="inline-flex items-center gap-1 text-[0.6rem] font-mono tracking-wider
+            text-[#9ab09a] border border-[rgba(116,198,157,0.12)]
+            px-3 py-1 rounded transition-all
+            hover:bg-[rgba(116,198,157,0.18)]
+            hover:border-[#74c69d]
+            hover:text-[#74c69d]">
+    WhatsApp
+  </a>
+</div>
 
   <!-- CONTENT GRID -->
   <div class="page-grid">

@@ -1,0 +1,118 @@
+<section
+      id="gallery"
+      class="py-[clamp(4rem,8vw,7rem)] pb-12 px-[clamp(1.25rem,4vw,3rem)] bg-ink"
+      aria-labelledby="gallery-title"
+    >
+      <div class="max-w-[1160px] mx-auto">
+        <p
+          class="reveal text-fern text-[0.62rem] font-medium tracking-[0.28em] uppercase mb-4 flex items-center gap-2 before:content-[''] before:block before:w-6 before:h-px before:bg-fern"
+        >
+          Puerto Cisnes y Alrededores · Patagonia Chilena
+        </p>
+        <h2
+          id="gallery-title"
+          class="reveal delay-1 font-serif text-[clamp(2rem,5vw,3rem)] font-light text-snow leading-[1.1]"
+        >
+          Nuestro Entorno Natural
+        </h2>
+        <p class="reveal delay-2 text-white/[0.45] text-[0.9rem] mt-2">
+          Fiordos, bosques nativos y montañas nevadas a pasos del hostal
+        </p>
+
+        <!-- Grid galería — layout complejo mantenido con CSS grid directo -->
+        <div
+          class="mt-12 grid gap-2"
+          style="grid-template-columns: repeat(12,1fr); grid-template-rows: 260px 260px;"
+        >
+          <div
+            class="g-item relative overflow-hidden rounded-[16px] shadow-hostal-md"
+            style="grid-column:1/6; grid-row:1/2;"
+          >
+            <img
+              src="/pizza-1.jpg"
+              alt="Montañas nevadas de la Patagonia chilena vistas desde Puerto Cisnes"
+              class="w-full h-full object-cover block brightness-[0.82] saturate-[0.88] transition-all duration-[750ms] ease-hostal hover:scale-[1.07] hover:brightness-[0.95] hover:saturate-[1.05]"
+              loading="lazy"
+            />
+          </div>
+          <div
+            class="g-item relative overflow-hidden rounded-[16px] shadow-hostal-md reveal delay-1"
+            style="grid-column:6/9; grid-row:1/2;"
+          >
+            <img
+              src="/galeria-3.jpg"
+              alt="Fiordo Puyuhuapi al sur de Chile, Región de Aysén"
+              class="w-full h-full object-cover block brightness-[0.82] saturate-[0.88] transition-all duration-[750ms] ease-hostal hover:scale-[1.07] hover:brightness-[0.95] hover:saturate-[1.05]"
+              loading="lazy"
+            />
+          </div>
+          <div
+            class="g-item relative overflow-hidden rounded-[16px] shadow-hostal-md reveal delay-2"
+            style="grid-column:9/13; grid-row:1/3;"
+          >
+            <img
+              src="/galeria.jpg"
+              alt="Bosque nativo de la Patagonia chilena en Puerto Cisnes"
+              class="w-full h-full object-cover block brightness-[0.82] saturate-[0.88] transition-all duration-[750ms] ease-hostal hover:scale-[1.07] hover:brightness-[0.95] hover:saturate-[1.05]"
+              loading="lazy"
+            />
+          </div>
+          <div
+            class="g-item relative overflow-hidden rounded-[16px] shadow-hostal-md reveal delay-1"
+            style="grid-column:1/4; grid-row:2/3;"
+          >
+            <img
+              src="/galeria-1.jpg"
+              alt="Río en la Patagonia, Aysén"
+              class="w-full h-full object-cover block brightness-[0.82] saturate-[0.88] transition-all duration-[750ms] ease-hostal hover:scale-[1.07] hover:brightness-[0.95] hover:saturate-[1.05]"
+              loading="lazy"
+            />
+          </div>
+          <div
+            class="g-item relative overflow-hidden rounded-[16px] shadow-hostal-md reveal delay-2"
+            style="grid-column:4/6; grid-row:2/3;"
+          >
+            <img
+              src="/galeria-2.jpg"
+              alt="Amanecer en los Andes patagónicos, Puerto Cisnes"
+              class="w-full h-full object-cover block brightness-[0.82] saturate-[0.88] transition-all duration-[750ms] ease-hostal hover:scale-[1.07] hover:brightness-[0.95] hover:saturate-[1.05]"
+              loading="lazy"
+            />
+          </div>
+          <div
+            class="g-item relative overflow-hidden rounded-[16px] shadow-hostal-md reveal delay-3"
+            style="grid-column:6/9; grid-row:2/3;"
+          >
+            <img
+              src="/pizza.jpg"
+              alt="Naturaleza patagónica, Carretera Austral"
+              class="w-full h-full object-cover block brightness-[0.82] saturate-[0.88] transition-all duration-[750ms] ease-hostal hover:scale-[1.07] hover:brightness-[0.95] hover:saturate-[1.05]"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+        /* Gallery responsive */
+      @media (max-width: 768px) {
+        #gallery .grid {
+          grid-template-columns: 1fr 1fr !important;
+          grid-template-rows: auto !important;
+        }
+        #gallery .g-item {
+          grid-column: auto !important;
+          grid-row: auto !important;
+          height: 180px;
+        }
+      }
+      @media (max-width: 480px) {
+        #gallery .grid {
+          grid-template-columns: 1fr !important;
+        }
+        #gallery .g-item {
+          height: 220px;
+        }
+      }
+    </style>

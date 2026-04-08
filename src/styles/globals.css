@@ -4,36 +4,37 @@
 
 @layer base {
   :root {
+    /* ── shadcn/ui tokens (sin modificar) ── */
     --background: 20 14.3% 4.1%;
     --foreground: 60 9.1% 97.8%;
 
     --card: 20 14.3% 4.1%;
     --card-foreground: 60 9.1% 97.8%;
- 
+
     --popover: 20 14.3% 4.1%;
     --popover-foreground: 60 9.1% 97.8%;
- 
+
     --primary: 20.5 90.2% 48.2%;
     --primary-foreground: 60 9.1% 97.8%;
- 
+
     --secondary: 12 6.5% 15.1%;
     --secondary-foreground: 60 9.1% 97.8%;
- 
+
     --muted: 12 6.5% 15.1%;
     --muted-foreground: 24 5.4% 63.9%;
- 
+
     --accent: 12 6.5% 15.1%;
     --accent-foreground: 60 9.1% 97.8%;
- 
+
     --destructive: 0 72.2% 50.6%;
     --destructive-foreground: 60 9.1% 97.8%;
 
     --border: 12 6.5% 15.1%;
     --input: 12 6.5% 15.1%;
     --ring: 20.5 90.2% 48.2%;
- 
+
     --radius: 0.5rem;
- 
+
     --sidebar: oklch(0.985 0 0);
     --sidebar-foreground: oklch(0.145 0 0);
     --sidebar-primary: oklch(0.205 0 0);
@@ -42,38 +43,50 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+
+    /* ── Colores custom Hostal El Monchito ── */
+    --forest:     #1a2e1a;
+    --moss:       #2d4a2d;
+    --sage:       #4a6741;
+    --fern:       #6b8f5e;
+    --fern2:      #82a874;
+    --glacier:    #4a7a8a;
+    --ice:        #7fb3c0;
+    --mist:       #b8d4db;
+    --cloud:      #e8e4df;
+    --snow:       #faf8f5;
+    --ink:        #1a1a18;
+    --inkdeep:    #111110;
+    --inkbase:    #161614;
+    --col-footer: #0c0d0c;
+    --wa:         #25D366;
   }
- 
+
   .light {
+    /* ── shadcn/ui light (sin modificar) ── */
     --background: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
-
     --card: 0 0% 100%;
     --card-foreground: 20 14.3% 4.1%;
- 
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
- 
     --primary: 24.6 95% 53.1%;
     --primary-foreground: 60 9.1% 97.8%;
- 
     --secondary: 60 4.8% 95.9%;
     --secondary-foreground: 24 9.8% 10%;
- 
     --muted: 60 4.8% 95.9%;
     --muted-foreground: 25 5.3% 44.7%;
- 
     --accent: 60 4.8% 95.9%;
     --accent-foreground: 24 9.8% 10%;
- 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
-
     --border: 20 5.9% 90%;
     --input: 20 5.9% 90%;
     --ring: 24.6 95% 53.1%;
   }
+
   .dark {
+    /* ── shadcn/ui dark sidebar (sin modificar) ── */
     --sidebar: oklch(0.205 0 0);
     --sidebar-foreground: oklch(0.985 0 0);
     --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -84,12 +97,131 @@
     --sidebar-ring: oklch(0.439 0 0);
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden leading-relaxed;
   }
-} 
+
+  /* Scrollbar */
+  ::-webkit-scrollbar       { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--ink); }
+  ::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 2px; }
+}
+
+/* ── Keyframes ── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1;  transform: scale(1); }
+  50%       { opacity: .4; transform: scale(.7); }
+}
+@keyframes scroll-ln {
+  0%, 100% { transform: scaleY(1);  opacity: .8; }
+  50%       { transform: scaleY(.4); opacity: .3; }
+}
+@keyframes wa-pulse {
+  0%, 100% { box-shadow: 0 4px 24px rgba(37,211,102,.4); }
+  50%       { box-shadow: 0 4px 36px rgba(37,211,102,.7), 0 0 0 10px rgba(37,211,102,.08); }
+}
+@keyframes float-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Utilities custom ── */
+@layer utilities {
+  /* Animaciones */
+  .animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+  .animate-scroll-ln { animation: scroll-ln 2s ease-in-out infinite; }
+  .animate-wa-pulse  { animation: wa-pulse 2.5s ease-in-out infinite; }
+  .animate-float-in  { animation: float-in .35s cubic-bezier(.16,1,.3,1); }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-44px);
+    transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(44px);
+    transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.visible,
+  .reveal-left.visible,
+  .reveal-right.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .delay-1 { transition-delay: .12s; }
+  .delay-2 { transition-delay: .24s; }
+  .delay-3 { transition-delay: .36s; }
+  .delay-4 { transition-delay: .48s; }
+
+  /* FAQ */
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 1.5rem;
+    transition: max-height .4s cubic-bezier(.16,1,.3,1), padding .3s;
+  }
+  .faq-item.open .faq-answer {
+    max-height: 300px;
+    padding: 0 1.5rem 1.3rem;
+  }
+  .faq-icon { transition: transform .3s cubic-bezier(.16,1,.3,1); }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+  /* Pseudo-elemento overlay galería */
+  .g-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,.4));
+    opacity: 0;
+    transition: opacity .4s;
+    pointer-events: none;
+  }
+  .g-item:hover::after { opacity: 1; }
+
+  /* Borde degradado imagen about */
+  .about-img-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 34px;
+    background: linear-gradient(135deg, rgba(107,143,94,.3) 0%, rgba(74,122,138,.15) 100%);
+    z-index: -1;
+  }
+
+  /* Nav link underline hover */
+  .nav-link-hover {
+    position: relative;
+  }
+  .nav-link-hover::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--fern);
+    transform: scaleX(0);
+    transition: transform .3s cubic-bezier(.16,1,.3,1);
+  }
+  .nav-link-hover:hover::after { transform: scaleX(1); }
+
+  /* Footer link hover indent */
+  .footer-link {
+    transition: color .2s, padding-left .2s;
+  }
+  .footer-link:hover { padding-left: 4px; }
+}

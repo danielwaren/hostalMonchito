@@ -1,0 +1,136 @@
+<section id="hero" class="relative h-svh min-h-[560px] flex items-center overflow-hidden" aria-label="Bienvenida al Hostal El Monchito">
+
+  <div id="parallax-bg" class="absolute inset-[-10%] z-0">
+    <img src="/header-img.jpg"
+         alt="Vista panorámica del fiordo Puyuhuapi desde Puerto Cisnes, Patagonia Chilena"
+         class="w-full h-full object-cover block"
+         width="1920" height="1080" fetchpriority="high" />
+  </div>
+
+  <div class="absolute inset-0 z-[1]"
+       style="background: radial-gradient(ellipse at 30% 50%, rgba(26,46,26,.7) 0%, transparent 70%), linear-gradient(135deg, rgba(20,20,18,.8) 0%, rgba(20,20,18,.3) 60%, rgba(74,122,138,.25) 100%)"
+       aria-hidden="true"></div>
+
+  <div class="relative z-[2] px-6 md:px-10 max-w-[min(800px,92vw)] mt-[clamp(3rem,8vh,6rem)]">
+
+    <div class="reveal inline-flex items-center gap-2 bg-white/[0.07] border border-white/[0.12] backdrop-blur-xl px-4 py-[0.4rem] rounded-full mb-5" aria-label="Ubicación">
+      <div class="animate-pulse-dot w-[6px] h-[6px] bg-fern rounded-full" aria-hidden="true"></div>
+      <span class="text-mist text-[0.68rem] tracking-[0.18em] uppercase">Hospedaje y Alimentación · Puerto Cisnes, Aysén</span>
+    </div>
+
+    <h1 class="reveal delay-1 font-serif text-[clamp(2.4rem,6.5vw,4.8rem)] font-light text-snow leading-[1.08] mb-4">
+      Hospedaje en<br><em class="italic text-mist">Puerto Cisnes</em><br>con todo incluido.
+    </h1>
+
+    <p class="reveal delay-2 text-white/[0.68] text-[clamp(0.85rem,1.8vw,0.95rem)] font-light leading-[1.7] max-w-[440px] mb-8">
+      Hostal con pensión completa, restaurante y convenios de alojamiento y colaciones para empresas del sector salmonero, obras públicas y turistas en la Patagonia chilena.
+    </p>
+
+    <div class="reveal delay-3 flex flex-wrap gap-[0.9rem] max-sm:flex-col">
+      <a href="https://wa.me/56912345678?text=Hola%2C%20quisiera%20hacer%20una%20reserva"
+         target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center justify-center gap-[0.55rem] bg-sage text-snow no-underline px-8 py-[0.85rem] rounded-[16px] text-[0.78rem] font-medium tracking-[0.1em] uppercase transition-all duration-300 ease-hostal shadow-[0_4px_20px_rgba(107,143,94,.35),0_1px_3px_rgba(0,0,0,.3)] hover:bg-fern2 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(107,143,94,.45),0_2px_8px_rgba(0,0,0,.3)]"
+         aria-label="Reservar por WhatsApp">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Reservar Ahora
+      </a>
+      <a href="#about"
+         class="inline-flex items-center justify-center gap-[0.55rem] border border-white/[0.28] text-snow no-underline px-8 py-[0.85rem] rounded-[16px] text-[0.78rem] font-normal tracking-[0.1em] uppercase transition-all duration-300 ease-hostal backdrop-blur-sm hover:bg-white/[0.08] hover:border-white/50 hover:-translate-y-0.5">
+        Conocer Más
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 9l-7 7-7-7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Weather widget -->
+  <div id="weather-widget"
+       class="absolute top-1/2 -translate-y-1/2 right-10 z-[3] hidden xl:block bg-[rgba(18,18,16,0.65)] backdrop-blur-xl border border-white/[0.1] rounded-[24px] p-[1.4rem_1.6rem] min-w-[185px] shadow-hostal-md"
+       aria-label="Clima actual en Puerto Cisnes">
+    <div class="text-fern text-[0.58rem] tracking-[0.22em] uppercase mb-[0.9rem] flex items-center gap-[0.4rem]">
+      <svg width="10" height="10" fill="var(--fern)" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      Puerto Cisnes
+    </div>
+    <div id="weather-main-content">
+      <p class="text-[0.78rem] text-white/40">Cargando clima…</p>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/45 text-[0.62rem] tracking-[0.2em] uppercase z-[2]" aria-hidden="true">
+    <div class="animate-scroll-ln w-px h-[50px] bg-gradient-to-b from-white/50 to-transparent"></div>
+    <span>Explorar</span>
+  </div>
+</section>
+
+<script>
+   
+      // Parallax
+      const parallaxBg = document.getElementById("parallax-bg");
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (window.innerWidth > 768 && window.scrollY < window.innerHeight) {
+            parallaxBg.style.transform = `translateY(${window.scrollY * 0.28}px)`;
+          }
+        },
+        { passive: true },
+      );
+
+      // Scroll reveal
+      const revealEls = document.querySelectorAll(
+        ".reveal, .reveal-left, .reveal-right",
+      );
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
+      );
+      revealEls.forEach((el) => observer.observe(el));
+  
+  // Weather
+  async function fetchWeather() {
+    try {
+      const res  = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-44.725&longitude=-72.755&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&wind_speed_unit=kmh&timezone=America%2FSantiago');
+      const data = await res.json();
+      const c    = data.current;
+      const wmo  = code => {
+        if (code === 0)                          return {icon:'☀️', desc:'Despejado'};
+        if ([1,2,3].includes(code))              return {icon:'⛅', desc:'Nublado'};
+        if ([45,48].includes(code))              return {icon:'🌫️', desc:'Neblina'};
+        if ([51,53,55,61,63].includes(code))     return {icon:'🌧️', desc:'Lluvia ligera'};
+        if ([65,66,67,80,81,82].includes(code))  return {icon:'🌧️', desc:'Lluvia'};
+        if ([71,73,75,77,85,86].includes(code))  return {icon:'❄️', desc:'Nieve'};
+        if ([95,96,99].includes(code))           return {icon:'⛈️', desc:'Tormenta'};
+        return {icon:'🌡️', desc:'Variable'};
+      };
+      const { icon, desc } = wmo(c.weather_code);
+      const weatherContent = document.getElementById('weather-main-content');
+      if (weatherContent) {
+        weatherContent.innerHTML = `
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.5rem">
+          <span style="font-size:2.2rem;line-height:1">${icon}</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--snow);line-height:1">${Math.round(c.temperature_2m)}°C</span>
+        </div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.55);margin-bottom:.6rem;text-transform:capitalize">${desc}</div>
+        <div style="display:flex;gap:1.2rem">
+          <div style="font-size:.65rem;color:rgba(255,255,255,.45)">
+            <strong style="color:var(--mist);display:block;font-size:.8rem">${c.relative_humidity_2m}%</strong>Humedad
+          </div>
+          <div style="font-size:.65rem;color:rgba(255,255,255,.45)">
+            <strong style="color:var(--mist);display:block;font-size:.8rem">${Math.round(c.wind_speed_10m)} km/h</strong>Viento
+          </div>
+        </div>`;
+      }
+    } catch(e) {
+      document.getElementById('weather-main-content').innerHTML =
+        '<p style="font-size:.78rem;color:rgba(255,255,255,.4)">Clima no disponible</p>';
+    }
+  }
+  fetchWeather();
+</script>
