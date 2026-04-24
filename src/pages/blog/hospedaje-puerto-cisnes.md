@@ -4,7 +4,7 @@ title: "Hospedaje para trabajadores en Puerto Cisnes: pensión completa y estad�
 description: "Alojamiento en Puerto Cisnes para trabajadores de la industria salmonera y construcción. Habitaciones cómodas, alimentación incluida y convenios empresa."
 pubDate: "Abril 2026"
 dateISO: "2026-04-05"
-image: "/img/galeria.jpg"
+image: "/img/header-cisnes.webp"
 category: "Empresas & Servicios"
 tags: ["Hospedaje trabajadores", "Puerto Cisnes", "Aysén"]
 readingTime: 5

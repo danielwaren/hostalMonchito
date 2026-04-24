@@ -4,7 +4,7 @@ title: "Dónde comer en Puerto Cisnes: restaurantes y opciones recomendadas"
 description: "Descubre dónde comer en Puerto Cisnes: restaurantes, comida casera, mariscos y opciones para trabajadores y turistas en la Región de Aysén."
 pubDate: "Abril 2026"
 dateISO: "2026-04-05"
-image: "/img/historia-img.jpg"
+image: "/img/donde-comer-pizza-cisnes.webp"
 category: "Turismo & Gastronomía"
 tags: ["Dónde comer Puerto Cisnes", "Restaurantes Aysén", "Comida chilena"]
 readingTime: 5

@@ -1,50 +1,83 @@
 <script type="application/ld+json">
-  [
+{
+  "@context": "https://schema.org",
+  "@graph": [
+
     {
-      "@context": "https://schema.org",
-      "@type": ["LodgingBusiness", "LocalBusiness"],
+      "@type": "LodgingBusiness",
       "@id": "https://hostalmonchito.cl/#business",
       "name": "Hostal El Monchito",
       "alternateName": ["Hostal Monchito", "El Monchito Puerto Cisnes"],
-      "description": "Hostal familiar en Puerto Cisnes con más de 12 años ofreciendo hospedaje, pensión completa, restaurante a la carta y convenios de alojamiento y alimentación para empresas del sector salmonero, constructoras y organismos públicos en la Región de Aysén, Patagonia Chilena.",
+      "description": "Hospedaje en Puerto Cisnes con pensión completa para trabajadores, empresas y turistas en la Región de Aysén.",
       "url": "https://hostalmonchito.cl/",
       "logo": "https://hostalmonchito.cl/header-img.jpg",
-      "telephone": "+56962249278",
+      "telephone": "+56962249178",
       "email": "hostalmonchito2023@gmail.com",
       "foundingDate": "2013",
       "priceRange": "$$",
-      "currenciesAccepted": "CLP",
-      "paymentAccepted": "Efectivo, Transferencia Bancaria, Tarjeta de Crédito, Factura Empresa",
-      "starRating": { "@type": "Rating", "ratingValue": "4.9", "bestRating": "5" },
-      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "50", "bestRating": "5" },
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Aguada de dolores 1",
         "addressLocality": "Puerto Cisnes",
-        "addressRegion": "Aysén del General Carlos Ibáñez del Campo",
+        "addressRegion": "Aysén",
         "postalCode": "6010000",
         "addressCountry": "CL"
       },
-      "geo": { "@type": "GeoCoordinates", "latitude": -44.725, "longitude": -72.755 },
-      "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "07:00", "closes": "23:00" }],
-      "sameAs": ["https://instagram.com/hostalmonchito","https://www.facebook.com/hostalmonchito"]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        { "@type": "Question", "name": "¿El Hostal El Monchito ofrece convenios para empresas en Puerto Cisnes?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. Ofrecemos convenios de alojamiento y alimentación a medida para empresas del sector salmonero, constructoras y organismos públicos en la Región de Aysén." } },
-        { "@type": "Question", "name": "¿Ofrecen servicio de colaciones para trabajadores en Puerto Cisnes?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. Ofrecemos servicio de colaciones y alimentación completa para equipos de trabajo en Puerto Cisnes y la Región de Aysén." } },
-        { "@type": "Question", "name": "¿Dónde está ubicado el Hostal El Monchito?", "acceptedAnswer": { "@type": "Answer", "text": "Estamos en Calle Los Pinos 245, Puerto Cisnes, Región de Aysén, Patagonia Chilena, a orillas del fiordo Puyuhuapi." } }
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -44.725,
+        "longitude": -72.755
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "07:00",
+        "closes": "23:00"
+      }],
+      "sameAs": [
+        "https://instagram.com/hostalmonchito",
+        "https://www.facebook.com/hostalmonchito"
       ]
     },
+
     {
-      "@context": "https://schema.org",
       "@type": "WebSite",
       "@id": "https://hostalmonchito.cl/#website",
       "url": "https://hostalmonchito.cl/",
-      "name": "Hostal El Monchito — Puerto Cisnes, Patagonia",
+      "name": "Hostal El Monchito",
       "inLanguage": "es-CL"
+    },
+
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿El hostal ofrece convenios para empresas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, ofrecemos convenios de alojamiento y alimentación para empresas en Puerto Cisnes y la Región de Aysén."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Tienen pensión completa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, contamos con servicio de pensión completa para trabajadores y turistas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Dónde está ubicado el hostal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Estamos ubicados en Puerto Cisnes, Región de Aysén, Patagonia Chilena."
+          }
+        }
+      ]
     }
+
   ]
-  </script>
+}
+</script>

@@ -1,13 +1,12 @@
 ---
-import { Image } from 'astro:assets';
-import '../styles/globals.css';
-import NavBar from "../components/landing/Navbar.astro";
+import BaseHead from '../components/landing/BaseHead.astro';
+import NavBar from '../components/landing/Navbar.astro';
 
 const {
   title,
   description,
   pubDate,
-  image,  
+  image,
   author        = 'Puerto Cisnes',
   category      = 'Patagonia',
   tags          = [],
@@ -17,97 +16,54 @@ const {
 const pageUrl   = Astro.url.href;
 const siteUrl   = Astro.site ?? 'https://puertocisnes.cl';
 const siteName  = 'Puerto Cisnes';
-const canonical = pageUrl;
 
-// JSON-LD Article schema
-const jsonLd = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: title,
-  description,
-  image: image ? [image] : [],
-  datePublished: pubDate,
-  author: { '@type': 'Organization', name: siteName, url: siteUrl },
-  publisher: {
-    '@type': 'Organization',
-    name: siteName,
-    url: siteUrl,
-    logo: { '@type': 'ImageObject', url: `${siteUrl}/favicon.svg` },
-  },
-  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
-});
+const formattedDate = pubDate
+  ? new Date(pubDate).toLocaleDateString('es-CL', { year: 'numeric', month: 'long', day: 'numeric' })
+  : '';
 ---
 
 <html lang="es">
 <head>
-  <!-- BASE -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="canonical" href={canonical} />
+  <BaseHead
+    title={title}
+    description={description}
+    image={image}
+    pubDate={pubDate}
+    author={author}
+    tags={tags}
+    type="article"
+  />
 
-  <!-- PRIMARY SEO -->
-  <title>{title} | {siteName}</title>
-  <meta name="description" content={description} />
-  <meta name="author" content={author} />
-  {tags.length > 0 && <meta name="keywords" content={tags.join(', ')} />}
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-
-  <!-- OPEN GRAPH -->
-  <meta property="og:type"        content="article" />
-  <meta property="og:site_name"   content={siteName} />
-  <meta property="og:title"       content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:url"         content={canonical} />
-  {image && <meta property="og:image"       content={image} />}
-  {image && <meta property="og:image:width" content="1200" />}
-  {image && <meta property="og:image:height" content="630" />}
-  <meta property="article:published_time" content={pubDate} />
-  <meta property="article:author"         content={author} />
-  {tags.map(tag => <meta property="article:tag" content={tag} />)}
-
-  <!-- TWITTER CARD -->
-  <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content={title} />
-  <meta name="twitter:description" content={description} />
-  {image && <meta name="twitter:image" content={image} />}
-
-  <!-- JSON-LD -->
-  <script type="application/ld+json" set:html={jsonLd} />
-
-  <!-- FONTS -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style is:global>
-  /* ═══════════════════════════════════════════
-     TOKENS
-  ═══════════════════════════════════════════ */
+  /* ─── TOKENS ─── */
   :root {
-    --bg:        #0b0f0d;
-    --bg-2:      #0f1510;
-    --bg-3:      #141c15;
-    --surface:   #192118;
-    --border:    rgba(116,198,157,0.12);
-    --accent:    #74c69d;
-    --accent-2:  #3a9d6e;
-    --accent-dim: rgba(116,198,157,0.18);
-    --gold:      #c9a84c;
-    --text:      #d8e4d8;
-    --text-2:    #9ab09a;
-    --text-3:    #5a7060;
-    --white:     #eef5ee;
-    --serif:     'Cormorant Garamond', Georgia, serif;
-    --sans:      'Lato', system-ui, sans-serif;
-    --mono:      'DM Mono', monospace;
-    --nav-h:     60px;
-    --radius:    6px;
+    --bg:          #080c0a;
+    --bg-2:        #0c1210;
+    --surface:     #111916;
+    --surface-2:   #162019;
+    --border:      rgba(100,200,140,0.10);
+    --border-2:    rgba(100,200,140,0.18);
+    --accent:      #5dcea0;
+    --accent-dim:  rgba(93,206,160,0.12);
+    --accent-glow: rgba(93,206,160,0.06);
+    --gold:        #c9a040;
+    --text:        #ccd9cc;
+    --text-2:      #7a9a7a;
+    --text-3:      #3d5c3d;
+    --white:       #eaf3ea;
+    --serif:       'Playfair Display', Georgia, serif;
+    --sans:        'Inter', system-ui, sans-serif;
+    --mono:        'JetBrains Mono', monospace;
+    --nav-h:       58px;
+    --r:           5px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 2rem); }
 
   body {
     background: var(--bg);
@@ -116,164 +72,121 @@ const jsonLd = JSON.stringify({
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
-    /* subtle texture */
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(116,198,157,0.06) 0%, transparent 70%);
   }
 
-  /* ═══════════════════════════════════════════
-     PROGRESS
-  ═══════════════════════════════════════════ */
-  #progress {
+  /* ─── READING PROGRESS ─── */
+  #progress-track {
     position: fixed;
-    top: 0; left: 0;
+    top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--accent-2), var(--accent), var(--gold));
-    width: 0;
-    z-index: 200;
-    transition: width 0.08s linear;
-    box-shadow: 0 0 8px var(--accent);
+    background: rgba(93,206,160,0.08);
+    z-index: 300;
   }
-
-  /* ═══════════════════════════════════════════
-     NAV
-  ═══════════════════════════════════════════ */
-  .site-nav {
+  #progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #3a9d6e, var(--accent), var(--gold));
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(93,206,160,0.4);
+  }
+  #progress-pct {
     position: fixed;
-    top: 2px; left: 0; right: 0;
-    height: var(--nav-h);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 clamp(1.25rem, 4vw, 3rem);
-    background: rgba(11, 15, 13, 0.82);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    transition: background 0.3s;
-  }
-
-  .nav-logo {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 300;
     font-family: var(--mono);
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
     color: var(--accent);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border-2);
+    padding: 0.3rem 0.6rem;
+    border-radius: 100px;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
 
-  .nav-logo::before {
-    content: '';
-    display: block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 6px var(--accent);
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: clamp(1rem, 3vw, 2rem);
-  }
-
-  .nav-link {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-2);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-link:hover { color: var(--accent); }
-
-  /* ═══════════════════════════════════════════
-     HERO
-  ═══════════════════════════════════════════ */
+  /* ─── HERO ─── */
   .hero {
     position: relative;
     width: 100%;
-    min-height: 100svh;
+    height: calc(100svh - var(--nav-h) - 2px);
+    margin-top: calc(var(--nav-h) + 2px);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     overflow: hidden;
-    margin-top: calc(var(--nav-h) + 2px);
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
+    background-color: var(--surface);
   }
 
-  /* dark vignette overlay */
-  .hero::before {
-    content: '';
+  /* tint layers */
+  .hero-overlay {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(ellipse at center top, transparent 20%, rgba(11,15,13,0.5) 100%),
-      linear-gradient(to bottom, rgba(11,15,13,0.2) 0%, transparent 30%);
     z-index: 1;
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(8,12,10,0.30) 0%,
+        rgba(8,12,10,0.10) 20%,
+        transparent       45%,
+        rgba(8,12,10,0.70) 75%,
+        var(--bg)          100%
+      );
   }
 
-  /* dramatic bottom gradient — blends into body bg */
-  .hero::after {
+  /* subtle green cast at top to blend nav */
+  .hero-overlay::before {
     content: '';
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 75%;
-    background: linear-gradient(
-      to top,
-      var(--bg)         0%,
-      rgba(11,15,13,.9) 30%,
-      rgba(11,15,13,.5) 60%,
-      transparent       100%
-    );
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: linear-gradient(to bottom, rgba(8,12,10,0.55), transparent);
     z-index: 2;
   }
 
-  .hero-inner {
+  .hero-content {
     position: relative;
     z-index: 5;
-    padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
-    max-width: 900px;
+    padding: 2rem clamp(1.5rem, 6vw, 5rem) clamp(3rem, 6vw, 5rem);
+    max-width: 860px;
   }
 
   .hero-eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.75rem;
     font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
     opacity: 0;
-    animation: fadeUp 0.6s 0.1s forwards;
+    animation: up 0.7s 0.1s forwards;
   }
 
-  .hero-eyebrow span {
+  .hero-eyebrow::before {
+    content: '';
     display: block;
-    width: 28px; height: 1px;
+    width: 32px; height: 1px;
     background: var(--accent);
+    flex-shrink: 0;
   }
 
   .hero-title {
     font-family: var(--serif);
-    font-size: clamp(2.6rem, 6vw, 5.5rem);
+    font-size: clamp(1.9rem, 4.5vw, 3.8rem);
     font-weight: 700;
     line-height: 1.0;
     color: var(--white);
-    letter-spacing: -0.01em;
-    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.75rem;
     opacity: 0;
-    animation: fadeUp 0.7s 0.25s forwards;
+    animation: up 0.8s 0.22s forwards;
   }
 
   .hero-title em {
@@ -281,105 +194,106 @@ const jsonLd = JSON.stringify({
     color: var(--accent);
   }
 
-  .hero-meta-row {
+  .hero-meta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1rem 2rem;
+    gap: 0.5rem 1.5rem;
     opacity: 0;
-    animation: fadeUp 0.6s 0.4s forwards;
+    animation: up 0.6s 0.38s forwards;
   }
 
-  .hero-date {
+  .hero-meta time,
+  .hero-meta span {
     font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    color: var(--text-3);
-  }
-
-  .hero-reading {
-    font-family: var(--mono);
-    font-size: 0.65rem;
+    font-size: 0.63rem;
     letter-spacing: 0.1em;
     color: var(--text-3);
   }
 
+  .hero-meta .dot {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--text-3);
+    flex-shrink: 0;
+  }
+
   .hero-desc {
+    margin-top: 1.25rem;
     font-family: var(--serif);
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
-    font-weight: 400;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
     font-style: italic;
-    line-height: 1.65;
-    color: rgba(216,228,216,0.7);
-    max-width: 560px;
+    line-height: 1.7;
+    color: rgba(204,217,204,0.65);
+    max-width: 580px;
+    opacity: 0;
+    animation: up 0.6s 0.5s forwards;
   }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* scroll arrow */
-  .scroll-cue {
+  /* scroll indicator */
+  .scroll-hint {
     position: absolute;
     bottom: 2.5rem;
-    right: clamp(1.25rem, 4vw, 3rem);
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 6;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.4rem;
-    color: var(--text-3);
-    font-family: var(--mono);
-    font-size: 0.5rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    gap: 0.5rem;
   }
 
-  .scroll-cue svg { animation: nudge 2.4s ease infinite; }
-
-  @keyframes nudge {
-    0%, 100% { transform: translateY(0); }
-    55%       { transform: translateY(6px); }
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, transparent, var(--accent));
+    animation: grow 2s ease infinite;
   }
 
-  /* ═══════════════════════════════════════════
-     SHARE BAR
-  ═══════════════════════════════════════════ */
+  @keyframes grow {
+    0%, 100% { opacity: 0; transform: scaleY(0.3) translateY(-10px); }
+    50%       { opacity: 1; transform: scaleY(1) translateY(0); }
+  }
+
+  /* ─── SHARE BAR ─── */
   .share-bar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.9rem clamp(1.25rem, 5vw, 4rem);
+    gap: 0.5rem;
+    padding: 0.75rem clamp(1.5rem, 6vw, 5rem);
     border-bottom: 1px solid var(--border);
     background: var(--bg-2);
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 50;
+    backdrop-filter: blur(10px);
   }
 
   .share-label {
     font-family: var(--mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.18em;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--text-3);
     margin-right: 0.25rem;
-    flex-shrink: 0;
   }
 
   .share-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.35rem;
     font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.08em;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
     color: var(--text-2);
     background: transparent;
     border: 1px solid var(--border);
-    padding: 0.32rem 0.9rem;
-    border-radius: var(--radius);
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--r);
     text-decoration: none;
-    transition: all 0.18s;
+    cursor: pointer;
+    transition: all 0.15s;
   }
 
   .share-btn:hover {
@@ -388,124 +302,107 @@ const jsonLd = JSON.stringify({
     color: var(--accent);
   }
 
-  .share-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
+  .share-btn svg { width: 10px; height: 10px; flex-shrink: 0; }
 
-  /* ═══════════════════════════════════════════
-     PAGE GRID
-  ═══════════════════════════════════════════ */
-  .page-grid {
-    max-width: 1200px;
+  .share-btn.copied { color: var(--accent); border-color: var(--accent); }
+
+  /* ─── LAYOUT ─── */
+  .page-wrap {
+    max-width: 1180px;
     margin: 0 auto;
-    padding: 0 clamp(1.25rem, 4vw, 3rem);
+    padding: 0 clamp(1.5rem, 4vw, 3rem);
     display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: clamp(2rem, 5vw, 5rem);
+    grid-template-columns: 1fr 260px;
+    gap: clamp(2.5rem, 5vw, 5rem);
     align-items: start;
   }
 
-  @media (max-width: 860px) {
-    .page-grid {
-      grid-template-columns: 1fr;
-    }
-    .sidebar {
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-    }
+  @media (max-width: 900px) {
+    .page-wrap { grid-template-columns: 1fr; }
+    .sidebar   { order: -1; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
   }
 
-  /* ═══════════════════════════════════════════
-     ARTICLE PROSE
-  ═══════════════════════════════════════════ */
+  /* ─── ARTICLE BODY ─── */
   .article-body {
-    padding: clamp(2.5rem, 5vw, 4rem) 0 4rem;
+    padding: clamp(3rem, 5vw, 5rem) 0 5rem;
   }
 
-  /* drop cap on first paragraph */
+  /* drop cap */
   .article-body > p:first-of-type::first-letter {
     font-family: var(--serif);
-    font-size: 4.5rem;
+    font-size: 5rem;
     font-weight: 700;
-    line-height: 0.8;
+    line-height: 0.75;
     float: left;
-    margin: 0.08em 0.12em 0 0;
+    margin: 0.1em 0.1em 0 0;
     color: var(--accent);
   }
 
   .article-body p {
     font-family: var(--serif);
-    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-    line-height: 1.9;
+    font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+    line-height: 1.95;
     color: var(--text);
-    margin-bottom: 1.7em;
+    margin-bottom: 1.8em;
     font-weight: 400;
   }
 
   .article-body h2 {
     font-family: var(--serif);
-    font-size: clamp(1.6rem, 2.5vw, 2.4rem);
-    font-weight: 600;
+    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    font-weight: 500;
     color: var(--white);
-    margin: 3em 0 0.8em;
-    line-height: 1.15;
-    position: relative;
-    padding-left: 1.25rem;
-  }
-
-  .article-body h2::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0.15em; bottom: 0.15em;
-    width: 3px;
-    background: linear-gradient(to bottom, var(--accent), var(--accent-2));
-    border-radius: 2px;
+    margin: 3.5em 0 1em;
+    line-height: 1.2;
+    padding-left: 1.2rem;
+    border-left: 2px solid var(--accent);
+    scroll-margin-top: calc(var(--nav-h) + 3rem);
   }
 
   .article-body h3 {
     font-family: var(--serif);
-    font-size: clamp(1.25rem, 2vw, 1.7rem);
-    font-weight: 600;
+    font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+    font-weight: 400;
     font-style: italic;
     color: var(--accent);
-    margin: 2.2em 0 0.6em;
-    line-height: 1.2;
+    margin: 2.5em 0 0.7em;
+    line-height: 1.3;
+    scroll-margin-top: calc(var(--nav-h) + 3rem);
   }
 
-  /* pull quote */
   .article-body blockquote {
     position: relative;
-    margin: 2.5em 0;
-    padding: 1.5rem 1.75rem 1.5rem 2.5rem;
-    border-left: none;
+    margin: 3rem 0;
+    padding: 1.75rem 2rem 1.75rem 2.25rem;
     background: var(--surface);
-    border-radius: var(--radius);
+    border-radius: var(--r);
     overflow: hidden;
   }
 
   .article-body blockquote::before {
-    content: '\201C';
-    position: absolute;
-    left: 0.4rem;
-    top: -0.3rem;
-    font-family: var(--serif);
-    font-size: 5rem;
-    color: var(--accent);
-    opacity: 0.35;
-    line-height: 1;
-  }
-
-  .article-body blockquote::after {
     content: '';
     position: absolute;
     left: 0; top: 0; bottom: 0;
-    width: 3px;
+    width: 2px;
     background: linear-gradient(to bottom, var(--accent), var(--gold));
+  }
+
+  .article-body blockquote::after {
+    content: '\201C';
+    position: absolute;
+    right: 1.5rem; top: 0.5rem;
+    font-family: var(--serif);
+    font-size: 6rem;
+    color: var(--accent);
+    opacity: 0.08;
+    line-height: 1;
   }
 
   .article-body blockquote p {
     font-family: var(--serif);
-    font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+    font-size: clamp(1.1rem, 1.7vw, 1.35rem);
     font-style: italic;
-    line-height: 1.7;
+    line-height: 1.75;
     color: var(--white);
     margin: 0;
   }
@@ -515,79 +412,200 @@ const jsonLd = JSON.stringify({
   .article-body a {
     color: var(--accent);
     text-decoration: underline;
-    text-decoration-color: rgba(116,198,157,0.4);
-    text-underline-offset: 3px;
+    text-decoration-color: rgba(93,206,160,0.35);
+    text-underline-offset: 4px;
     transition: text-decoration-color 0.2s;
   }
   .article-body a:hover { text-decoration-color: var(--accent); }
 
   .article-body ul, .article-body ol {
-    padding-left: 1.5rem;
-    margin-bottom: 1.5em;
+    padding-left: 1.6rem;
+    margin-bottom: 1.75em;
   }
 
   .article-body li {
     font-family: var(--serif);
     font-size: clamp(1.05rem, 1.5vw, 1.15rem);
-    line-height: 1.75;
+    line-height: 1.8;
     color: var(--text);
-    margin-bottom: 0.4em;
+    margin-bottom: 0.5em;
   }
 
   .article-body li::marker { color: var(--accent); }
 
-  /* inline images in article */
   .article-body img {
     width: 100%;
     height: auto;
-    border-radius: var(--radius);
-    margin: 2rem 0;
+    border-radius: var(--r);
+    margin: 2.5rem 0;
     border: 1px solid var(--border);
+    display: block;
   }
 
-  /* decorative divider */
   .article-body hr {
     border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 3rem 0;
+    margin: 3.5rem 0;
     height: 1px;
-    background: linear-gradient(to right, transparent, var(--border), transparent);
+    background: linear-gradient(to right, transparent, var(--border-2), transparent);
     position: relative;
   }
 
   .article-body hr::after {
-    content: '✦';
+    content: '◆';
     position: absolute;
-    font-size: 0.7rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.55rem;
     color: var(--text-3);
     background: var(--bg);
-    padding: 0 0.75rem;
+    padding: 0 1rem;
   }
 
-  /* strong / em */
-  .article-body strong { color: var(--white); font-weight: 700; }
+  .article-body strong { color: var(--white); font-weight: 500; }
   .article-body em     { color: var(--accent); font-style: italic; }
 
-  /* ═══════════════════════════════════════════
-     SIDEBAR
-  ═══════════════════════════════════════════ */
+  /* ─── FADE-IN ON SCROLL ─── */
+  .article-body .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .article-body .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── TAGS ─── */
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    padding-top: 2.5rem;
+    margin-top: 3rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid rgba(93,206,160,0.18);
+    padding: 0.28rem 0.75rem;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .tag:hover {
+    background: rgba(93,206,160,0.2);
+    border-color: rgba(93,206,160,0.35);
+  }
+
+  /* ─── SIDEBAR ─── */
   .sidebar {
     padding: clamp(2rem, 4vw, 4rem) 0;
     position: sticky;
     top: calc(var(--nav-h) + 1.5rem);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  .s-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.25rem 1.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .s-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+  }
+
+  .s-heading {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 1rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* TOC */
+  #toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .toc-item a {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.45rem 0;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--text-2);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.15s, padding-left 0.15s;
+  }
+
+  .toc-item:last-child a { border-bottom: none; }
+
+  .toc-item a::before {
+    content: '';
+    display: block;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-3);
+    flex-shrink: 0;
+    margin-top: 0.42em;
+    transition: background 0.15s;
+  }
+
+  .toc-item a:hover {
+    color: var(--accent);
+    padding-left: 0.35rem;
+  }
+  .toc-item a:hover::before { background: var(--accent); }
+  .toc-item.active a { color: var(--accent); }
+  .toc-item.active a::before { background: var(--accent); }
+
+  /* h3 indent */
+  .toc-item.depth-3 a {
+    padding-left: 1rem;
+    font-size: 0.78rem;
+    color: var(--text-3);
+  }
+  .toc-item.depth-3 a::before { width: 3px; height: 3px; }
+
+  #toc-empty {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--text-3);
   }
 
   /* CTA */
   .cta-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.75rem;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border-2);
+    border-radius: var(--r);
+    padding: 1.5rem;
     position: relative;
     overflow: hidden;
   }
@@ -596,122 +614,136 @@ const jsonLd = JSON.stringify({
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-2), var(--accent), var(--gold));
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+  }
+
+  .cta-card::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: var(--accent-glow);
   }
 
   .cta-card h3 {
     font-family: var(--serif);
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.25;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.3;
     color: var(--white);
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.6rem;
+    position: relative;
+    z-index: 1;
   }
 
   .cta-card p {
-    font-size: 0.85rem;
+    font-size: 0.83rem;
     line-height: 1.65;
     color: var(--text-2);
     margin-bottom: 1.25rem;
-    font-family: var(--sans);
+    position: relative;
+    z-index: 1;
   }
 
   .cta-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     background: var(--accent);
     color: var(--bg);
     font-family: var(--mono);
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     font-weight: 500;
     padding: 0.65rem 1.25rem;
-    border-radius: var(--radius);
+    border-radius: var(--r);
     text-decoration: none;
     transition: background 0.2s, transform 0.15s;
+    position: relative;
+    z-index: 1;
   }
+
   .cta-btn:hover {
-    background: var(--accent-2);
+    background: #4ab88a;
     transform: translateY(-1px);
   }
 
-  /* SIDEBAR SECTION */
-  .sidebar-section {
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.25rem;
-  }
+  .cta-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
 
-  .sidebar-heading {
-    font-family: var(--mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-3);
-    margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .related-link {
-    display: block;
+  /* related */
+  .related-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
     padding: 0.65rem 0;
     border-bottom: 1px solid var(--border);
-    font-family: var(--serif);
-    font-size: 0.95rem;
-    line-height: 1.45;
-    color: var(--text);
     text-decoration: none;
-    transition: color 0.18s, padding-left 0.18s;
+    transition: all 0.15s;
   }
-  .related-link:last-child { border-bottom: none; }
-  .related-link:hover { color: var(--accent); padding-left: 0.35rem; }
+  .related-item:last-child { border-bottom: none; }
+  .related-item:hover { padding-left: 0.4rem; }
 
-  .related-link small {
+  .related-item .ri-icon {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: 4px;
+    background: var(--accent-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    margin-top: 0.15rem;
+  }
+
+  .related-item .ri-text small {
+    display: block;
     font-family: var(--mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.12em;
+    font-size: 0.52rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--text-3);
-    display: block;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.18rem;
   }
 
-  /* ═══════════════════════════════════════════
-     TAGS
-  ═══════════════════════════════════════════ */
-  .tag-list {
+  .related-item .ri-text span {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--text);
+    transition: color 0.15s;
+  }
+
+  .related-item:hover .ri-text span { color: var(--accent); }
+
+  /* location chip */
+  .location-chip {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 0.75rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
   }
 
-  .tag {
-    font-family: var(--mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--accent-dim);
-    border: 1px solid rgba(116,198,157,0.2);
-    padding: 0.25rem 0.7rem;
-    border-radius: 100px;
+  .location-chip svg { color: var(--accent); flex-shrink: 0; }
+
+  .location-chip p {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--text-2);
   }
 
-  /* ═══════════════════════════════════════════
-     FOOTER
-  ═══════════════════════════════════════════ */
+  /* ─── FOOTER ─── */
   .site-footer {
-    margin-top: 4rem;
+    margin-top: 5rem;
     border-top: 1px solid var(--border);
-    padding: 2rem clamp(1.25rem, 4vw, 3rem);
+    padding: 2rem clamp(1.5rem, 4vw, 3rem);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -722,7 +754,7 @@ const jsonLd = JSON.stringify({
 
   .footer-brand {
     font-family: var(--mono);
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--text-3);
@@ -730,128 +762,149 @@ const jsonLd = JSON.stringify({
 
   .footer-back {
     font-family: var(--mono);
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--text-3);
     text-decoration: none;
     transition: color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
   }
   .footer-back:hover { color: var(--accent); }
 
-  /* ═══════════════════════════════════════════
-     RESPONSIVE TWEAKS
-  ═══════════════════════════════════════════ */
-  @media (max-width: 480px) {
-    .hero-title { line-height: 1.05; }
-    .share-bar  { gap: 0.5rem; }
+  /* ─── KEYFRAMES ─── */
+  @keyframes up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 500px) {
     .share-label { display: none; }
+    #progress-pct { display: none; }
     .sidebar { position: static; }
   }
   </style>
 </head>
 
-<body class="bg-[#0b0f0d] text-[#d8e4d8] font-sans font-light min-h-screen antialiased
-             bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(116,198,157,0.06)_0%,transparent_70%)]">
+<body>
 
-  <!-- PROGRESS -->
-  <div id="progress"
-     class="fixed top-0 left-0 h-[2px] w-0 z-[200]
-            bg-gradient-to-r from-[#3a9d6e] via-[#74c69d] to-[#c9a84c]
-            shadow-[0_0_8px_#74c69d] transition-[width] duration-75">
-</div>
+  <!-- READING PROGRESS -->
+  <div id="progress-track">
+    <div id="progress-fill"></div>
+  </div>
+  <div id="progress-pct">0%</div>
 
-  <!-- NAV -->
+  <!-- NAV — fixed, overlaid on hero -->
   <NavBar />
 
-  <!-- HERO -->
+  <!-- ══════════════════ HERO ══════════════════ -->
   <header
-  class="relative w-full min-h-screen flex flex-col justify-end overflow-hidden mt-[62px] bg-cover bg-center"
-  style={image ? `background-image:url('${image}')` : `background-color:#141c15`}
->
+    class="hero"
+    style={image ? `background-image:url('${image}')` : ''}
+    aria-label={`Imagen de portada: ${title}`}
+  >
+    <div class="hero-overlay" aria-hidden="true"></div>
 
-  <!-- overlay -->
-  <div class="absolute inset-0 z-[1]
-       bg-[radial-gradient(ellipse_at_center_top,transparent_20%,rgba(11,15,13,0.5)_100%),linear-gradient(to_bottom,rgba(11,15,13,0.2)_0%,transparent_30%)]">
-  </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">
+        {category} · {siteName}
+      </p>
 
-  <!-- bottom gradient -->
-  <div class="absolute bottom-0 left-0 right-0 h-[75%] z-[2]
-       bg-gradient-to-t from-[#0b0f0d] via-[rgba(11,15,13,0.5)] to-transparent">
-  </div>
+      <h1 class="hero-title">{title}</h1>
 
-  <div class="relative z-[5] max-w-[900px]
-              px-[clamp(1.25rem,5vw,4rem)]
-              pt-[clamp(2rem,5vw,4rem)]
-              pb-[clamp(3rem,6vw,5rem)]">
+      <div class="hero-meta">
+        {pubDate && <time datetime={pubDate}>{formattedDate}</time>}
+        {pubDate && readingTime && <span class="dot" aria-hidden="true"></span>}
+        {readingTime && <span id="reading-time">{readingTime} min de lectura</span>}
+      </div>
 
-    <p class="flex items-center gap-2 font-mono text-[0.6rem] tracking-[0.25em] uppercase
-              text-[#74c69d] mb-5 opacity-0 translate-y-4 animate-[fadeUp_0.6s_0.1s_forwards]">
-      <span class="w-7 h-px bg-[#74c69d]"></span>
-      {category} · {siteName}
-    </p>
-
-    <h1 class="font-serif text-[clamp(2.6rem,6vw,5.5rem)] font-bold leading-[1]
-               text-[#eef5ee] tracking-[-0.01em] mb-6
-               opacity-0 translate-y-4 animate-[fadeUp_0.7s_0.25s_forwards]">
-      {title}
-    </h1>
-
-    <div class="flex flex-wrap items-center gap-x-8 gap-y-4
-                opacity-0 translate-y-4 animate-[fadeUp_0.6s_0.4s_forwards]">
-
-      <time class="font-mono text-[0.65rem] tracking-[0.12em] text-[#5a7060]">
-        {pubDate}
-      </time>
-
-      {readingTime && (
-        <span class="font-mono text-[0.65rem] tracking-[0.1em] text-[#5a7060]">
-          {readingTime} min de lectura
-        </span>
-      )}
-
-      {description && (
-        <p class="font-serif italic text-[clamp(1rem,1.5vw,1.2rem)]
-                  text-[rgba(216,228,216,0.7)] max-w-[560px]">
-          {description}
-        </p>
-      )}
+      {description && <p class="hero-desc">{description}</p>}
     </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <div class="scroll-line"></div>
+    </div>
+  </header>
+
+  <!-- ══════════════════ SHARE BAR ══════════════════ -->
+  <div class="share-bar" aria-label="Compartir artículo">
+    <span class="share-label">Compartir</span>
+
+    <!-- WhatsApp -->
+    <a
+      id="share-whatsapp"
+      class="share-btn"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Compartir en WhatsApp"
+    >
+      <!-- WhatsApp icon -->
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.714l5.994-1.571A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.001-1.373l-.358-.213-3.714.974 1.001-3.622-.233-.372A9.795 9.795 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
+      </svg>
+      WhatsApp
+    </a>
+
+    <!-- X / Twitter -->
+    <a
+      id="share-x"
+      class="share-btn"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Compartir en X"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.727-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      X
+    </a>
+
+    <!-- Instagram (abre perfil para compartir desde Stories) -->
+    <a
+      id="share-instagram"
+      class="share-btn"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Compartir en Instagram"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+      </svg>
+      Instagram
+    </a>
+
+    <!-- Copy link -->
+    <button
+      id="share-copy"
+      class="share-btn"
+      aria-label="Copiar enlace"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>
+      Copiar enlace
+    </button>
   </div>
-</header>
-  <!-- SHARE BAR -->
-<div class="flex flex-wrap items-center gap-2
-            px-[clamp(1.25rem,5vw,4rem)] py-3
-            border-b border-[rgba(116,198,157,0.12)]
-            bg-[#0f1510]">
 
-  <span class="font-mono text-[0.58rem] tracking-[0.18em] uppercase text-[#5a7060]">
-    Compartir
-  </span>
+  <!-- ══════════════════ CONTENT GRID ══════════════════ -->
+  <div class="page-wrap">
 
-  <!-- botón -->
-  <a class="inline-flex items-center gap-1 text-[0.6rem] font-mono tracking-wider
-            text-[#9ab09a] border border-[rgba(116,198,157,0.12)]
-            px-3 py-1 rounded transition-all
-            hover:bg-[rgba(116,198,157,0.18)]
-            hover:border-[#74c69d]
-            hover:text-[#74c69d]">
-    WhatsApp
-  </a>
-</div>
-
-  <!-- CONTENT GRID -->
-  <div class="page-grid">
-
+    <!-- MAIN ARTICLE -->
     <main id="main-content">
       <article class="article-body" aria-label={title}>
         <slot />
 
-        <!-- TAGS -->
         {tags.length > 0 && (
-          <div class="tag-list" aria-label="Etiquetas">
+          <div class="tags-row" aria-label="Etiquetas">
             {tags.map((tag: string) => (
-              <span class="tag">{tag}</span>
+              <a href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`} class="tag">
+                {tag}
+              </a>
             ))}
           </div>
         )}
@@ -859,17 +912,29 @@ const jsonLd = JSON.stringify({
     </main>
 
     <!-- SIDEBAR -->
-    <aside aria-label="Sidebar" class="sidebar">
+    <aside aria-label="Sidebar del artículo" class="sidebar">
+
+      <!-- TABLE OF CONTENTS — generated by JS -->
+      <div class="s-card">
+        <p class="s-heading">En este artículo</p>
+        <ul id="toc-list" aria-label="Tabla de contenidos">
+          <li id="toc-empty" style="display:none;">
+            <p style="font-family:var(--serif);font-style:italic;font-size:0.88rem;color:var(--text-3);">
+              Sin secciones detectadas
+            </p>
+          </li>
+        </ul>
+      </div>
 
       <!-- CTA -->
       <div class="cta-card">
         <h3>¿Buscas hospedaje en Puerto Cisnes?</h3>
-        <p>Pensión completa para empresas y turistas en la Región de Aysén. Habitaciones cómodas, atención personalizada y ubicación privilegiada.</p>
+        <p>Pensión completa para empresas y turistas en la Región de Aysén. Habitaciones cómodas y atención personalizada.</p>
         <a href="https://wa.me/56912345678"
            target="_blank" rel="noopener noreferrer"
            class="cta-btn">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:12px;height:12px;">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
             <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.714l5.994-1.571A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.001-1.373l-.358-.213-3.714.974 1.001-3.622-.233-.372A9.795 9.795 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
           </svg>
           Reservar ahora
@@ -877,33 +942,52 @@ const jsonLd = JSON.stringify({
       </div>
 
       <!-- RELATED -->
-      <div class="sidebar-section">
-        <p class="sidebar-heading">Artículos relacionados</p>
-        <a href="/blog/donde-alojar" class="related-link">
-          <small>Hospedaje</small>
-          Dónde alojar en Puerto Cisnes
+      <div class="s-card">
+        <p class="s-heading">Artículos relacionados</p>
+
+        <a href="/blog/donde-alojar" class="related-item">
+          <div class="ri-icon">🏠</div>
+          <div class="ri-text">
+            <small>Hospedaje</small>
+            <span>Dónde alojar en Puerto Cisnes</span>
+          </div>
         </a>
-        <a href="/blog/trabajadores" class="related-link">
-          <small>Servicios</small>
-          Hospedaje para trabajadores en Aysén
+
+        <a href="/blog/trabajadores" class="related-item">
+          <div class="ri-icon">🔧</div>
+          <div class="ri-text">
+            <small>Servicios</small>
+            <span>Hospedaje para trabajadores en Aysén</span>
+          </div>
         </a>
-        <a href="/blog/gastronomia" class="related-link">
-          <small>Gastronomía</small>
-          Dónde comer en Puerto Cisnes
+
+        <a href="/blog/gastronomia" class="related-item">
+          <div class="ri-icon">🐟</div>
+          <div class="ri-text">
+            <small>Gastronomía</small>
+            <span>Dónde comer en Puerto Cisnes</span>
+          </div>
         </a>
-        <a href="/blog/turismo" class="related-link">
-          <small>Turismo</small>
-          Qué hacer en la Región de Aysén
+
+        <a href="/blog/turismo" class="related-item">
+          <div class="ri-icon">🏔️</div>
+          <div class="ri-text">
+            <small>Turismo</small>
+            <span>Qué hacer en la Región de Aysén</span>
+          </div>
         </a>
       </div>
 
       <!-- LOCATION -->
-      <div class="sidebar-section">
-        <p class="sidebar-heading">Ubicación</p>
-        <p style="font-family:var(--serif);font-size:0.95rem;line-height:1.7;color:var(--text-2);font-style:italic;">
-          Puerto Cisnes<br/>
-          Región de Aysén · Patagonia chilena
-        </p>
+      <div class="s-card">
+        <p class="s-heading">Ubicación</p>
+        <div class="location-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <p>Puerto Cisnes<br/>Región de Aysén · Patagonia Chilena</p>
+        </div>
       </div>
 
     </aside>
@@ -911,50 +995,151 @@ const jsonLd = JSON.stringify({
 
   <!-- FOOTER -->
   <footer class="site-footer">
-    <span class="footer-brand">© {new Date().getFullYear()} Puerto Cisnes — Patagonia Chilena</span>
-    <a href="/blog" class="footer-back">← Volver al blog</a>
+    <nav aria-label="Breadcrumb">
+      <span class="footer-brand">
+        <a href="/" style="color:inherit;text-decoration:none;">Puerto Cisnes</a>
+        &nbsp;/&nbsp;
+        <a href="/blog" style="color:inherit;text-decoration:none;">Blog</a>
+        &nbsp;/&nbsp;
+        <span style="color:var(--text-2);">{title}</span>
+      </span>
+    </nav>
+    <a href="/blog" class="footer-back">
+      ← Volver al blog
+    </a>
   </footer>
 
-  <!-- SCRIPTS -->
-  <script>
-    // Progress bar
-    const bar = document.getElementById('progress');
-    if (bar) {
-      const update = () => {
-        const el = document.documentElement;
-        const pct = el.scrollTop / (el.scrollHeight - el.clientHeight) * 100;
-        bar.style.width = Math.min(pct, 100) + '%';
-      };
-      window.addEventListener('scroll', update, { passive: true });
-      update();
+  <!-- ══════════════════ SCRIPTS ══════════════════ -->
+  <script define:vars={{ pageUrl, title, description }}>
+    /* ── Reading progress ── */
+    const fill = document.getElementById('progress-fill');
+    const pct  = document.getElementById('progress-pct');
+
+    function updateProgress() {
+      const el      = document.documentElement;
+      const scrolled = el.scrollTop;
+      const total    = el.scrollHeight - el.clientHeight;
+      const p        = total > 0 ? Math.round((scrolled / total) * 100) : 0;
+      if (fill) fill.style.width = p + '%';
+      if (pct)  {
+        pct.textContent = p + '%';
+        pct.style.opacity = (p > 5 && p < 98) ? '1' : '0';
+      }
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    /* ── Auto reading time ── */
+    const article = document.querySelector('.article-body');
+    const rtEl    = document.getElementById('reading-time');
+    if (article && rtEl && !rtEl.textContent.trim().replace('min de lectura','').trim()) {
+      const words = article.innerText.trim().split(/\s+/).length;
+      const mins  = Math.max(1, Math.round(words / 220));
+      rtEl.textContent = mins + ' min de lectura';
     }
 
-    // Nav opacity on scroll
-    const nav = document.querySelector('.site-nav') as HTMLElement | null;
-    if (nav) {
-      window.addEventListener('scroll', () => {
-        nav.style.background = window.scrollY > 60
-          ? 'rgba(11,15,13,0.97)'
-          : 'rgba(11,15,13,0.82)';
-      }, { passive: true });
+    /* ── TOC builder ── */
+    const headings = article
+      ? Array.from(article.querySelectorAll('h2, h3'))
+      : [];
+    const tocList  = document.getElementById('toc-list');
+    const tocEmpty = document.getElementById('toc-empty');
+
+    if (headings.length > 0 && tocList) {
+      tocEmpty && (tocEmpty.style.display = 'none');
+      headings.forEach((h, i) => {
+        if (!h.id) h.id = 'section-' + i;
+        const li = document.createElement('li');
+        li.className = 'toc-item depth-' + (h.tagName === 'H2' ? '2' : '3');
+        li.dataset.id = h.id;
+        const a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.textContent = h.textContent;
+        li.appendChild(a);
+        tocList.appendChild(li);
+      });
+    } else if (tocEmpty) {
+      tocEmpty.style.display = 'block';
     }
 
-    // Animate article paragraphs on scroll
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) {
-          (e.target as HTMLElement).style.opacity = '1';
-          (e.target as HTMLElement).style.transform = 'translateY(0)';
-          observer.unobserve(e.target);
+    /* ── TOC active section highlight ── */
+    const tocItems = Array.from(document.querySelectorAll('.toc-item'));
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocItems.forEach(li => li.classList.remove('active'));
+          const match = tocItems.find(li => li.dataset.id === entry.target.id);
+          if (match) match.classList.add('active');
         }
-      }),
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    );
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
 
-    document.querySelectorAll('.article-body > p, .article-body > h2, .article-body > h3, .article-body > blockquote').forEach(el => {
-      (el as HTMLElement).style.cssText += 'opacity:0;transform:translateY(14px);transition:opacity 0.55s ease,transform 0.55s ease';
-      observer.observe(el);
-    });
+    headings.forEach(h => io.observe(h));
+
+    /* ── Scroll reveal ── */
+    const revealEls = article
+      ? Array.from(article.querySelectorAll('p, h2, h3, blockquote, ul, ol, img'))
+      : [];
+
+    revealEls.forEach(el => el.classList.add('reveal'));
+
+    const revealIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealIO.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    revealEls.forEach(el => revealIO.observe(el));
+
+    /* ── Share buttons ── */
+    const encodedUrl   = encodeURIComponent(pageUrl);
+    const encodedTitle = encodeURIComponent(title);
+    const encodedDesc  = encodeURIComponent(description || '');
+
+    const wa = document.getElementById('share-whatsapp');
+    if (wa) wa.href = `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`;
+
+    const xBtn = document.getElementById('share-x');
+    if (xBtn) xBtn.href = `https://x.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`;
+
+    const ig = document.getElementById('share-instagram');
+    if (ig) {
+      ig.href = '#';
+      ig.addEventListener('click', e => {
+        e.preventDefault();
+        if (navigator.share) {
+          navigator.share({ title, url: pageUrl }).catch(() => {});
+        } else {
+          navigator.clipboard.writeText(pageUrl).then(() => {
+            ig.classList.add('copied');
+            const prev = ig.lastChild;
+            if (prev) prev.textContent = '¡Enlace copiado!';
+            setTimeout(() => {
+              ig.classList.remove('copied');
+              if (prev) prev.textContent = 'Instagram';
+            }, 2000);
+          });
+        }
+      });
+    }
+
+    const copyBtn = document.getElementById('share-copy');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(pageUrl).then(() => {
+          copyBtn.classList.add('copied');
+          const last = copyBtn.lastChild;
+          if (last) last.textContent = '¡Copiado!';
+          setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            if (last) last.textContent = 'Copiar enlace';
+          }, 2000);
+        });
+      });
+    }
   </script>
 
 </body>

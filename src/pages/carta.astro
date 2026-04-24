@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carta — Hostal Monchito · Puerto Cisnes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EFE0;
+    --dark: #1C1A14;
+    --terracotta: #C4622D;
+    --gold: #D4A843;
+    --forest: #2D4A35;
+    --warm-mid: #8B6914;
+    --light-cream: #FAF6EE;
+    --border: rgba(196,98,45,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--dark);
+    color: var(--cream);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 60%, rgba(44,74,53,0.45) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 20% 20%, rgba(196,98,45,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 80% 80%, rgba(212,168,67,0.1) 0%, transparent 60%),
+      #1C1A14;
+  }
+
+  /* Decorative mountain silhouette */
+  .mountains {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    overflow: hidden;
+  }
+  .mountains svg { width: 100%; height: 100%; }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1s ease both;
+  }
+
+  .badge {
+    display: inline-block;
+    border: 1px solid var(--terracotta);
+    color: var(--terracotta);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 0.35rem 1.1rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s 0.1s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 12vw, 7rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    animation: fadeUp 1s 0.2s ease both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: rgba(245,239,224,0.65);
+    animation: fadeUp 1s 0.35s ease both;
+  }
+
+  .hero-divider {
+    margin: 2rem auto;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    animation: fadeUp 1s 0.45s ease both;
+  }
+
+  .location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,239,224,0.5);
+    animation: fadeUp 1s 0.55s ease both;
+  }
+
+  .location span { color: var(--terracotta); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,239,224,0.3);
+    animation: fadeIn 2s 1.2s both;
+    z-index: 2;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(180deg, var(--terracotta), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ── NAVIGATION TABS ── */
+  .nav-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(28,26,20,0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1rem;
+  }
+
+  .nav-tabs-inner {
+    display: flex;
+    gap: 0;
+    max-width: 700px;
+    margin: 0 auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-tabs-inner::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 1rem 1.2rem;
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,239,224,0.45);
+    white-space: nowrap;
+    transition: color 0.2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%; right: 50%;
+    height: 2px;
+    background: var(--terracotta);
+    transition: left 0.3s, right 0.3s;
+  }
+
+  .tab-btn.active {
+    color: var(--cream);
+  }
+
+  .tab-btn.active::after {
+    left: 10%; right: 10%;
+  }
+
+  /* ── SECTIONS ── */
+  .menu-section {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--cream);
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── MENU ITEMS ── */
+  .menu-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .menu-item {
+    border-bottom: 1px solid var(--border);
+    padding: 1.4rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: background 0.2s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .menu-item::before {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0; bottom: 0;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(196,98,45,0.05), transparent);
+    transition: left 0.5s;
+  }
+
+  .menu-item:hover::before { left: 100%; }
+
+  .item-info { flex: 1; }
+
+  .item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.35rem;
+  }
+
+  .item-desc {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: rgba(245,239,224,0.55);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .item-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+
+  /* ── BURGERS NOTE ── */
+  .section-note {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: rgba(44,74,53,0.25);
+    border: 1px solid rgba(44,74,53,0.5);
+    border-radius: 8px;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 1.8rem;
+    font-size: 0.85rem;
+    color: rgba(245,239,224,0.7);
+  }
+
+  .section-note .note-icon { font-size: 1rem; flex-shrink: 0; }
+
+  /* ── SIDES LIST ── */
+  .sides-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .side-chip {
+    background: rgba(196,98,45,0.12);
+    border: 1px solid rgba(196,98,45,0.3);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.8rem;
+    color: rgba(245,239,224,0.75);
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: rgba(0,0,0,0.4);
+    border-top: 1px solid var(--border);
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+  }
+
+  .footer-sub {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,239,224,0.35);
+    margin-bottom: 1.5rem;
+  }
+
+  .instagram-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: linear-gradient(135deg, #C4622D, #D4A843);
+    color: var(--dark);
+    text-decoration: none;
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.7rem 1.6rem;
+    border-radius: 999px;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .instagram-btn:hover { transform: scale(1.04); opacity: 0.9; }
+
+  .footer-copy {
+    margin-top: 2rem;
+    font-size: 0.7rem;
+    color: rgba(245,239,224,0.2);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── SEPARATOR ── */
+  .section-sep {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 1rem auto;
+    max-width: 700px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="badge">📍 Puerto Cisnes · Patagonia</div>
+    <h1>Hostal<br><em>Monchito</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Pizzas artesanales · Burgers · Platos caseros</p>
+    <p class="location"><span>✦</span> En el corazón de la Patagonia <span>✦</span></p>
+  </div>
+
+  <!-- Mountain silhouette -->
+  <div class="mountains">
+    <svg viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,180 L0,130 L80,90 L160,120 L280,60 L380,100 L460,45 L560,90 L660,30 L760,80 L860,20 L960,70 L1060,40 L1160,85 L1260,50 L1360,95 L1440,70 L1440,180 Z" fill="rgba(44,74,53,0.3)"/>
+      <path d="M0,180 L0,150 L100,120 L200,145 L320,100 L430,130 L540,90 L640,120 L740,75 L860,115 L960,85 L1080,110 L1180,80 L1300,115 L1440,90 L1440,180 Z" fill="rgba(44,74,53,0.2)"/>
+      <path d="M0,180 L0,165 L150,145 L300,160 L450,135 L600,155 L750,130 L900,150 L1050,125 L1200,148 L1440,130 L1440,180 Z" fill="rgba(28,26,20,0.6)"/>
+    </svg>
+  </div>
+
+  <div class="scroll-hint">Ver carta</div>
+</section>
+
+<!-- STICKY NAV -->
+<nav class="nav-tabs">
+  <div class="nav-tabs-inner">
+    <button class="tab-btn active" onclick="scrollTo('pizzas', this)">🍕 Pizzas</button>
+    <button class="tab-btn" onclick="scrollTo('burgers', this)">🍔 Burgers</button>
+    <button class="tab-btn" onclick="scrollTo('caseros', this)">🍽️ Platos</button>
+  </div>
+</nav>
+
+<!-- ══ PIZZAS ══ -->
+<section class="menu-section" id="pizzas">
+  <div class="section-header reveal">
+    <div class="section-icon">🍕</div>
+    <h2 class="section-title">Pizzas <em>Artesanales</em></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="menu-grid">
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Pizza 4 Quesos</div>
+        <div class="item-desc">Salsa de tomate, gauda, azul, camembert y philadelphia</div>
+      </div>
+      <div class="item-price">$12.500</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Pizza Carne</div>
+        <div class="item-desc">Salsa de tomate, gauda, carne de vacuno, cebolla morada y pimentón rojo</div>
+      </div>
+      <div class="item-price">$12.500</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Pizza Pepperoni</div>
+        <div class="item-desc">Salsa de tomate, gauda y abundantes rodajas de pepperoni</div>
+      </div>
+      <div class="item-price">$11.000</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Pizza Vegetariana</div>
+        <div class="item-desc">Salsa de tomate, gauda, champiñón, palmito y choclo</div>
+      </div>
+      <div class="item-price">$11.500</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Pizza Choclosa</div>
+        <div class="item-desc">Salsa de tomate, gauda, pollo, choclo y salame ahumado</div>
+      </div>
+      <div class="item-price">$12.000</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Pizza Campera</div>
+        <div class="item-desc">Salsa de tomate, gauda, pollo salteado, choclo y cebolla caramelizada</div>
+      </div>
+      <div class="item-price">$12.000</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Pizza Fresca</div>
+        <div class="item-desc">Salsa de tomate, gauda, palmitos, philadelphia y ciboulette</div>
+      </div>
+      <div class="item-price">$12.000</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Pizza Salame</div>
+        <div class="item-desc">Salsa de tomate, gauda y abundantes láminas de salame ahumado</div>
+      </div>
+      <div class="item-price">$11.000</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-sep">
+
+<!-- ══ BURGERS ══ -->
+<section class="menu-section" id="burgers">
+  <div class="section-header reveal">
+    <div class="section-icon">🍔</div>
+    <h2 class="section-title">Nuestras <em>Burgers</em></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="section-note reveal">
+    <span class="note-icon">🍟</span>
+    <span>Todas las burgers incluyen papas fritas</span>
+  </div>
+
+  <div class="menu-grid">
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Burger Clásica</div>
+        <div class="item-desc">Cheddar, lechuga, cebolla morada, tomate y salsa</div>
+      </div>
+      <div class="item-price">$9.500</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Burger Italiana</div>
+        <div class="item-desc">Cheddar, palta, tomate y salsa</div>
+      </div>
+      <div class="item-price">$9.000</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Burger Monchito</div>
+        <div class="item-desc">Cheddar, dill, lechuga, cebolla frita y salsa</div>
+      </div>
+      <div class="item-price">$9.000</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Burger Fungi</div>
+        <div class="item-desc">Cheddar, champiñón, dill, tomate y salsa</div>
+      </div>
+      <div class="item-price">$9.500</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Burger Doble</div>
+        <div class="item-desc">Doble carne, doble cheddar y salsa</div>
+      </div>
+      <div class="item-price">$9.500</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-sep">
+
+<!-- ══ PLATOS CASEROS ══ -->
+<section class="menu-section" id="caseros">
+  <div class="section-header reveal">
+    <div class="section-icon">🍽️</div>
+    <h2 class="section-title">Platos <em>Caseros</em></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="section-note reveal">
+    <span class="note-icon">🥗</span>
+    <div>
+      <strong style="color:var(--cream)">Incluye dos agregados a elección:</strong>
+      <div style="margin-top:0.4rem">
+        <div class="sides-grid" style="margin-bottom:0">
+          <span class="side-chip">Arroz</span>
+          <span class="side-chip">Puré</span>
+          <span class="side-chip">Papas cocidas</span>
+          <span class="side-chip">Papas doradas</span>
+          <span class="side-chip">Ensaladas del día</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-grid">
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Carne a la olla</div>
+      </div>
+      <div class="item-price">$12.000</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Merluza frita / plancha</div>
+      </div>
+      <div class="item-price">$12.500</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Pollo a la plancha</div>
+      </div>
+      <div class="item-price">$12.000</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Milanesa de pollo</div>
+      </div>
+      <div class="item-price">$12.500</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Pechuga con salsa de champiñones</div>
+      </div>
+      <div class="item-price">$12.500</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Bistec a lo pobre</div>
+      </div>
+      <div class="item-price">$13.000</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Merluza a lo pobre</div>
+      </div>
+      <div class="item-price">$14.000</div>
+    </div>
+    <div class="menu-item reveal">
+      <div class="item-info">
+        <div class="item-name">Chuletas de cerdo</div>
+      </div>
+      <div class="item-price">$12.000</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">Hostal Monchito</div>
+  <div class="footer-sub">Puerto Cisnes · Patagonia · Chile</div>
+  <a href="https://instagram.com/hostalmonchito" class="instagram-btn" target="_blank">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    @hostalmonchito
+  </a>
+  <p class="footer-copy">⭐ Comparte tu experiencia con nosotros</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Tab navigation
+  function scrollTo(id, btn) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // Update active tab on scroll
+  const sections = ['pizzas', 'burgers', 'caseros'];
+  const tabs = document.querySelectorAll('.tab-btn');
+  window.addEventListener('scroll', () => {
+    let current = 'pizzas';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    tabs.forEach((btn, i) => {
+      btn.classList.toggle('active', sections[i] === current);
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>

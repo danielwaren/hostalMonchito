@@ -1,0 +1,29 @@
+---
+const { title, description } = Astro.props;
+import '../styles/globals.css';
+import Nav from '../components/landing/Navbar.astro';
+import Footer from '../components/landing/Footer.astro';
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+
+  <body class="bg-neutral-950 text-white font-sans">
+
+    <!-- NAV GLOBAL -->
+    <Nav />
+
+    <!-- CONTENIDO -->
+    <main class="max-w-6xl mx-auto px-4 pt-28 pb-16">
+      <slot />
+    </main>
+
+    <Footer />
+
+  </body>
+</html>

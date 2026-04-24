@@ -1,0 +1,685 @@
+---
+import Layout from '../layouts/LayoutInterior.astro';
+---
+
+<Layout
+  title="Hospedaje en Puerto Cisnes | Hostal El Monchito"
+  description="Hospedaje en Puerto Cisnes con pensión completa para empresas, trabajadores y turistas en la Región de Aysén. Reserva directa por WhatsApp."
+  image="/img/cisnes.webp"
+  url="https://www.hostalmonchito.cl/hospedaje-puerto-cisnes"
+>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --tierra:    #c8a97e;
+    --oscuro:    #0e0d0b;
+    --carbon:    #1a1815;
+    --piedra:    #2c2a26;
+    --niebla:    #6b6560;
+    --crema:     #f0ead8;
+    --verde:     #2d5a3d;
+    --verde-clr: #4a9461;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .page-wrap {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--oscuro);
+    color: var(--crema);
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+
+  .hero__photo {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(0.7) brightness(0.85);
+    transition: transform 8s ease;
+  }
+
+  .hero__photo:hover img { transform: scale(1.04); }
+
+  .hero__photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 60%, var(--oscuro) 100%);
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 4rem 4rem 3rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero__eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--tierra);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero__eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--tierra);
+    flex-shrink: 0;
+  }
+
+  .hero__h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 4.5vw, 4.8rem);
+    font-weight: 900;
+    line-height: 1.06;
+    color: var(--crema);
+    margin-bottom: 1.75rem;
+  }
+
+  .hero__h1 em {
+    font-style: italic;
+    color: var(--tierra);
+  }
+
+  .hero__desc {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #a09890;
+    max-width: 380px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero__cta-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-wsp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--verde);
+    color: #fff;
+    padding: 0.9rem 1.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-wsp:hover {
+    background: var(--verde-clr);
+    transform: translateY(-2px);
+  }
+
+  .btn-wsp svg { width: 18px; height: 18px; }
+
+  .hero__scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--niebla);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: nudge 2s ease-in-out infinite;
+  }
+
+  .hero__scroll-hint span { writing-mode: vertical-rl; }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ─── STRIP NÚMEROS ─── */
+  .strip-nums {
+    background: var(--tierra);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+  }
+
+  .strip-nums__item {
+    padding: 2rem 1rem;
+    border-right: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .strip-nums__item:last-child { border-right: none; }
+
+  .strip-nums__num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 900;
+    color: var(--oscuro);
+    line-height: 1;
+    display: block;
+  }
+
+  .strip-nums__label {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.6);
+    margin-top: 0.4rem;
+    display: block;
+  }
+
+  /* ─── SECCIÓN SERVICIOS ─── */
+  .servicios {
+    padding: 7rem 5vw;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--tierra);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--tierra);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 4rem;
+    max-width: 520px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--tierra);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--piedra);
+  }
+
+  .card {
+    background: var(--carbon);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--tierra);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .card:hover { background: #1f1d19; }
+  .card:hover::before { transform: scaleX(1); }
+
+  .card__icon {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--piedra);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: var(--tierra);
+    font-size: 1.2rem;
+  }
+
+  .card__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--crema);
+  }
+
+  .card__desc {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--niebla);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .card__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .card__list li {
+    font-size: 0.82rem;
+    color: #8a8278;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .card__list li::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--tierra);
+    flex-shrink: 0;
+  }
+
+  /* ─── IMAGEN + TEXTO LATERAL ─── */
+  .split-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 560px;
+    margin: 0;
+  }
+
+  .split-section__img {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .split-section__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.6);
+    transition: transform 6s ease, filter 0.6s;
+  }
+
+  .split-section__img:hover img {
+    transform: scale(1.05);
+    filter: saturate(0.85);
+  }
+
+  .split-section__body {
+    background: var(--carbon);
+    padding: 5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .split-section__body .section-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .split-section__body p {
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: var(--niebla);
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  .split-section__body p + p { margin-top: 0.75rem; }
+
+  /* ─── CTA CENTRAL ─── */
+  .cta-block {
+    text-align: center;
+    padding: 7rem 5vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-block::before {
+    content: 'HOSPEDAJE';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(5rem, 14vw, 16rem);
+    font-weight: 900;
+    color: rgba(255,255,255,0.025);
+    white-space: nowrap;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .cta-block__title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+
+  .cta-block__sub {
+    font-size: 0.9rem;
+    color: var(--niebla);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    position: relative;
+  }
+
+  .btn-wsp-lg {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--verde);
+    color: #fff;
+    padding: 1.1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+    position: relative;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-wsp-lg:hover {
+    background: var(--verde-clr);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(45,90,61,0.45);
+  }
+
+  .btn-wsp-lg svg { width: 20px; height: 20px; }
+
+  /* ─── TEXTO SEO ─── */
+  .seo-text {
+    background: var(--carbon);
+    border-top: 1px solid var(--piedra);
+  }
+
+  .seo-text__inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .seo-text__inner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--crema);
+  }
+
+  .seo-text__inner p {
+    font-size: 0.875rem;
+    line-height: 1.9;
+    color: var(--niebla);
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .hero__photo {
+      height: 55vw;
+      min-height: 280px;
+    }
+
+    .hero__photo::after {
+      background: linear-gradient(0deg, var(--oscuro) 0%, transparent 60%);
+    }
+
+    .hero__content {
+      padding: 2.5rem 1.5rem 3rem;
+    }
+
+    .strip-nums { grid-template-columns: 1fr; }
+    .strip-nums__item { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.15); }
+
+    .servicios { padding: 4rem 1.5rem; }
+    .cards { grid-template-columns: 1fr; }
+
+    .split-section {
+      grid-template-columns: 1fr;
+    }
+    .split-section__img { height: 280px; }
+    .split-section__body { padding: 3rem 1.5rem; }
+
+    .cta-block { padding: 4rem 1.5rem; }
+    .seo-text__inner { padding: 3rem 1.5rem; }
+  }
+</style>
+
+<div class="page-wrap">
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero" aria-label="Bienvenida">
+    <div class="hero__photo">
+      <img
+        src="/img/galeria-1.jpg"
+        alt="Vista de Puerto Cisnes en la Patagonia chilena"
+        loading="eager"
+        width="900"
+        height="1100"
+      />
+    </div>
+
+    <div class="hero__content">
+      <p class="hero__eyebrow">Región de Aysén · Patagonia Chilena</p>
+
+      <h1 class="hero__h1">
+        Hospedaje<br>
+        en Puerto<br>
+        <em>Cisnes</em>
+      </h1>
+
+      <p class="hero__desc">
+        Pensión completa para trabajadores, empresas y turistas. En el corazón de la Patagonia, sobre la Carretera Austral.
+      </p>
+
+      <div class="hero__cta-group">
+        <a href="https://wa.me/56962249178" target="_blank" rel="noopener" class="btn-wsp" aria-label="Reservar hospedaje por WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.856L.057 23.886l6.2-1.625A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 01-5.003-1.371l-.358-.214-3.724.977.993-3.62-.233-.371A9.793 9.793 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/>
+          </svg>
+          Reservar ahora
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__scroll-hint" aria-hidden="true">
+      <span>scroll</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ══════════ STRIP NÚMEROS ══════════ -->
+  <div class="strip-nums" aria-label="Cifras del hostal">
+    <div class="strip-nums__item">
+      <span class="strip-nums__num">+15</span>
+      <span class="strip-nums__label">Años de experiencia</span>
+    </div>
+    <div class="strip-nums__item">
+      <span class="strip-nums__num">3</span>
+      <span class="strip-nums__label">Tipos de huésped</span>
+    </div>
+    <div class="strip-nums__item">
+      <span class="strip-nums__num">24/7</span>
+      <span class="strip-nums__label">Atención directa</span>
+    </div>
+  </div>
+
+  <!-- ══════════ SERVICIOS ══════════ -->
+  <section class="servicios" aria-labelledby="servicios-title">
+    <p class="section-label">Nuestros servicios</p>
+    <h2 class="section-title" id="servicios-title">
+      Un hospedaje para<br>
+      <em>cada tipo</em> de viajero
+    </h2>
+
+    <div class="cards" role="list">
+
+      <!-- EMPRESAS -->
+      <article class="card" role="listitem">
+        <div class="card__icon" aria-hidden="true">🏗</div>
+        <h3 class="card__title">Para empresas</h3>
+        <p class="card__desc">
+          Convenios de hospedaje y alimentación para empresas salmoneras, de construcción y obras públicas en la Región de Aysén.
+        </p>
+        <ul class="card__list">
+          <li>Pensión completa</li>
+          <li>Colaciones para faena</li>
+          <li>Facturación a empresa</li>
+          <li>Estadías prolongadas</li>
+        </ul>
+      </article>
+
+      <!-- TRABAJADORES -->
+      <article class="card" role="listitem">
+        <div class="card__icon" aria-hidden="true">🧰</div>
+        <h3 class="card__title">Para trabajadores</h3>
+        <p class="card__desc">
+          Hospedaje cómodo y económico para trabajadores en turno que llegan a Puerto Cisnes desde distintos puntos de la región.
+        </p>
+        <ul class="card__list">
+          <li>Habitaciones cómodas</li>
+          <li>Alimentación diaria</li>
+          <li>Ambiente tranquilo</li>
+          <li>Ubicación estratégica</li>
+        </ul>
+      </article>
+
+      <!-- TURISTAS -->
+      <article class="card" role="listitem">
+        <div class="card__icon" aria-hidden="true">🏔</div>
+        <h3 class="card__title">Para turistas</h3>
+        <p class="card__desc">
+          El punto de partida ideal para recorrer la Carretera Austral y descubrir la Patagonia chilena con toda la comodidad.
+        </p>
+        <ul class="card__list">
+          <li>Atención personalizada</li>
+          <li>Desayuno incluido</li>
+          <li>Cerca de atractivos</li>
+          <li>Recomendaciones locales</li>
+        </ul>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ══════════ SPLIT IMG + TEXTO ══════════ -->
+  <section class="split-section" aria-label="Sobre el hostal">
+    <div class="split-section__img">
+      <img
+        src="/img/galeria-2.jpg"
+        alt="Interior acogedor del Hostal El Monchito en Puerto Cisnes"
+        loading="lazy"
+        width="800"
+        height="600"
+      />
+    </div>
+    <div class="split-section__body">
+      <p class="section-label">Hostal El Monchito</p>
+      <h2 class="section-title">
+        Calidez en plena<br>
+        <em>Patagonia</em>
+      </h2>
+      <p>
+        Ubicado en Puerto Cisnes, nuestro hostal es un punto de referencia para quienes trabajan o viajan por la Región de Aysén. Ofrecemos pensión completa, ambiente familiar y atención directa sin intermediarios.
+      </p>
+      <p>
+        Estamos a pocos metros del centro del pueblo, con fácil acceso a la banca, supermercados, embarcadero y los principales atractivos naturales del área.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════ CTA CENTRAL ══════════ -->
+  <section class="cta-block" aria-label="Reserva tu hospedaje">
+    <h2 class="cta-block__title">¿Listo para reservar?</h2>
+    <p class="cta-block__sub">Contáctanos por WhatsApp · Respuesta inmediata</p>
+    <a
+      href="https://wa.me/56962249178"
+      target="_blank"
+      rel="noopener"
+      class="btn-wsp-lg"
+      aria-label="Abrir WhatsApp para reservar hospedaje en Puerto Cisnes"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.856L.057 23.886l6.2-1.625A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 01-5.003-1.371l-.358-.214-3.724.977.993-3.62-.233-.371A9.793 9.793 0 012.182 12C2.182 6.569 6.569 2.182 12 2.182S21.818 6.569 21.818 12 17.431 21.818 12 21.818z"/>
+      </svg>
+      Reservar por WhatsApp
+    </a>
+  </section>
+
+  <!-- ══════════ TEXTO SEO ══════════ -->
+  <section class="seo-text" aria-label="Información sobre el hospedaje en Puerto Cisnes">
+    <div class="seo-text__inner">
+      <h2>Hospedaje en Puerto Cisnes: tu base en la Patagonia</h2>
+      <p>
+        Nuestro hospedaje en Puerto Cisnes está diseñado para ofrecer comodidad real tanto a trabajadores como a turistas que visitan la Región de Aysén. Contamos con servicio de pensión completa, alimentación para empresas y un ambiente acogedor en plena Patagonia chilena.
+      </p>
+      <p>
+        Somos una excelente opción para quienes buscan alojamiento en Puerto Cisnes cerca de la Carretera Austral, con fácil acceso a servicios, naturaleza y conectividad hacia distintos puntos de la región. Llevamos más de 15 años recibiendo huéspedes de todo Chile y del mundo.
+      </p>
+      <p>
+        Si buscas un hostal en Puerto Cisnes con pensión completa, atención directa y precio justo, en Hostal El Monchito te esperamos.
+      </p>
+    </div>
+  </section>
+
+</div>
+
+</Layout>

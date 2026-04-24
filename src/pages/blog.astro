@@ -1,0 +1,91 @@
+---
+import Nav from '../../src/components/landing/Navbar.astro';
+
+const posts = Object.values(
+  import.meta.glob('./blog/*.md', { eager: true })
+);
+
+// ordenar por fecha
+const sortedPosts = posts.sort(
+  (a, b) => new Date(b.frontmatter.dateISO) - new Date(a.frontmatter.dateISO)
+);
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | Hostal El Monchito Puerto Cisnes</title>
+    <meta name="description" content="Blog sobre Puerto Cisnes: turismo, hospedaje y trabajadores en Aysén." />
+  </head>
+
+  <body class="bg-neutral-950 text-white font-sans">
+
+    <Nav />
+
+    <main class="max-w-6xl mx-auto px-4 py-16 pt-24"
+
+      <!-- HEADER -->
+      <section class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+          Blog Puerto Cisnes
+        </h1>
+        <p class="text-neutral-400 max-w-2xl mx-auto">
+          Guías, datos y recomendaciones sobre turismo y hospedaje en la Región de Aysén.
+        </p>
+      </section>
+
+      <!-- POSTS -->
+      <section class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+        {sortedPosts.map((post) => {
+          const slug = post.file.split('/').pop().replace('.md', '');
+
+          return (
+            <a href={`/blog/${slug}`} class="group h-full">
+
+              <article class="bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-800 hover:border-neutral-700 transition flex flex-col h-full">
+
+                <!-- IMAGE -->
+                <div class="overflow-hidden h-52">
+                  <img
+                    src={post.frontmatter.image}
+                    alt={post.frontmatter.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                    loading="lazy"
+                  />
+                </div>
+
+                <!-- CONTENT -->
+                <div class="p-5 flex flex-col flex-1">
+
+                  <p class="text-sm text-neutral-500 mb-2">
+                    {post.frontmatter.pubDate}
+                  </p>
+
+                  <h2 class="text-xl font-semibold mb-3 group-hover:text-green-400 transition line-clamp-2">
+                    {post.frontmatter.title}
+                  </h2>
+
+                  <p class="text-neutral-400 text-sm line-clamp-3 flex-1">
+                    {post.frontmatter.description}
+                  </p>
+
+                  <div class="mt-4 text-green-400 text-sm font-medium">
+                    Leer más →
+                  </div>
+
+                </div>
+
+              </article>
+
+            </a>
+          );
+        })}
+
+      </section>
+
+    </main>
+
+  </body>
+</html>
