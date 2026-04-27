@@ -4,7 +4,7 @@ import SeoSchema from './SeoSchema.astro';
 const {
   title = "Hostal El Monchito | Puerto Cisnes",
   description = "Hospedaje en Puerto Cisnes con pensión completa para trabajadores y turistas en la Región de Aysén.",
-  image = "https://hostalmonchito.cl/header-img.jpg",
+  image = "https://hostalmonchito.cl/img/logo.png",
   url = "https://hostalmonchito.cl/",
 } = Astro.props;
 ---
@@ -30,6 +30,10 @@ const {
 <meta name="language" content="Spanish" />
 <meta name="content-language" content="es-CL" />
 <link rel="alternate" hreflang="es-CL" href={url} />
+
+<!-- FAVICON -->
+<link rel="icon" href="/img/logo.png" type="image/png" />
+<link rel="apple-touch-icon" href="/img/logo.png" />
 
 <!-- KEYWORDS -->
 <meta name="keywords" content="hostal Puerto Cisnes, hospedaje Puerto Cisnes, alojamiento Puerto Cisnes, pensión completa Puerto Cisnes, alojamiento trabajadores Aysén, hostal Carretera Austral" />

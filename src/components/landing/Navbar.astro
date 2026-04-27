@@ -1,6 +1,16 @@
 ---
 const isHome = Astro.url.pathname === "/";
 const link = (id) => isHome ? `#${id}` : `/#${id}`;
+
+const navLinks = [
+  { href: link("about"),        label: "Nosotros" },
+  { href: link("services"),     label: "Servicios" },
+  { href: link("gallery"),      label: "Entorno" },
+  { href: link("testimonials"), label: "Reseñas" },
+  { href: link("faq"),          label: "Preguntas" },
+  { href: link("blog"),         label: "Blog" },
+  { href: "/Contacto",          label: "Contacto" },
+];
 ---
 
 <nav id="navbar"
@@ -12,18 +22,16 @@ const link = (id) => isHome ? `#${id}` : `/#${id}`;
   </a>
 
   <ul class="hidden lg:flex gap-10 list-none">
-    <li><a href={link("about")}        class="nav-link-hover text-white/65 no-underline text-[0.75rem] tracking-[0.12em] uppercase transition-colors duration-200 hover:text-snow">Nosotros</a></li>
-    <li><a href={link("services")}     class="nav-link-hover text-white/65 no-underline text-[0.75rem] tracking-[0.12em] uppercase transition-colors duration-200 hover:text-snow">Servicios</a></li>
-    <li><a href={link("gallery")}      class="nav-link-hover text-white/65 no-underline text-[0.75rem] tracking-[0.12em] uppercase transition-colors duration-200 hover:text-snow">Entorno</a></li>
-    <li><a href={link("testimonials")} class="nav-link-hover text-white/65 no-underline text-[0.75rem] tracking-[0.12em] uppercase transition-colors duration-200 hover:text-snow">Reseñas</a></li>
-    <li><a href={link("faq")}          class="nav-link-hover text-white/65 no-underline text-[0.75rem] tracking-[0.12em] uppercase transition-colors duration-200 hover:text-snow">Preguntas</a></li>
-    <li><a href={link("blog")}         class="nav-link-hover text-white/65 no-underline text-[0.75rem] tracking-[0.12em] uppercase transition-colors duration-200 hover:text-snow">Blog</a></li>
-    <li><a href={"/Contacto"}      class="nav-link-hover text-white/65 no-underline text-[0.75rem] tracking-[0.12em] uppercase transition-colors duration-200 hover:text-snow">Contacto</a></li>
+    {navLinks.map(({ href, label }) => (
+      <li>
+        <a href={href} class="nav-link-hover text-white/65 no-underline text-[0.75rem] tracking-[0.12em] uppercase transition-colors duration-200 hover:text-snow">
+          {label}
+        </a>
+      </li>
+    ))}
   </ul>
 
   <div class="flex items-center gap-2">
-
-    <!-- Botón: Iniciar Sesión -->
     <a href="/login"
        class="hidden lg:inline-flex items-center gap-1.5
               text-white/60 hover:text-snow
@@ -41,11 +49,9 @@ const link = (id) => isHome ? `#${id}` : `/#${id}`;
       Iniciar Sesión
     </a>
 
-    <!-- Botón: Reservar -->
     <a href={link("footer")}
        class="hidden lg:inline-flex items-center gap-1.5
-              text-snow
-              bg-sage hover:bg-fern2
+              text-snow bg-sage hover:bg-fern2
               px-5 py-[0.55rem] rounded-[10px]
               text-[0.72rem] font-semibold tracking-[0.1em] uppercase
               shadow-hostal-fern hover:shadow-fern-hover
@@ -55,64 +61,67 @@ const link = (id) => isHome ? `#${id}` : `/#${id}`;
       Reservar
     </a>
 
-    <!-- Hamburger -->
+    <!-- Hamburger — los spans se animan a X cuando el menú está abierto -->
     <button id="hamburger-btn"
             class="flex lg:hidden flex-col gap-[5px] bg-transparent border border-white/20 rounded-[10px] cursor-pointer p-[0.55rem_0.65rem] transition-colors duration-200 hover:border-white/50"
-            aria-label="Abrir menú móvil" aria-expanded="false">
-      <span class="block w-5 h-[1.5px] bg-snow transition-all duration-300"></span>
-      <span class="block w-5 h-[1.5px] bg-snow transition-all duration-300"></span>
-      <span class="block w-5 h-[1.5px] bg-snow transition-all duration-300"></span>
+            aria-label="Abrir menú móvil" aria-expanded="false" aria-controls="mobile-menu">
+      <span id="ham-1" class="block w-5 h-[1.5px] bg-snow transition-all duration-300 origin-center"></span>
+      <span id="ham-2" class="block w-5 h-[1.5px] bg-snow transition-all duration-300"></span>
+      <span id="ham-3" class="block w-5 h-[1.5px] bg-snow transition-all duration-300 origin-center"></span>
     </button>
   </div>
 </nav>
 
 <!-- ===== MOBILE MENU ===== -->
 <div id="mobile-menu"
-     class="hidden fixed inset-0 z-[200] bg-[rgba(10,11,10,0.97)] backdrop-blur-2xl flex-col items-center justify-center gap-2"
+     class="hidden fixed inset-0 z-[200] bg-[rgba(8,10,8,0.97)] backdrop-blur-2xl flex-col"
+     style="opacity:0; transform:translateX(100%); transition: opacity 0.28s ease, transform 0.28s ease;"
      role="dialog" aria-modal="true" aria-label="Menú de navegación">
 
-  <button id="mobile-close-btn"
-          class="absolute top-6 right-6 bg-white/[0.08] border border-white/[0.15] rounded-full w-10 h-10 flex items-center justify-center text-snow text-lg cursor-pointer transition-colors duration-200 hover:bg-white/[0.15]"
-          aria-label="Cerrar menú">✕</button>
+  <!-- Header -->
+  <div class="flex items-center justify-between px-5 py-[1.15rem] border-b border-white/[0.08]">
+    <a href={isHome ? "#" : "/"} class="font-serif text-2xl font-light text-snow no-underline tracking-[0.02em]">
+      El <em class="text-fern italic">Monchito</em>
+    </a>
+    <button id="mobile-close-btn"
+            class="w-8 h-8 rounded-full bg-white/[0.07] border border-white/[0.15] flex items-center justify-center text-snow text-sm cursor-pointer transition-colors duration-200 hover:bg-white/[0.14]"
+            aria-label="Cerrar menú">✕</button>
+  </div>
 
-  <nav class="flex flex-col items-center" aria-label="Menú móvil">
-    <a href={link("about")}        class="font-serif text-white/70 no-underline text-[2.6rem] font-light block text-center py-[0.4rem] px-8 transition-all duration-300 hover:text-snow hover:translate-x-2">Nosotros</a>
-    <div class="w-px h-10 bg-gradient-to-b from-transparent via-white/20 to-transparent my-2"></div>
-    <a href={link("services")}     class="font-serif text-white/70 no-underline text-[2.6rem] font-light block text-center py-[0.4rem] px-8 transition-all duration-300 hover:text-snow hover:translate-x-2">Servicios</a>
-    <div class="w-px h-10 bg-gradient-to-b from-transparent via-white/20 to-transparent my-2"></div>
-    <a href={link("gallery")}      class="font-serif text-white/70 no-underline text-[2.6rem] font-light block text-center py-[0.4rem] px-8 transition-all duration-300 hover:text-snow hover:translate-x-2">Entorno</a>
-    <div class="w-px h-10 bg-gradient-to-b from-transparent via-white/20 to-transparent my-2"></div>
-    <a href={link("testimonials")} class="font-serif text-white/70 no-underline text-[2.6rem] font-light block text-center py-[0.4rem] px-8 transition-all duration-300 hover:text-snow hover:translate-x-2">Reseñas</a>
-    <div class="w-px h-10 bg-gradient-to-b from-transparent via-white/20 to-transparent my-2"></div>
-    <a href={link("faq")}          class="font-serif text-white/70 no-underline text-[2.6rem] font-light block text-center py-[0.4rem] px-8 transition-all duration-300 hover:text-snow hover:translate-x-2">Preguntas</a>
-    <div class="w-px h-10 bg-gradient-to-b from-transparent via-white/20 to-transparent my-2"></div>
-    <a href={link("blog")}         class="font-serif text-white/70 no-underline text-[2.6rem] font-light block text-center py-[0.4rem] px-8 transition-all duration-300 hover:text-snow hover:translate-x-2">Blog</a>
-    <div class="w-px h-10 bg-gradient-to-b from-transparent via-white/20 to-transparent my-2"></div>
-    <a href={link("footer")}       class="font-serif text-white/70 no-underline text-[2.6rem] font-light block text-center py-[0.4rem] px-8 transition-all duration-300 hover:text-snow hover:translate-x-2">Reservar</a>
+  <!-- Links — FIX: nav correctamente cerrado, mismo orden que desktop -->
+  <nav class="flex flex-col flex-1 px-4 pt-4 pb-2 overflow-y-auto gap-[2px]" aria-label="Menú móvil">
+    <p class="text-white/25 text-[0.65rem] tracking-[0.1em] uppercase px-3 mb-1">Menú</p>
+
+    {navLinks.map(({ href, label }) => (
+      <a href={href}
+         class="mobile-nav-link flex items-center justify-between px-3.5 py-[0.65rem] rounded-[10px] text-white/65 no-underline text-[0.82rem] tracking-[0.1em] uppercase transition-all duration-[180ms] active:bg-white/[0.08] active:text-snow">
+        {label}
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true" class="opacity-30">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </a>
+    ))}
   </nav>
 
-  <a href="/login"
-     class="mt-6 inline-flex items-center gap-1.5
-            text-white/65 hover:text-snow
-            border border-white/20 hover:border-white/50
-            bg-transparent hover:bg-white/[0.06]
-            px-4 py-2 rounded-[10px]
-            text-[0.72rem] tracking-[0.08em] uppercase
-            backdrop-blur-sm
-            transition-all duration-[250ms] ease-hostal
-            no-underline">
-    Iniciar Sesión
-  </a>
+  <!-- Footer buttons — FIX: fuera del nav pero dentro del dialog -->
+  <div class="flex gap-2 px-4 py-4 border-t border-white/[0.08]">
+    <a href="/login"
+       class="flex-1 text-center py-[0.6rem] rounded-[10px] border border-white/20 text-white/65 hover:text-snow hover:border-white/40 hover:bg-white/[0.05] text-[0.72rem] tracking-[0.08em] uppercase no-underline transition-all duration-[200ms]">
+      Iniciar Sesión
+    </a>
+    <a href={link("footer")}
+       class="flex-1 text-center py-[0.6rem] rounded-[10px] bg-sage hover:bg-fern2 text-snow font-semibold text-[0.72rem] tracking-[0.1em] uppercase no-underline transition-all duration-[200ms]">
+      Reservar
+    </a>
+  </div>
 </div>
 
 <script>
+  // Scroll behaviour
   const navbar = document.getElementById('navbar');
-
   const onScroll = () => {
     if (!navbar) return;
-    
     const scrolled = window.scrollY;
-
     if (scrolled > 20) {
       const opacity = Math.min(0.85, 0.4 + scrolled / 600);
       navbar.style.backgroundColor = `rgba(8, 10, 8, ${opacity})`;
@@ -130,32 +139,70 @@ const link = (id) => isHome ? `#${id}` : `/#${id}`;
       navbar.style.paddingBottom = '1.5rem';
     }
   };
-
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // Hamburger
-  const hamburger = document.getElementById('hamburger-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const closeBtn = document.getElementById('mobile-close-btn');
+  // Mobile menu
+  const hamburger   = document.getElementById('hamburger-btn');
+  const mobileMenu  = document.getElementById('mobile-menu');
+  const closeBtn    = document.getElementById('mobile-close-btn');
+  const ham1 = document.getElementById('ham-1');
+  const ham2 = document.getElementById('ham-2');
+  const ham3 = document.getElementById('ham-3');
+
+  const setHamburgerOpen = (open) => {
+    if (open) {
+      ham1.style.transform = 'translateY(6.5px) rotate(45deg)';
+      ham2.style.opacity   = '0';
+      ham3.style.transform = 'translateY(-6.5px) rotate(-45deg)';
+    } else {
+      ham1.style.transform = '';
+      ham2.style.opacity   = '';
+      ham3.style.transform = '';
+    }
+  };
 
   const openMenu = () => {
     mobileMenu.classList.remove('hidden');
     mobileMenu.classList.add('flex');
     hamburger.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+    setHamburgerOpen(true);
+    requestAnimationFrame(() => {
+      mobileMenu.style.opacity   = '1';
+      mobileMenu.style.transform = 'translateX(0)';
+    });
+
+    // FIX: Focus trap — mover foco al botón de cierre
+    setTimeout(() => closeBtn.focus(), 50);
   };
 
   const closeMenu = () => {
-    mobileMenu.classList.add('hidden');
-    mobileMenu.classList.remove('flex');
+    mobileMenu.style.opacity   = '0';
+    mobileMenu.style.transform = 'translateX(100%)';
     hamburger.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
+    setHamburgerOpen(false);
+    setTimeout(() => {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+      hamburger.focus(); // devolver foco al trigger
+    }, 280);
   };
 
   hamburger.addEventListener('click', openMenu);
   closeBtn.addEventListener('click', closeMenu);
 
+  // Cerrar con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && hamburger.getAttribute('aria-expanded') === 'true') {
+      closeMenu();
+    }
+  });
+
   mobileMenu.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', closeMenu);
   });
+
+  // FIX: scroll-padding para compensar el navbar fijo
+  // Agregar en tu CSS global: html { scroll-padding-top: 5rem; }
 </script>
