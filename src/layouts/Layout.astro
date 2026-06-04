@@ -2,6 +2,9 @@
 import '../styles/globals.css';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import Sidebar from '@/components/Sidebar';
+import { inject } from '@vercel/analytics';
+
+inject();
 ---
 
 <!doctype html>
