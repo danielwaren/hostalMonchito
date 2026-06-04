@@ -28,6 +28,7 @@
     "@radix-ui/react-tooltip": "^1.2.7",
     "@supabase/supabase-js": "^2.50.0",
     "@types/papaparse": "^5.3.16",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^5.15.3",
     "csv-parser": "^3.2.0",
     "date-fns": "^4.1.0",
