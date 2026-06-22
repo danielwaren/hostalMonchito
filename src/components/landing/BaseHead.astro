@@ -66,3 +66,21 @@ const {
 
 <!-- SCHEMA -->
 <SeoSchema />
+
+<!-- Tracking de visitas (excluye administradores) -->
+<script>
+  window.addEventListener("load", () => {
+    const esAdmin = document.cookie.split(";").some((c) =>
+      c.trim().startsWith("sb-kqtrrpqpillowaqmavpw-auth-token")
+    );
+    if (esAdmin) return;
+    fetch("/api/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        pagina: window.location.pathname,
+        referente: document.referrer || null,
+      }),
+    }).catch(() => {});
+  });
+</script>

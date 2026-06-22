@@ -18,11 +18,19 @@ export interface Props {
   breadcrumbTitle?: string;
 }
 
-// Destructurar props con valores por defecto
-const { 
-  title = "Hostal Monchito", 
+const {
+  title = "Hostal Monchito",
   breadcrumbTitle
 } = Astro.props;
+
+const user = Astro.locals.user;
+const sidebarUser = user
+  ? {
+      name: user.user_metadata?.full_name ?? user.email ?? "Admin",
+      email: user.email ?? "",
+      avatar: user.user_metadata?.avatar_url ?? "",
+    }
+  : undefined;
 
 // Función para obtener el título de la página basado en la URL
 function getPageTitle(pathname: string): string {
@@ -77,7 +85,7 @@ const currentPageTitle = breadcrumbTitle || getPageTitle(Astro.url.pathname);
         <div class="flex h-screen overflow-hidden">
             <!-- Sidebar fijo -->
             <div class="fixed flex left-0 top-0 h-full z-10">
-                <AppSidebar client:visible />
+                <AppSidebar user={sidebarUser} client:visible />
             </div>
            
             <!-- Contenido principal con margen para el sidebar -->

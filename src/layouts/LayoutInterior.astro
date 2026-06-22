@@ -11,6 +11,22 @@ import Footer from '../components/landing/Footer.astro';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+  <script>
+    window.addEventListener("load", () => {
+      const esAdmin = document.cookie.split(";").some((c) =>
+        c.trim().startsWith("sb-kqtrrpqpillowaqmavpw-auth-token")
+      );
+      if (esAdmin) return;
+      fetch("/api/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pagina: window.location.pathname,
+          referente: document.referrer || null,
+        }),
+      }).catch(() => {});
+    });
+  </script>
   </head>
 
   <body class="bg-neutral-950 text-white font-sans">

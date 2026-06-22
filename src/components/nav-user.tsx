@@ -102,9 +102,13 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
-              Log out
+            <DropdownMenuItem asChild>
+              <form method="POST" action="/api/auth/signout" className="w-full">
+                <button type="submit" className="flex items-center gap-2 w-full cursor-pointer">
+                  <LogOut className="size-4" />
+                  Cerrar sesión
+                </button>
+              </form>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

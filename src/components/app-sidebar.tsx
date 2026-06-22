@@ -12,6 +12,7 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  BarChart2,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -53,6 +54,12 @@ const data = {
     },
   ],
   navMain: [
+    {
+      title: "Actividad del sitio",
+      url: "/analytics",
+      icon: BarChart2,
+      items: [],
+    },
     {
       title: "Dashboard",
       url: "/",
@@ -197,7 +204,17 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  user?: {
+    name: string
+    email: string
+    avatar: string
+  }
+}
+
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
+  const sidebarUser = user ?? data.user
+
   return (
     <SidebarProvider>
       <Sidebar collapsible="icon" {...props}>
@@ -209,10 +226,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarHeader>
         <SidebarContent>
           <NavMain items={data.navMain} />
-  
+
         </SidebarContent>
         <SidebarFooter>
-          <NavUser user={data.user} />
+          <NavUser user={sidebarUser} />
         </SidebarFooter>
         <SidebarRail />
       </Sidebar>
