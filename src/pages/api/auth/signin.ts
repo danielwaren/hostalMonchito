@@ -19,10 +19,12 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     }
   );
 
+  const origin = new URL(request.url).origin;
+
   const { data } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${import.meta.env.PUBLIC_BASE_URL}/api/auth/callback`,
+      redirectTo: `${origin}/api/auth/callback`,
     },
   });
 
