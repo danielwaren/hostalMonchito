@@ -92,6 +92,32 @@ function imprimirVoucher(cliente: string, servicios: ServicioRow[]) {
   }
 }
 
+// ─── Mensaje de envío ──────────────────────────────────────────────────────
+function saludoSegunHora(): string {
+  const h = new Date().getHours();
+  if (h >= 6 && h < 12) return "Buenos días";
+  if (h >= 12 && h < 20) return "Buenas tardes";
+  return "Buenas noches"; // 20:00 a 05:59
+}
+
+function mensajeVoucher(
+  cliente: string,
+  servicios: ServicioRow[],
+  totalBruto: number
+): string {
+  return [
+    `${saludoSegunHora()}.`,
+    "",
+    `Junto con saludar, adjuntamos el voucher de servicios prestados por Hostal & Restaurant Monchito, correspondiente a ${cliente}, por el período ${periodoServicios(servicios)}, por un monto total de ${formatCLP(totalBruto)}.`,
+    "",
+    "Ante cualquier consulta, quedamos a su entera disposición.",
+    "",
+    "Atentamente,",
+    "Hostal & Restaurant Monchito",
+    "Puerto Cisnes, Región de Aysén",
+  ].join("\n");
+}
+
 // ─── Compartir voucher como imagen por WhatsApp ────────────────────────────
 async function compartirPDFWhatsApp(
   cliente: string,
@@ -157,18 +183,23 @@ async function compartirPDFWhatsApp(
     );
 
     const imageFile = new File([blob], nombreArchivo, { type: "image/jpeg" });
+    const mensaje = mensajeVoucher(cliente, servicios, totalBruto);
 
-    // Móvil: Web Share API con imagen (funciona en Android e iOS)
+    // Móvil (y escritorios con hoja de compartir): el sistema muestra el
+    // selector de contacto y adjunta la imagen junto con el mensaje.
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
       await navigator.share({
-        title: `Voucher Hostal Monchito – ${cliente}`,
-        text: `Voucher de servicios para ${cliente} · ${fechaEmision}`,
+        title: `Voucher de servicios – ${cliente}`,
+        text: mensaje,
         files: [imageFile],
       });
       return;
     }
 
-    // Desktop: descargar imagen y abrir WhatsApp Web en el navegador
+    // Escritorio sin hoja de compartir (p. ej. Firefox): el navegador no
+    // permite adjuntar archivos a WhatsApp Web desde la página, así que se
+    // descarga la imagen y se abre WhatsApp con el mensaje ya escrito para
+    // que el usuario elija el contacto y adjunte el archivo descargado.
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -176,7 +207,17 @@ async function compartirPDFWhatsApp(
     a.click();
     URL.revokeObjectURL(url);
 
-    window.open("https://web.whatsapp.com/", "_blank", "noopener,noreferrer");
+    window.open(
+      `https://web.whatsapp.com/send?text=${encodeURIComponent(mensaje)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+    alert(
+      `El voucher se descargó como "${nombreArchivo}".\n\n` +
+        "En WhatsApp: elija el contacto, adjunte esa imagen con el clip 📎 " +
+        "y envíe. El mensaje ya va escrito."
+    );
   } catch (err: any) {
     // El usuario canceló el diálogo de compartir — no es un error real
     if (err?.name === "AbortError") return;
