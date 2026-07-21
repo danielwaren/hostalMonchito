@@ -1,0 +1,105 @@
+---
+export const prerender = false;
+
+import { client } from "@/lib/db";
+
+const { token } = Astro.params;
+
+const r = await client.execute({
+  sql: `SELECT cliente, created_at FROM vouchers
+        WHERE token = ? AND datetime('now') < expira_at`,
+  args: [token ?? ""],
+});
+
+const voucher = r.rows[0];
+const imgUrl = `${Astro.url.origin}/api/voucher-img/${token}`;
+const emitido = voucher
+  ? new Date((voucher.created_at as string).replace(" ", "T") + "Z")
+      .toLocaleDateString("es-CL", { day: "2-digit", month: "long", year: "numeric" })
+  : "";
+
+if (!voucher) Astro.response.status = 404;
+---
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voucher de servicios — Hostal &amp; Restaurant Monchito</title>
+    <meta name="robots" content="noindex, nofollow" />
+    {voucher && (
+      <>
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Voucher de servicios — Hostal Monchito" />
+        <meta property="og:description" content={`Detalle de servicios prestados a ${voucher.cliente}.`} />
+        <meta property="og:image" content={imgUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={imgUrl} />
+      </>
+    )}
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+        background: #eceae4;
+        color: #1f2421;
+        min-height: 100vh;
+        padding: 24px 16px 40px;
+      }
+      .wrap { max-width: 820px; margin: 0 auto; }
+      .top { text-align: center; margin-bottom: 20px; }
+      .marca {
+        font-size: 20px; font-weight: 700; color: #1e463c;
+        letter-spacing: 3px; text-transform: uppercase;
+      }
+      .sub { font-size: 12px; color: #6d7570; letter-spacing: 1.4px;
+             text-transform: uppercase; margin-top: 5px; }
+      .card {
+        background: #fff; border: 1px solid #d8d3c9;
+        box-shadow: 0 2px 14px rgba(0,0,0,.07); overflow: hidden;
+      }
+      .card img { width: 100%; height: auto; display: block; }
+      .acciones { text-align: center; margin-top: 20px; }
+      .btn {
+        display: inline-block; background: #1e463c; color: #fff;
+        text-decoration: none; padding: 13px 30px; font-size: 14px;
+        font-weight: 600; letter-spacing: .4px; border-radius: 4px;
+      }
+      .pie { text-align: center; margin-top: 22px; font-size: 12px; color: #8a918c; line-height: 1.8; }
+      .vacio { background: #fff; border: 1px solid #d8d3c9; padding: 48px 24px; text-align: center; }
+      .vacio h1 { font-size: 19px; color: #1e463c; margin-bottom: 10px; }
+      .vacio p { font-size: 14px; color: #6d7570; line-height: 1.7; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <div class="marca">Monchito</div>
+        <div class="sub">Residencial y Restaurant · Puerto Cisnes</div>
+      </div>
+
+      {voucher ? (
+        <>
+          <div class="card">
+            <img src={imgUrl} alt="Voucher de servicios" />
+          </div>
+          <div class="acciones">
+            <a class="btn" href={imgUrl} download="Voucher-Monchito.jpg">Descargar voucher</a>
+          </div>
+          <div class="pie">
+            Emitido el {emitido} · Este enlace caduca a los 30 días.<br />
+            Consultas: hostalmonchito2023@gmail.com · +56 9 6224 9178
+          </div>
+        </>
+      ) : (
+        <div class="vacio">
+          <h1>Voucher no disponible</h1>
+          <p>
+            Este enlace no existe o ya caducó.<br />
+            Solicite uno nuevo al Hostal &amp; Restaurant Monchito.
+          </p>
+        </div>
+      )}
+    </div>
+  </body>
+</html>

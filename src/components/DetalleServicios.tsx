@@ -51,6 +51,8 @@ const calcTotalIVA = (s: ServicioRow) => calcSubtotal(s) * (1 + IVA);
 
 // ─── Generador de Voucher PDF ───────────────────────────────────────────────
 function imprimirVoucher(cliente: string, servicios: ServicioRow[]) {
+  if (!voucherEsValido(cliente, servicios)) return;
+
   const totalNeto = servicios.reduce((a, s) => a + calcSubtotal(s), 0);
   const totalIVAcalc = totalNeto * IVA;
   const totalBruto = totalNeto + totalIVAcalc;
@@ -92,6 +94,23 @@ function imprimirVoucher(cliente: string, servicios: ServicioRow[]) {
   }
 }
 
+// ─── Validación previa ─────────────────────────────────────────────────────
+// Sin esto se puede emitir un voucher en blanco (cliente vacío y total $0).
+function voucherEsValido(cliente: string, servicios: ServicioRow[]): boolean {
+  if (!cliente.trim()) {
+    alert("Ingrese el nombre del cliente antes de generar el voucher.");
+    return false;
+  }
+  if (!servicios.some((s) => calcSubtotal(s) > 0)) {
+    alert(
+      "El voucher no tiene servicios cargados.\n\n" +
+        "Agregue al menos un almuerzo, cena o alojamiento con cantidad mayor a cero."
+    );
+    return false;
+  }
+  return true;
+}
+
 // ─── Mensaje de envío ──────────────────────────────────────────────────────
 function saludoSegunHora(): string {
   const h = new Date().getHours();
@@ -103,12 +122,14 @@ function saludoSegunHora(): string {
 function mensajeVoucher(
   cliente: string,
   servicios: ServicioRow[],
-  totalBruto: number
+  totalBruto: number,
+  urlVoucher?: string
 ): string {
   return [
     `${saludoSegunHora()}.`,
     "",
     `Junto con saludar, adjuntamos el voucher de servicios prestados por Hostal & Restaurant Monchito, correspondiente a ${cliente}, por el período ${periodoServicios(servicios)}, por un monto total de ${formatCLP(totalBruto)}.`,
+    ...(urlVoucher ? ["", "Puede verlo y descargarlo aquí:", urlVoucher] : []),
     "",
     "Ante cualquier consulta, quedamos a su entera disposición.",
     "",
@@ -124,6 +145,8 @@ async function compartirPDFWhatsApp(
   servicios: ServicioRow[],
   setCargandoPDF: (v: boolean) => void
 ) {
+  if (!voucherEsValido(cliente, servicios)) return;
+
   setCargandoPDF(true);
   try {
     const { default: html2canvas } = await import("html2canvas");
@@ -182,41 +205,58 @@ async function compartirPDFWhatsApp(
       )
     );
 
-    const imageFile = new File([blob], nombreArchivo, { type: "image/jpeg" });
-    const mensaje = mensajeVoucher(cliente, servicios, totalBruto);
+    // Se publica el voucher y se envía su enlace dentro del mensaje: el
+    // navegador no permite adjuntar archivos a WhatsApp desde la página, así
+    // que el enlace es la única forma de mandarlo todo en un solo paso.
+    let urlVoucher: string | undefined;
+    try {
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const lector = new FileReader();
+        lector.onload = () => resolve((lector.result as string).split(",")[1]);
+        lector.onerror = () => reject(new Error("No se pudo leer la imagen"));
+        lector.readAsDataURL(blob);
+      });
 
-    // Móvil (y escritorios con hoja de compartir): el sistema muestra el
-    // selector de contacto y adjunta la imagen junto con el mensaje.
-    if (navigator.share && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+      const res = await fetch("/api/voucher", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cliente, imagenBase64: base64 }),
+      });
+      if (res.ok) urlVoucher = (await res.json()).url;
+      else console.error("No se pudo publicar el voucher:", await res.text());
+    } catch (e) {
+      console.error("No se pudo publicar el voucher:", e);
+    }
+
+    const mensaje = mensajeVoucher(cliente, servicios, totalBruto, urlVoucher);
+
+    // Si el enlace falló, se cae al método manual: descargar y adjuntar.
+    if (!urlVoucher) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = nombreArchivo;
+      a.click();
+      URL.revokeObjectURL(url);
+      alert(
+        `No se pudo generar el enlace del voucher, así que se descargó como "${nombreArchivo}".\n\n` +
+          "En WhatsApp: elija el contacto y adjunte esa imagen con el clip 📎."
+      );
+    }
+
+    // Con hoja de compartir del sistema (móvil): selector de contacto nativo.
+    if (navigator.share) {
       await navigator.share({
         title: `Voucher de servicios – ${cliente}`,
         text: mensaje,
-        files: [imageFile],
       });
       return;
     }
-
-    // Escritorio sin hoja de compartir (p. ej. Firefox): el navegador no
-    // permite adjuntar archivos a WhatsApp Web desde la página, así que se
-    // descarga la imagen y se abre WhatsApp con el mensaje ya escrito para
-    // que el usuario elija el contacto y adjunte el archivo descargado.
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = nombreArchivo;
-    a.click();
-    URL.revokeObjectURL(url);
 
     window.open(
       `https://web.whatsapp.com/send?text=${encodeURIComponent(mensaje)}`,
       "_blank",
       "noopener,noreferrer"
-    );
-
-    alert(
-      `El voucher se descargó como "${nombreArchivo}".\n\n` +
-        "En WhatsApp: elija el contacto, adjunte esa imagen con el clip 📎 " +
-        "y envíe. El mensaje ya va escrito."
     );
   } catch (err: any) {
     // El usuario canceló el diálogo de compartir — no es un error real

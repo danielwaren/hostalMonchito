@@ -24,6 +24,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
     PUBLIC_PATHS.includes(pathname) ||
     pathname.startsWith("/blog") ||
     pathname.startsWith("/api/auth") ||
+    // Voucher compartido: lo abre el cliente, que no tiene sesión. El acceso
+    // lo restringe el token aleatorio del enlace, no la sesión.
+    pathname.startsWith("/v/") ||
+    pathname.startsWith("/api/voucher-img/") ||
     pathname.startsWith("/_")
   ) {
     return next();
