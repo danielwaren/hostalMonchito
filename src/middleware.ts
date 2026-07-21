@@ -12,6 +12,9 @@ const PUBLIC_PATHS = [
   "/Contacto",
   "/hospedaje-puerto-cisnes",
   "/carta",
+  // Lo llaman visitantes anónimos desde las páginas públicas: si se
+  // protege, no se registra ninguna visita.
+  "/api/track",
 ];
 
 export const onRequest = defineMiddleware(async (context, next) => {
