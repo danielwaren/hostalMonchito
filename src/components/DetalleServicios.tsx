@@ -207,6 +207,22 @@ function generarFilasVoucher(servicios: ServicioRow[]): string {
     .join("");
 }
 
+// Rango de fechas cubierto por el voucher (dato real, no correlativo inventado)
+function periodoServicios(servicios: ServicioRow[]): string {
+  const fechas = servicios
+    .filter((s) => calcSubtotal(s) > 0)
+    .map((s) => s.fecha)
+    .sort();
+  if (fechas.length === 0) return "—";
+  const fmt = (f: string) =>
+    new Date(f + "T12:00:00").toLocaleDateString("es-CL", {
+      day: "2-digit", month: "2-digit", year: "numeric",
+    });
+  const desde = fmt(fechas[0]);
+  const hasta = fmt(fechas[fechas.length - 1]);
+  return desde === hasta ? desde : `${desde} — ${hasta}`;
+}
+
 // ─── HTML del voucher (única fuente de verdad: impresión e imagen) ──────────
 function generarHTMLVoucher(
   cliente: string,
@@ -219,137 +235,136 @@ function generarHTMLVoucher(
 ): string {
   return `
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+
+    /* Sin esto el navegador descarta los fondos al imprimir y el
+       voucher sale casi todo en blanco. */
+    .v-page, .v-page * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
     .v-page *, .v-page *::before, .v-page *::after { box-sizing:border-box; margin:0; padding:0; }
-    .v-page { width:780px; background:#fdfbf6; font-family:'DM Sans',sans-serif; font-size:12px; color:#2a2520; }
+    .v-page { width:780px; background:#fff; font-family:'DM Sans',Arial,sans-serif; font-size:11.5px; color:#1f2421; }
 
     /* Cabecera */
-    .v-head { background:#1e463c; padding:26px 40px 20px; display:flex; align-items:center; }
-    .v-logo { width:92px; height:92px; border-radius:50%; background:#fdfbf6; padding:4px; flex-shrink:0; }
-    .v-logo img { width:100%; height:100%; border-radius:50%; display:block; }
-    .v-brand { padding-left:22px; flex:1; }
-    .v-brand-eyebrow { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:#c9b896; letter-spacing:.5px; }
-    .v-brand-name { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:600; color:#fdfbf6; line-height:1.05; letter-spacing:1px; }
-    .v-brand-sub { font-size:9px; letter-spacing:3.2px; text-transform:uppercase; color:#8fa89c; margin-top:6px; }
-    .v-contact { text-align:right; font-size:10.5px; color:#a8bdb1; line-height:1.95; padding-left:20px; }
-    .v-contact b { display:block; color:#c9b896; font-size:8.5px; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; font-weight:500; }
+    .v-rule-top { height:5px; background:#1e463c; }
+    .v-head { display:flex; align-items:center; padding:20px 34px 18px; border-bottom:1px solid #d8d3c9; }
+    .v-logo { width:74px; height:74px; flex-shrink:0; }
+    .v-logo img { width:100%; height:100%; display:block; }
+    .v-brand { padding-left:18px; flex:1; }
+    .v-brand-name { font-size:23px; font-weight:700; color:#1e463c; letter-spacing:3.5px; text-transform:uppercase; line-height:1.1; }
+    .v-brand-sub { font-size:9.5px; color:#6d7570; letter-spacing:1.6px; text-transform:uppercase; margin-top:5px; }
+    .v-head-contact { text-align:right; font-size:10px; color:#4a524d; line-height:1.85; padding-left:20px; }
+    .v-head-contact span { color:#8a918c; }
 
-    /* Onda separadora (eco del logo) */
-    .v-wave { display:block; width:100%; height:14px; }
-    .v-wave svg { display:block; width:100%; height:14px; }
+    /* Barra de título del documento */
+    .v-doc { background:#1e463c; padding:11px 34px; display:flex; align-items:center; }
+    .v-doc-title { flex:1; font-size:13px; font-weight:600; color:#fff; letter-spacing:2.6px; text-transform:uppercase; }
+    .v-doc-tag { font-size:9px; color:#a9c0b6; letter-spacing:1.6px; text-transform:uppercase; }
 
-    /* Banda de documento */
-    .v-band { background:#f2ece0; padding:15px 40px; display:flex; align-items:center; border-bottom:1px solid #e0d7c6; }
-    .v-band-l { flex:1; }
-    .v-label { font-size:8.5px; letter-spacing:2.4px; text-transform:uppercase; color:#a08c6d; margin-bottom:4px; }
-    .v-band-title { font-family:'Cormorant Garamond',serif; font-size:21px; font-weight:600; color:#1e463c; line-height:1.15; }
-    .v-band-r { text-align:right; padding-left:24px; }
-    .v-band-date { font-size:13px; color:#4a4038; font-weight:500; }
-
-    /* Cliente */
-    .v-client { padding:16px 40px; display:flex; align-items:center; border-bottom:1px solid #efe8db; }
-    .v-avatar { width:44px; height:44px; border-radius:50%; background:#1e463c; color:#fdfbf6; font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; text-align:center; line-height:44px; flex-shrink:0; }
-    .v-client-txt { padding-left:15px; }
-    .v-client-name { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:#1e463c; line-height:1.2; }
+    /* Metadatos */
+    .v-meta { display:flex; border-bottom:1px solid #d8d3c9; }
+    .v-meta-cell { flex:1; padding:11px 34px; border-right:1px solid #e4e0d7; }
+    .v-meta-cell:last-child { border-right:0; }
+    .v-meta-k { font-size:8.5px; color:#8a918c; letter-spacing:1.7px; text-transform:uppercase; margin-bottom:3px; }
+    .v-meta-v { font-size:12.5px; font-weight:600; color:#1f2421; }
+    .v-meta-v.cli { color:#1e463c; }
 
     /* Secciones */
-    .v-sec { padding:20px 40px 0; }
-    .v-sec-head { display:flex; align-items:center; margin-bottom:11px; }
-    .v-sec-title { font-size:8.5px; letter-spacing:2.4px; text-transform:uppercase; color:#a08c6d; white-space:nowrap; padding-right:12px; }
-    .v-sec-rule { flex:1; height:1px; background:#e6ddcc; }
+    .v-sec { padding:18px 34px 0; }
+    .v-sec-title { font-size:9px; font-weight:600; color:#1e463c; letter-spacing:2.2px; text-transform:uppercase; padding-bottom:7px; border-bottom:1.5px solid #1e463c; margin-bottom:0; }
 
     /* Tabla */
     .v-table { width:100%; border-collapse:collapse; }
-    .v-table thead th { background:#1e463c; color:#c9b896; font-size:8.5px; font-weight:500; text-transform:uppercase; letter-spacing:1.3px; padding:10px 12px; text-align:left; }
+    .v-table thead th { background:#eef1ef; color:#1e463c; font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; padding:9px 10px; text-align:left; border-bottom:1px solid #c9d2cd; }
     .v-table thead th.c { text-align:center; }
     .v-table thead th.r { text-align:right; }
-    .v-table tbody td { padding:10px 12px; font-size:12px; color:#3a332c; border-bottom:1px solid #efe8db; }
-    .v-table tbody tr:nth-child(even) td { background:#faf6ee; }
+    .v-table tbody td { padding:8px 10px; font-size:11.5px; color:#2c322e; border-bottom:1px solid #e8e5dd; }
+    .v-table tbody tr:last-child td { border-bottom:1px solid #c9d2cd; }
     .v-table td.c { text-align:center; }
-    .v-table td.r { text-align:right; }
+    .v-table td.r { text-align:right; font-variant-numeric:tabular-nums; }
     .v-table td.b { font-weight:700; color:#1e463c; }
-    .v-table td.fecha { color:#6b6055; }
-    .v-empty { text-align:center; color:#a08c6d; padding:22px; font-size:12px; }
+    .v-table td.fecha { color:#4a524d; font-weight:500; }
+    .v-empty { text-align:center; color:#8a918c; padding:20px; }
 
     /* Resumen */
-    .v-cards { display:flex; }
-    .v-card { flex:1; background:#f7f2e8; border:1px solid #e6ddcc; border-top:2.5px solid #1e463c; padding:13px 10px; text-align:center; }
-    .v-card + .v-card { margin-left:10px; }
-    .v-card-label { font-size:8.5px; letter-spacing:1.8px; text-transform:uppercase; color:#a08c6d; }
-    .v-card-qty { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:600; color:#1e463c; line-height:1.15; }
-    .v-card-price { font-size:9.5px; color:#8a7d6c; }
+    .v-cards { display:flex; border:1px solid #d8d3c9; }
+    .v-card { flex:1; padding:10px 12px; border-right:1px solid #e4e0d7; display:flex; align-items:center; }
+    .v-card:last-child { border-right:0; }
+    .v-card-qty { font-size:22px; font-weight:700; color:#1e463c; line-height:1; min-width:34px; }
+    .v-card-txt { padding-left:10px; }
+    .v-card-label { font-size:8.5px; color:#6d7570; letter-spacing:1.5px; text-transform:uppercase; }
+    .v-card-price { font-size:10px; color:#8a918c; margin-top:2px; }
 
     /* Zona inferior */
-    .v-bottom { padding:20px 40px 24px; display:flex; align-items:flex-start; }
-    .v-deposit { flex:1; background:#f7f2e8; border:1px solid #e6ddcc; border-left:2.5px solid #a67c52; padding:14px 16px; }
-    .v-dep-title { font-size:8.5px; letter-spacing:2.2px; text-transform:uppercase; color:#a08c6d; padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid #e6ddcc; }
-    .v-dep-row { display:flex; justify-content:space-between; font-size:11px; line-height:1.85; }
-    .v-dep-k { color:#8a7d6c; }
-    .v-dep-v { color:#3a332c; font-weight:500; text-align:right; }
-    .v-dep-v.acc { color:#a67c52; font-weight:700; font-size:12px; }
+    .v-bottom { padding:18px 34px 20px; display:flex; align-items:flex-start; }
+    .v-deposit { flex:1; border:1px solid #d8d3c9; padding:12px 14px; }
+    .v-dep-title { font-size:8.5px; font-weight:700; color:#1e463c; letter-spacing:1.8px; text-transform:uppercase; padding-bottom:7px; margin-bottom:7px; border-bottom:1px solid #e4e0d7; }
+    .v-dep-row { display:flex; justify-content:space-between; font-size:10.5px; line-height:1.95; }
+    .v-dep-k { color:#8a918c; }
+    .v-dep-v { color:#2c322e; font-weight:500; text-align:right; }
+    .v-dep-v.acc { color:#1e463c; font-weight:700; }
 
-    .v-totals { width:250px; margin-left:18px; border:1px solid #e6ddcc; }
-    .v-tot-row { display:flex; justify-content:space-between; padding:9px 15px; font-size:12px; border-bottom:1px solid #efe8db; }
-    .v-tot-row .k { color:#8a7d6c; }
-    .v-tot-row .v { color:#3a332c; font-weight:500; }
-    .v-tot-grand { background:#1e463c; padding:13px 15px; display:flex; justify-content:space-between; align-items:center; }
-    .v-tot-grand .k { font-size:9px; letter-spacing:2.4px; text-transform:uppercase; color:#8fa89c; }
-    .v-tot-grand .v { font-family:'Cormorant Garamond',serif; font-size:25px; font-weight:700; color:#fdfbf6; line-height:1; }
+    .v-totals { width:262px; margin-left:16px; border:1px solid #d8d3c9; }
+    .v-tot-row { display:flex; justify-content:space-between; padding:8px 14px; font-size:11.5px; border-bottom:1px solid #e8e5dd; }
+    .v-tot-row .k { color:#6d7570; }
+    .v-tot-row .v { color:#2c322e; font-weight:600; font-variant-numeric:tabular-nums; }
+    .v-tot-grand { background:#1e463c; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; }
+    .v-tot-grand .k { font-size:9.5px; font-weight:600; color:#a9c0b6; letter-spacing:2.2px; text-transform:uppercase; }
+    .v-tot-grand .v { font-size:20px; font-weight:700; color:#fff; line-height:1; font-variant-numeric:tabular-nums; }
 
     /* Pie */
-    .v-foot { background:#1e463c; padding:16px 40px 18px; display:flex; align-items:center; }
-    .v-foot-l { flex:1; font-size:10px; color:#a8bdb1; line-height:1.8; }
-    .v-foot-c { text-align:center; padding:0 20px; }
-    .v-foot-brand { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:17px; color:#c9b896; line-height:1.2; }
-    .v-foot-note { font-size:9px; color:#8fa89c; letter-spacing:1.5px; text-transform:uppercase; margin-top:3px; }
-    .v-foot-r { flex:1; text-align:right; font-size:9.5px; color:#8fa89c; line-height:1.8; }
-    .v-foot-r b { color:#a8bdb1; font-weight:500; }
+    .v-foot { border-top:1px solid #d8d3c9; padding:12px 34px; display:flex; align-items:center; }
+    .v-foot-l { flex:1; font-size:9.5px; color:#8a918c; line-height:1.7; }
+    .v-foot-r { text-align:right; font-size:9.5px; color:#6d7570; }
+    .v-foot-r b { color:#1e463c; font-weight:600; }
+    .v-rule-bottom { height:5px; background:#1e463c; }
+
+    @page { size:A4; margin:10mm; }
+    @media print {
+      .v-page { width:100% !important; }
+    }
   </style>
 
   <div class="v-page">
 
+    <div class="v-rule-top"></div>
+
     <div class="v-head">
-      <div class="v-logo"><img src="/img/logo.png" alt="Hostal Monchito" /></div>
+      <div class="v-logo"><img src="/img/logo-voucher.png" alt="Hostal Monchito" /></div>
       <div class="v-brand">
-        <div class="v-brand-eyebrow">Residencial y Restaurant</div>
         <div class="v-brand-name">Monchito</div>
-        <div class="v-brand-sub">Puerto Cisnes · Región de Aysén</div>
+        <div class="v-brand-sub">Residencial y Restaurant · Puerto Cisnes, Aysén</div>
       </div>
-      <div class="v-contact">
-        <b>Contacto</b>
-        Aguada de Dolores 1<br />
-        hostalmonchito2023@gmail.com<br />
-        +56 9 6224 9178
-      </div>
-    </div>
-
-    <div class="v-wave" style="background:#1e463c;">
-      <svg viewBox="0 0 780 14" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,7 Q32.5,0 65,7 T130,7 T195,7 T260,7 T325,7 T390,7 T455,7 T520,7 T585,7 T650,7 T715,7 T780,7 L780,14 L0,14 Z" fill="#fdfbf6"/>
-      </svg>
-    </div>
-
-    <div class="v-band">
-      <div class="v-band-l">
-        <div class="v-label">Comprobante</div>
-        <div class="v-band-title">Detalle de Servicios Prestados</div>
-      </div>
-      <div class="v-band-r">
-        <div class="v-label">Fecha de emisión</div>
-        <div class="v-band-date">${fechaEmision}</div>
+      <div class="v-head-contact">
+        <span>Dirección</span> Aguada de Dolores 1<br />
+        <span>Correo</span> hostalmonchito2023@gmail.com<br />
+        <span>Teléfono</span> +56 9 6224 9178
       </div>
     </div>
 
-    <div class="v-client">
-      <div class="v-avatar">${cliente.charAt(0).toUpperCase()}</div>
-      <div class="v-client-txt">
-        <div class="v-label">Cliente</div>
-        <div class="v-client-name">${cliente}</div>
+    <div class="v-doc">
+      <div class="v-doc-title">Detalle de Servicios Prestados</div>
+      <div class="v-doc-tag">Comprobante</div>
+    </div>
+
+    <div class="v-meta">
+      <div class="v-meta-cell">
+        <div class="v-meta-k">Cliente</div>
+        <div class="v-meta-v cli">${cliente}</div>
+      </div>
+      <div class="v-meta-cell">
+        <div class="v-meta-k">Período de servicios</div>
+        <div class="v-meta-v">${periodoServicios(servicios)}</div>
+      </div>
+      <div class="v-meta-cell">
+        <div class="v-meta-k">Fecha de emisión</div>
+        <div class="v-meta-v">${fechaEmision}</div>
       </div>
     </div>
 
     <div class="v-sec">
-      <div class="v-sec-head"><div class="v-sec-title">Consumos por fecha</div><div class="v-sec-rule"></div></div>
+      <div class="v-sec-title">Consumos por fecha</div>
       <table class="v-table">
         <thead><tr>
           <th>Fecha</th><th class="c">Almuerzos</th><th class="c">Cenas</th>
@@ -360,11 +375,20 @@ function generarHTMLVoucher(
     </div>
 
     <div class="v-sec">
-      <div class="v-sec-head"><div class="v-sec-title">Resumen por concepto</div><div class="v-sec-rule"></div></div>
-      <div class="v-cards">
-        <div class="v-card"><div class="v-card-label">Almuerzos</div><div class="v-card-qty">${servicios.reduce((a, s) => a + s.almuerzo, 0)}</div><div class="v-card-price">${formatCLP(PRECIO_ALMUERZO)} c/u</div></div>
-        <div class="v-card"><div class="v-card-label">Cenas</div><div class="v-card-qty">${servicios.reduce((a, s) => a + s.cena, 0)}</div><div class="v-card-price">${formatCLP(PRECIO_CENA)} c/u</div></div>
-        <div class="v-card"><div class="v-card-label">Alojamientos</div><div class="v-card-qty">${servicios.reduce((a, s) => a + s.alojamiento, 0)}</div><div class="v-card-price">${formatCLP(PRECIO_ALOJAMIENTO)} c/u</div></div>
+      <div class="v-sec-title">Resumen por concepto</div>
+      <div class="v-cards" style="margin-top:12px;">
+        <div class="v-card">
+          <div class="v-card-qty">${servicios.reduce((a, s) => a + s.almuerzo, 0)}</div>
+          <div class="v-card-txt"><div class="v-card-label">Almuerzos</div><div class="v-card-price">${formatCLP(PRECIO_ALMUERZO)} c/u</div></div>
+        </div>
+        <div class="v-card">
+          <div class="v-card-qty">${servicios.reduce((a, s) => a + s.cena, 0)}</div>
+          <div class="v-card-txt"><div class="v-card-label">Cenas</div><div class="v-card-price">${formatCLP(PRECIO_CENA)} c/u</div></div>
+        </div>
+        <div class="v-card">
+          <div class="v-card-qty">${servicios.reduce((a, s) => a + s.alojamiento, 0)}</div>
+          <div class="v-card-txt"><div class="v-card-label">Alojamientos</div><div class="v-card-price">${formatCLP(PRECIO_ALOJAMIENTO)} c/u</div></div>
+        </div>
       </div>
     </div>
 
@@ -384,27 +408,17 @@ function generarHTMLVoucher(
       </div>
     </div>
 
-    <div class="v-wave" style="background:#fdfbf6;">
-      <svg viewBox="0 0 780 14" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,7 Q32.5,14 65,7 T130,7 T195,7 T260,7 T325,7 T390,7 T455,7 T520,7 T585,7 T650,7 T715,7 T780,7 L780,14 L0,14 Z" fill="#1e463c"/>
-      </svg>
-    </div>
-
     <div class="v-foot">
       <div class="v-foot-l">
-        Aguada de Dolores 1, Puerto Cisnes<br />
-        hostalmonchito2023@gmail.com<br />
-        +56 9 6224 9178
-      </div>
-      <div class="v-foot-c">
-        <div class="v-foot-brand">Gracias por su preferencia</div>
-        <div class="v-foot-note">Hostal &amp; Restaurant Monchito</div>
+        Hostal &amp; Restaurant Monchito · Aguada de Dolores 1, Puerto Cisnes, Región de Aysén<br />
+        hostalmonchito2023@gmail.com · +56 9 6224 9178
       </div>
       <div class="v-foot-r">
-        <b>Emitido el</b><br />
-        ${fechaEmision}
+        <b>Emitido el</b><br />${fechaEmision}
       </div>
     </div>
+
+    <div class="v-rule-bottom"></div>
 
   </div>`;
 }
