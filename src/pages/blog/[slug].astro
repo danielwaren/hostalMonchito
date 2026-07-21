@@ -2,26 +2,22 @@
 import { getCollection } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 
-export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+// El sitio se sirve en modo servidor, así que getStaticPaths no limita las
+// rutas: hay que buscar el artículo en cada pedido y responder 404 si no
+// existe. Sin esto, cualquier /blog/loquesea devolvía 200 con la página
+// vacía, y Google lo trata como soft 404.
+const { slug } = Astro.params;
 
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: {
-      data: post.data,
-      Content: post.Content
-    }
-  }));
+const posts = await getCollection('blog');
+const post = posts.find((p) => p.slug === slug);
+
+if (!post) {
+  return new Response(null, { status: 404 });
 }
 
-const data = Astro.props?.data;
-const Content = Astro.props?.Content;
+const { Content } = await post.render();
 ---
 
-{!data || !Content ? (
-  <pre>{JSON.stringify(Astro.props, null, 2)}</pre>
-) : (
-  <BlogPost {...data}>
-    <Content />
-  </BlogPost>
-)}
+<BlogPost {...post.data}>
+  <Content />
+</BlogPost>
