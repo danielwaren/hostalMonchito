@@ -1,0 +1,249 @@
+---
+export const prerender = false;
+---
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Muestra 1 · Editorial Patagónico — Hostal Monchito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper:   #f2ece2;
+      --raised:  #fbf8f3;
+      --ink:     #1a1f1b;
+      --body:    #4a5450;
+      --muted:   #7d8783;
+      --rule:    #d9d0c1;
+      --forest:  #1f4a3d;
+      --clay:    #b4643c;
+      --scrim:   rgba(20,26,22,.42);
+    }
+    [data-tema="oscuro"] {
+      --paper:   #0f1512;
+      --raised:  #161e1a;
+      --ink:     #eef2ee;
+      --body:    #b3bfb9;
+      --muted:   #7e8a85;
+      --rule:    #26332d;
+      --forest:  #86c0a6;
+      --clay:    #e0916a;
+      --scrim:   rgba(8,12,10,.5);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      background:var(--paper); color:var(--body);
+      font-family:'Work Sans',system-ui,sans-serif;
+      font-size:17px; line-height:1.72;
+      -webkit-font-smoothing:antialiased;
+      transition:background .5s ease, color .5s ease;
+    }
+    .wrap { max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,64px); }
+
+    /* Barra */
+    .bar { position:fixed; inset:0 0 auto; z-index:50; display:flex; align-items:center;
+           padding:20px clamp(20px,5vw,64px); mix-blend-mode:difference; }
+    .bar-brand { font-family:'Fraunces',serif; font-size:19px; color:#fff; letter-spacing:.02em; flex:1; }
+    .tema { background:none; border:1px solid rgba(255,255,255,.45); color:#fff;
+            font:500 11px/1 'Work Sans',sans-serif; letter-spacing:.14em; text-transform:uppercase;
+            padding:9px 15px; border-radius:999px; cursor:pointer; }
+    .tema:hover { background:rgba(255,255,255,.12); }
+    .tema:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+
+    /* Portada */
+    .cover { position:relative; min-height:100svh; display:flex; align-items:flex-end;
+             padding-bottom:clamp(48px,9vh,104px); overflow:hidden; }
+    .cover-img { position:absolute; inset:0; }
+    .cover-img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .cover-img::after { content:''; position:absolute; inset:0;
+      background:linear-gradient(180deg, var(--scrim) 0%, transparent 38%, rgba(10,14,11,.72) 100%); }
+    .cover-in { position:relative; z-index:2; width:100%; }
+    .kicker { font-size:11.5px; letter-spacing:.3em; text-transform:uppercase; color:rgba(255,255,255,.72);
+              margin-bottom:22px; display:flex; align-items:center; gap:14px; }
+    .kicker::after { content:''; height:1px; flex:1; max-width:150px; background:rgba(255,255,255,.3); }
+    .cover h1 { font-family:'Fraunces',serif; font-weight:300; color:#fff;
+                font-size:clamp(3rem,9.5vw,7.6rem); line-height:.94; letter-spacing:-.025em;
+                text-wrap:balance; max-width:14ch; }
+    .cover h1 em { font-style:italic; font-weight:400; }
+    .cover-foot { display:flex; flex-wrap:wrap; gap:36px; align-items:flex-end;
+                  margin-top:38px; padding-top:26px; border-top:1px solid rgba(255,255,255,.22); }
+    .cover-foot p { color:rgba(255,255,255,.82); max-width:44ch; font-size:16px; }
+    .cta { display:inline-block; background:#fff; color:#15201a; text-decoration:none;
+           font:600 12px/1 'Work Sans',sans-serif; letter-spacing:.16em; text-transform:uppercase;
+           padding:17px 34px; white-space:nowrap; transition:transform .3s, background .3s; }
+    .cta:hover { transform:translateY(-2px); background:var(--clay); color:#fff; }
+
+    /* Secciones */
+    section { padding:clamp(80px,13vh,160px) 0; }
+    .eyebrow { font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--clay);
+               margin-bottom:20px; font-weight:600; }
+    h2 { font-family:'Fraunces',serif; font-weight:300; color:var(--ink);
+         font-size:clamp(2.1rem,5vw,3.7rem); line-height:1.06; letter-spacing:-.02em;
+         text-wrap:balance; max-width:18ch; }
+    .lede { font-size:19px; max-width:56ch; margin-top:26px; }
+
+    .servicios { margin-top:72px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
+    .serv { padding:36px 32px 40px; border-top:1px solid var(--rule); border-right:1px solid var(--rule); }
+    .serv:last-child { border-right:0; }
+    .serv-n { font-family:'Fraunces',serif; font-size:13px; color:var(--clay); display:block; margin-bottom:20px; }
+    .serv h3 { font-family:'Fraunces',serif; font-weight:400; font-size:25px; color:var(--ink);
+               margin-bottom:12px; line-height:1.2; }
+    .serv p { font-size:15.5px; }
+    @media (max-width:720px){ .serv{ border-right:0; } }
+
+    /* Cita a sangre */
+    .quote { background:var(--raised); padding:clamp(64px,10vh,120px) 0; }
+    .quote blockquote { font-family:'Fraunces',serif; font-style:italic; font-weight:300;
+      font-size:clamp(1.6rem,4vw,2.9rem); line-height:1.28; color:var(--ink);
+      max-width:22ch; letter-spacing:-.015em; }
+    .quote cite { display:block; margin-top:28px; font:500 12px/1 'Work Sans',sans-serif;
+      letter-spacing:.2em; text-transform:uppercase; color:var(--muted); font-style:normal; }
+
+    /* Blog */
+    .posts { margin-top:64px; display:grid; gap:2px; }
+    .post { display:grid; grid-template-columns:150px 1fr auto; gap:32px; align-items:center;
+            padding:30px 0; border-top:1px solid var(--rule); text-decoration:none;
+            transition:padding-left .4s cubic-bezier(.22,1,.36,1); }
+    .post:hover { padding-left:16px; }
+    .post-cat { font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--clay); }
+    .post h3 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(19px,2.4vw,27px);
+               color:var(--ink); line-height:1.24; letter-spacing:-.01em; }
+    .post-arrow { font-size:22px; color:var(--muted); transition:transform .4s, color .4s; }
+    .post:hover .post-arrow { transform:translateX(8px); color:var(--clay); }
+    @media (max-width:760px){
+      .post { grid-template-columns:1fr; gap:10px; }
+      .post-arrow { display:none; }
+    }
+
+    footer { border-top:1px solid var(--rule); padding:44px 0 64px; font-size:14px; color:var(--muted); }
+
+    /* Animación */
+    .rise { opacity:0; transform:translateY(26px); }
+    .linea { display:block; overflow:hidden; }
+    .linea > span { display:block; }
+    @media (prefers-reduced-motion:reduce){
+      .rise { opacity:1 !important; transform:none !important; }
+      .linea > span { transform:none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bar">
+    <div class="bar-brand">El Monchito</div>
+    <button class="tema" id="tema" aria-label="Cambiar tema">Oscuro</button>
+  </div>
+
+  <header class="cover">
+    <div class="cover-img">
+      <img src="/img/header-home-cisnes.webp" alt="Puerto Cisnes desde el hostal" />
+    </div>
+    <div class="wrap cover-in">
+      <div class="kicker rise">Puerto Cisnes · Región de Aysén</div>
+      <h1><span class="linea"><span>Dormir</span></span><span class="linea"><span>donde termina</span></span><span class="linea"><span><em>el camino</em></span></span></h1>
+      <div class="cover-foot rise">
+        <p>Pensión completa, restaurant y convenios para empresas, sobre la Carretera Austral. Trece años recibiendo a quien llega.</p>
+        <a class="cta" href="#">Reservar</a>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow rise">Qué ofrecemos</div>
+      <h2 class="rise">Un hospedaje para cada tipo de viajero.</h2>
+      <p class="lede rise">No somos un hotel. Somos una casa en la Patagonia donde se come bien, se duerme tranquilo y se atiende sin intermediarios.</p>
+
+      <div class="servicios">
+        <div class="serv rise">
+          <span class="serv-n">01</span>
+          <h3>Pensión completa</h3>
+          <p>Desayuno, almuerzo y cena en habitaciones individuales y dobles. Cocina patagónica con productos locales.</p>
+        </div>
+        <div class="serv rise">
+          <span class="serv-n">02</span>
+          <h3>Convenios de empresa</h3>
+          <p>Alojamiento y colaciones para faena, estadías prolongadas y facturación. Salmoneras, constructoras y obras públicas.</p>
+        </div>
+        <div class="serv rise">
+          <span class="serv-n">03</span>
+          <h3>Restaurant abierto</h3>
+          <p>Pizzas artesanales, burgers y platos caseros. También para quienes no se alojan con nosotros.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="quote">
+    <div class="wrap">
+      <blockquote class="rise">A pocos metros del centro, con el fiordo enfrente y el Queulat a una hora.</blockquote>
+      <cite class="rise">Aguada de Dolores 1, Puerto Cisnes</cite>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow rise">Desde el blog</div>
+      <h2 class="rise">Guías para moverse por Aysén.</h2>
+      <div class="posts">
+        <a class="post rise" href="#"><span class="post-cat">Turismo &amp; Guía</span><h3>Qué hacer en Puerto Cisnes: naturaleza y panoramas</h3><span class="post-arrow">→</span></a>
+        <a class="post rise" href="#"><span class="post-cat">Cómo llegar</span><h3>Guía completa por tierra, mar y aire</h3><span class="post-arrow">→</span></a>
+        <a class="post rise" href="#"><span class="post-cat">Parques</span><h3>Cómo visitar el Parque Nacional Queulat</h3><span class="post-arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">Muestra 1 de 3 · Editorial Patagónico — Fraunces + Work Sans</div>
+  </footer>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const raiz = document.documentElement;
+  const btn = document.getElementById('tema');
+  const guardado = localStorage.getItem('tema-muestra');
+  if (guardado) raiz.setAttribute('data-tema', guardado);
+  const pintar = () => { btn.textContent = raiz.getAttribute('data-tema') === 'oscuro' ? 'Claro' : 'Oscuro'; };
+  pintar();
+  btn.addEventListener('click', () => {
+    const nuevo = raiz.getAttribute('data-tema') === 'oscuro' ? 'claro' : 'oscuro';
+    raiz.setAttribute('data-tema', nuevo);
+    localStorage.setItem('tema-muestra', nuevo);
+    pintar();
+  });
+
+  const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!quieto) {
+    // Titular por líneas
+    gsap.from('.linea > span', {
+      yPercent: 108, duration: 1.15, ease: 'power4.out', stagger: 0.09, delay: 0.15
+    });
+    gsap.to('.cover .rise', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.12, delay: 0.5 });
+
+    // Parallax suave de la portada
+    gsap.to('.cover-img img', {
+      yPercent: 14, ease: 'none',
+      scrollTrigger: { trigger: '.cover', start: 'top top', end: 'bottom top', scrub: true }
+    });
+
+    // Revelados
+    gsap.utils.toArray('section .rise, .quote .rise').forEach((el) => {
+      gsap.to(el, {
+        opacity: 1, y: 0, duration: .95, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%' }
+      });
+    });
+  } else {
+    document.querySelectorAll('.rise').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+---
+export const prerender = false;
+---
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Muestra 2 · Cartográfico — Hostal Monchito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper:  #e8e4db;
+      --raised: #f4f1ea;
+      --ink:    #10201f;
+      --body:   #46544f;
+      --muted:  #7c8a84;
+      --rule:   #cbc5b7;
+      --curva:  rgba(22,63,60,.17);
+      --acento: #1c5f57;
+      --alerta: #c2603a;
+    }
+    [data-tema="oscuro"] {
+      --paper:  #080e0f;
+      --raised: #0e1618;
+      --ink:    #e6efec;
+      --body:   #9fb0ab;
+      --muted:  #6c7d78;
+      --rule:   #1e2b2c;
+      --curva:  rgba(126,207,193,.14);
+      --acento: #6fd0bd;
+      --alerta: #e08a5c;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background:var(--paper); color:var(--body);
+      font-family:'Archivo',system-ui,sans-serif; font-size:16px; line-height:1.7;
+      -webkit-font-smoothing:antialiased; overflow-x:hidden;
+      transition:background .5s ease, color .5s ease;
+    }
+    #curvas { position:fixed; inset:0; z-index:0; pointer-events:none; }
+    .capa { position:relative; z-index:1; }
+    .wrap { max-width:1240px; margin:0 auto; padding:0 clamp(18px,4.5vw,56px); }
+    .mono { font-family:'IBM Plex Mono',monospace; }
+
+    /* Retícula */
+    .grid-lines { position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-image:linear-gradient(var(--rule) 1px, transparent 1px),
+                       linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+      background-size:clamp(60px,8vw,110px) clamp(60px,8vw,110px); opacity:.4; }
+
+    /* Barra */
+    .bar { position:fixed; inset:0 0 auto; z-index:60; display:flex; align-items:center; gap:18px;
+           padding:16px clamp(18px,4.5vw,56px); border-bottom:1px solid var(--rule);
+           background:color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter:blur(9px); }
+    .bar-brand { font-weight:700; font-size:14px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink); }
+    .bar-coord { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); flex:1; }
+    .tema { background:none; border:1px solid var(--rule); color:var(--ink);
+            font:500 10.5px/1 'IBM Plex Mono',monospace; letter-spacing:.1em; text-transform:uppercase;
+            padding:9px 14px; cursor:pointer; }
+    .tema:hover { border-color:var(--acento); color:var(--acento); }
+    .tema:focus-visible { outline:2px solid var(--acento); outline-offset:2px; }
+    @media (max-width:640px){ .bar-coord{ display:none; } }
+
+    /* Portada */
+    .cover { min-height:100svh; display:flex; align-items:center; padding:120px 0 60px; }
+    .tag { display:inline-flex; align-items:center; gap:9px; font-family:'IBM Plex Mono',monospace;
+           font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--acento);
+           border:1px solid var(--acento); padding:6px 12px; margin-bottom:32px; }
+    .dot { width:5px; height:5px; background:var(--acento); border-radius:50%; }
+    h1 { font-weight:600; color:var(--ink); font-size:clamp(2.6rem,8vw,6.4rem);
+         line-height:.98; letter-spacing:-.035em; text-transform:uppercase; text-wrap:balance; max-width:13ch; }
+    h1 .thin { font-weight:300; color:var(--acento); }
+    .cover p { max-width:48ch; margin-top:30px; font-size:17px; }
+
+    /* Ficha técnica */
+    .ficha { margin-top:52px; display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+             border:1px solid var(--rule); }
+    .ficha div { padding:18px 20px; border-right:1px solid var(--rule); }
+    .ficha div:last-child { border-right:0; }
+    .ficha dt { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.16em;
+                text-transform:uppercase; color:var(--muted); margin-bottom:7px; }
+    .ficha dd { font-size:19px; color:var(--ink); font-weight:500; font-variant-numeric:tabular-nums; }
+    @media (max-width:620px){ .ficha div{ border-right:0; border-bottom:1px solid var(--rule); } }
+
+    /* Secciones */
+    section { padding:clamp(72px,11vh,140px) 0; }
+    .sec-head { display:flex; align-items:baseline; gap:16px; border-bottom:1px solid var(--ink);
+                padding-bottom:12px; margin-bottom:48px; }
+    .sec-num { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--alerta); }
+    h2 { font-weight:600; font-size:clamp(1.6rem,3.6vw,2.6rem); color:var(--ink);
+         letter-spacing:-.02em; text-transform:uppercase; flex:1; }
+
+    .items { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:1px;
+             background:var(--rule); border:1px solid var(--rule); }
+    .item { background:var(--paper); padding:30px 26px 34px; transition:background .35s; }
+    .item:hover { background:var(--raised); }
+    .item-k { font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.15em;
+              color:var(--alerta); text-transform:uppercase; display:block; margin-bottom:16px; }
+    .item h3 { font-size:21px; font-weight:600; color:var(--ink); margin-bottom:10px; letter-spacing:-.01em; }
+    .item p { font-size:15px; }
+
+    /* Imagen con marco técnico */
+    .plano { margin-top:64px; position:relative; border:1px solid var(--rule); padding:11px; }
+    .plano img { width:100%; height:clamp(240px,44vh,460px); object-fit:cover; display:block; }
+    .plano-lab { position:absolute; bottom:22px; left:22px; font-family:'IBM Plex Mono',monospace;
+                 font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:#fff;
+                 background:rgba(6,16,15,.72); padding:7px 11px; }
+
+    /* Blog */
+    .posts { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px;
+             background:var(--rule); border:1px solid var(--rule); }
+    .post { background:var(--paper); padding:26px 24px 30px; text-decoration:none; display:block;
+            transition:background .35s; }
+    .post:hover { background:var(--raised); }
+    .post-meta { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.14em;
+                 text-transform:uppercase; color:var(--muted); display:flex; gap:10px; margin-bottom:14px; }
+    .post h3 { font-size:19px; font-weight:600; color:var(--ink); line-height:1.28; letter-spacing:-.01em; }
+    .post-go { margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--acento); }
+
+    footer { border-top:1px solid var(--rule); padding:34px 0 56px;
+             font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); }
+
+    .rise { opacity:0; transform:translateY(22px); }
+    @media (prefers-reduced-motion:reduce){ .rise{ opacity:1 !important; transform:none !important; } }
+  </style>
+</head>
+<body>
+  <canvas id="curvas" aria-hidden="true"></canvas>
+  <div class="grid-lines" aria-hidden="true"></div>
+
+  <div class="capa">
+    <div class="bar">
+      <span class="bar-brand">Monchito</span>
+      <span class="bar-coord">44°43′30″S · 72°45′18″W — Puerto Cisnes, Aysén</span>
+      <button class="tema" id="tema">Oscuro</button>
+    </div>
+
+    <header class="cover">
+      <div class="wrap">
+        <div class="tag rise"><span class="dot"></span> Carretera Austral · km 0</div>
+        <h1 class="rise">Base en el <span class="thin">fiordo</span></h1>
+        <p class="rise">Hospedaje con pensión completa, restaurant y convenios de empresa en Puerto Cisnes. Trece años operando en la Región de Aysén.</p>
+        <dl class="ficha rise">
+          <div><dt>Latitud</dt><dd class="mono">−44.725</dd></div>
+          <div><dt>Longitud</dt><dd class="mono">−72.755</dd></div>
+          <div><dt>Operando desde</dt><dd class="mono">2013</dd></div>
+          <div><dt>Atención</dt><dd class="mono">07 — 23 h</dd></div>
+        </dl>
+      </div>
+    </header>
+
+    <section>
+      <div class="wrap">
+        <div class="sec-head rise"><span class="sec-num">§ 01</span><h2>Servicios</h2></div>
+        <div class="items">
+          <div class="item rise"><span class="item-k">Alojamiento</span><h3>Pensión completa</h3><p>Desayuno, almuerzo y cena. Habitaciones individuales y dobles con WiFi.</p></div>
+          <div class="item rise"><span class="item-k">Empresas</span><h3>Convenios de faena</h3><p>Colaciones, estadías prolongadas y facturación para salmoneras y constructoras.</p></div>
+          <div class="item rise"><span class="item-k">Restaurant</span><h3>Cocina abierta</h3><p>Pizzas artesanales, burgers y platos caseros con productos locales.</p></div>
+        </div>
+
+        <figure class="plano rise">
+          <img src="/img/cisnes.webp" alt="Puerto Cisnes y el fiordo" />
+          <figcaption class="plano-lab">Fig. 1 — Puerto Cisnes desde el fiordo</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="sec-head rise"><span class="sec-num">§ 02</span><h2>Bitácora</h2></div>
+        <div class="posts">
+          <a class="post rise" href="#"><div class="post-meta"><span>Turismo</span><span>6 min</span></div><h3>Qué hacer en Puerto Cisnes: naturaleza y panoramas</h3><div class="post-go">Leer →</div></a>
+          <a class="post rise" href="#"><div class="post-meta"><span>Acceso</span><span>8 min</span></div><h3>Cómo llegar por tierra, mar y aire</h3><div class="post-go">Leer →</div></a>
+          <a class="post rise" href="#"><div class="post-meta"><span>Parques</span><span>7 min</span></div><h3>Parque Nacional Queulat desde Puerto Cisnes</h3><div class="post-go">Leer →</div></a>
+        </div>
+      </div>
+    </section>
+
+    <footer><div class="wrap">Muestra 2 de 3 · Cartográfico — Archivo + IBM Plex Mono</div></footer>
+  </div>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const raiz = document.documentElement;
+  const btn = document.getElementById('tema');
+  const guardado = localStorage.getItem('tema-muestra');
+  if (guardado) raiz.setAttribute('data-tema', guardado);
+  const pintar = () => { btn.textContent = raiz.getAttribute('data-tema') === 'oscuro' ? 'Claro' : 'Oscuro'; };
+  pintar();
+  btn.addEventListener('click', () => {
+    const nuevo = raiz.getAttribute('data-tema') === 'oscuro' ? 'claro' : 'oscuro';
+    raiz.setAttribute('data-tema', nuevo);
+    localStorage.setItem('tema-muestra', nuevo);
+    pintar();
+  });
+
+  // ── Curvas de nivel dibujadas en canvas ──
+  const cv = document.getElementById('curvas');
+  const ctx = cv.getContext('2d');
+  let w, h, dpr, desfase = 0;
+
+  function medir() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    cv.width = w * dpr; cv.height = h * dpr;
+    cv.style.width = w + 'px'; cv.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  medir();
+
+  function color() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--curva').trim();
+  }
+
+  function dibujar() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.strokeStyle = color();
+    ctx.lineWidth = 1;
+    const cx = w * 0.72, cy = h * 0.46;
+    const anillos = 22;
+    for (let i = 0; i < anillos; i++) {
+      const base = 46 + i * 41 + desfase * 26;
+      ctx.beginPath();
+      for (let a = 0; a <= Math.PI * 2 + 0.06; a += 0.06) {
+        // Perturbaciones superpuestas: da la irregularidad de una curva de nivel real
+        const r = base
+          + Math.sin(a * 3 + i * 0.55) * (17 + i * 1.6)
+          + Math.sin(a * 5.3 - i * 0.31) * (9 + i * 0.9)
+          + Math.cos(a * 2.1 + i * 0.9) * 13;
+        const x = cx + Math.cos(a) * r * 1.28;
+        const y = cy + Math.sin(a) * r * 0.82;
+        a === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.stroke();
+    }
+  }
+  dibujar();
+
+  window.addEventListener('resize', () => { medir(); dibujar(); });
+
+  const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!quieto) {
+    // El relieve se "recorre" con el scroll
+    ScrollTrigger.create({
+      trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 1,
+      onUpdate: (self) => { desfase = self.progress * 3.2; dibujar(); }
+    });
+
+    gsap.to('.cover .rise', { opacity:1, y:0, duration:.9, ease:'power3.out', stagger:.11, delay:.2 });
+    gsap.utils.toArray('section .rise').forEach((el) => {
+      gsap.to(el, { opacity:1, y:0, duration:.85, ease:'power3.out',
+        scrollTrigger:{ trigger:el, start:'top 88%' } });
+    });
+  } else {
+    document.querySelectorAll('.rise').forEach(el => { el.style.opacity=1; el.style.transform='none'; });
+  }
+
+  // Repinta al cambiar de tema
+  btn.addEventListener('click', () => setTimeout(dibujar, 60));
+</script>
+</body>
+</html>

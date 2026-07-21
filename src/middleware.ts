@@ -31,6 +31,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     // lo restringe el token aleatorio del enlace, no la sesión.
     pathname.startsWith("/v/") ||
     pathname.startsWith("/api/voucher-img/") ||
+    // Muestras de rediseño, temporales: se eliminan al elegir dirección.
+    pathname.startsWith("/muestra") ||
     pathname.startsWith("/_")
   ) {
     return next();

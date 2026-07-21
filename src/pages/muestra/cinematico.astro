@@ -1,0 +1,234 @@
+---
+export const prerender = false;
+---
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Muestra 3 · Cinemático — Hostal Monchito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --fondo:  #0a0c0b;
+      --panel:  #111514;
+      --texto:  #f2f4f2;
+      --suave:  #a8b2ad;
+      --tenue:  #6d7873;
+      --linea:  rgba(255,255,255,.13);
+      --oro:    #c8a97a;
+    }
+    [data-tema="claro"] {
+      --fondo:  #eeebe5;
+      --panel:  #f7f5f0;
+      --texto:  #121614;
+      --suave:  #4d5754;
+      --tenue:  #828c88;
+      --linea:  rgba(10,14,12,.14);
+      --oro:    #9a7845;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background:var(--fondo); color:var(--suave);
+      font-family:'Jost',system-ui,sans-serif; font-size:16.5px; line-height:1.72;
+      -webkit-font-smoothing:antialiased; overflow-x:hidden;
+      transition:background .55s ease, color .55s ease;
+    }
+    .wrap { max-width:1200px; margin:0 auto; padding:0 clamp(20px,5vw,60px); }
+
+    .bar { position:fixed; inset:0 0 auto; z-index:80; display:flex; align-items:center;
+           padding:20px clamp(20px,5vw,60px); }
+    .bar-brand { font-family:'Bodoni Moda',serif; font-size:20px; color:var(--texto); flex:1;
+                 letter-spacing:.03em; mix-blend-mode:difference; }
+    .tema { background:rgba(255,255,255,.09); border:1px solid var(--linea); color:var(--texto);
+            font:500 10.5px/1 'Jost',sans-serif; letter-spacing:.16em; text-transform:uppercase;
+            padding:10px 16px; border-radius:999px; cursor:pointer; backdrop-filter:blur(10px); }
+    .tema:hover { background:rgba(255,255,255,.16); }
+    .tema:focus-visible { outline:2px solid var(--oro); outline-offset:3px; }
+
+    /* Apertura */
+    .apertura { position:relative; height:100svh; overflow:hidden; }
+    .apertura-img { position:absolute; inset:-8%; }
+    .apertura-img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .velo { position:absolute; inset:0; background:linear-gradient(180deg,
+            rgba(6,9,8,.5) 0%, rgba(6,9,8,.18) 42%, rgba(6,9,8,.86) 100%); }
+    .apertura-txt { position:absolute; inset:auto 0 0; padding-bottom:clamp(52px,10vh,110px); z-index:3; }
+    .marca { font-family:'Bodoni Moda',serif; color:#fff; font-weight:400;
+             font-size:clamp(3.4rem,13vw,11rem); line-height:.86; letter-spacing:-.03em; }
+    .marca em { font-style:italic; color:var(--oro); }
+    .sub { display:flex; flex-wrap:wrap; gap:20px 40px; align-items:center; margin-top:30px;
+           padding-top:24px; border-top:1px solid rgba(255,255,255,.2); }
+    .sub p { color:rgba(255,255,255,.8); max-width:40ch; }
+    .sub .dato { font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:rgba(255,255,255,.55); }
+    .baja { position:absolute; left:50%; bottom:26px; transform:translateX(-50%); z-index:4;
+            font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:rgba(255,255,255,.5); }
+
+    /* Capítulos anclados */
+    .capitulo { position:relative; height:100svh; overflow:hidden; }
+    .cap-img { position:absolute; inset:0; }
+    .cap-img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .cap-img::after { content:''; position:absolute; inset:0;
+      background:linear-gradient(90deg, rgba(6,9,8,.88) 0%, rgba(6,9,8,.5) 48%, rgba(6,9,8,.2) 100%); }
+    .cap-txt { position:relative; z-index:2; height:100%; display:flex; align-items:center; }
+    .cap-n { font-family:'Bodoni Moda',serif; font-size:13px; color:var(--oro);
+             letter-spacing:.2em; margin-bottom:20px; }
+    .capitulo h2 { font-family:'Bodoni Moda',serif; font-weight:400; color:#fff;
+                   font-size:clamp(2.2rem,6vw,4.6rem); line-height:1.02; letter-spacing:-.02em;
+                   max-width:15ch; text-wrap:balance; }
+    .capitulo p { color:rgba(255,255,255,.78); max-width:44ch; margin-top:22px; }
+
+    /* Intermedio */
+    .intermedio { background:var(--panel); padding:clamp(80px,14vh,170px) 0; }
+    .intermedio h3 { font-family:'Bodoni Moda',serif; font-weight:400; color:var(--texto);
+      font-size:clamp(1.9rem,4.6vw,3.4rem); line-height:1.12; max-width:19ch; letter-spacing:-.02em; }
+    .cifras { margin-top:60px; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:2px; }
+    .cifra { padding:28px 26px; border-top:1px solid var(--linea); }
+    .cifra dt { font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--tenue); margin-bottom:10px; }
+    .cifra dd { font-family:'Bodoni Moda',serif; font-size:38px; color:var(--texto); line-height:1;
+                font-variant-numeric:tabular-nums; }
+
+    /* Blog */
+    .lecturas { background:var(--fondo); padding:clamp(72px,12vh,150px) 0; }
+    .lect-head { font-size:11px; letter-spacing:.26em; text-transform:uppercase; color:var(--oro); margin-bottom:34px; }
+    .posts { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:34px; }
+    .post { text-decoration:none; display:block; }
+    .post-img { overflow:hidden; aspect-ratio:4/3; margin-bottom:18px; }
+    .post-img img { width:100%; height:100%; object-fit:cover; display:block;
+                    transition:transform .8s cubic-bezier(.22,1,.36,1); }
+    .post:hover .post-img img { transform:scale(1.06); }
+    .post-cat { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--oro); }
+    .post h4 { font-family:'Bodoni Moda',serif; font-weight:400; font-size:22px; color:var(--texto);
+               line-height:1.26; margin-top:9px; }
+
+    footer { border-top:1px solid var(--linea); padding:36px 0 60px; font-size:13px; color:var(--tenue); }
+
+    .rise { opacity:0; transform:translateY(24px); }
+    @media (prefers-reduced-motion:reduce){
+      .rise{ opacity:1 !important; transform:none !important; }
+      .capitulo, .apertura { height:auto; min-height:0; padding:80px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bar">
+    <span class="bar-brand">Monchito</span>
+    <button class="tema" id="tema">Claro</button>
+  </div>
+
+  <header class="apertura">
+    <div class="apertura-img"><img src="/img/header-home-cisnes.webp" alt="Puerto Cisnes al amanecer" /></div>
+    <div class="velo"></div>
+    <div class="apertura-txt">
+      <div class="wrap">
+        <h1 class="marca rise">El <em>Monchito</em></h1>
+        <div class="sub rise">
+          <p>Hospedaje, cocina y descanso en Puerto Cisnes, sobre la Carretera Austral.</p>
+          <span class="dato">Región de Aysén · Desde 2013</span>
+        </div>
+      </div>
+    </div>
+    <div class="baja">Scroll</div>
+  </header>
+
+  <section class="capitulo" data-cap>
+    <div class="cap-img"><img src="/img/donde-dormir.webp" alt="Habitación del hostal" /></div>
+    <div class="cap-txt"><div class="wrap">
+      <div class="cap-n rise">I</div>
+      <h2 class="rise">Una cama caliente después de la faena.</h2>
+      <p class="rise">Habitaciones individuales y dobles con pensión completa: desayuno, almuerzo y cena. Para quien llega a trabajar y para quien llega a mirar.</p>
+    </div></div>
+  </section>
+
+  <section class="capitulo" data-cap>
+    <div class="cap-img"><img src="/img/donde-comer-cisnes.webp" alt="Cocina del restaurant" /></div>
+    <div class="cap-txt"><div class="wrap">
+      <div class="cap-n rise">II</div>
+      <h2 class="rise">La cocina no cierra para nadie.</h2>
+      <p class="rise">Pizzas artesanales, burgers y platos caseros con productos locales. El restaurant atiende también a quienes no se alojan.</p>
+    </div></div>
+  </section>
+
+  <div class="intermedio">
+    <div class="wrap">
+      <h3 class="rise">Trece años recibiendo a quien baja por la Austral.</h3>
+      <dl class="cifras">
+        <div class="cifra rise"><dt>Operando desde</dt><dd>2013</dd></div>
+        <div class="cifra rise"><dt>Atención</dt><dd>07—23</dd></div>
+        <div class="cifra rise"><dt>Tipos de huésped</dt><dd>03</dd></div>
+        <div class="cifra rise"><dt>Del centro</dt><dd>2 min</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="lecturas">
+    <div class="wrap">
+      <div class="lect-head rise">Desde el blog</div>
+      <div class="posts">
+        <a class="post rise" href="#"><div class="post-img"><img src="/img/galeria-3.jpg" alt="" /></div><span class="post-cat">Turismo</span><h4>Qué hacer en Puerto Cisnes</h4></a>
+        <a class="post rise" href="#"><div class="post-img"><img src="/img/header-cisnes.webp" alt="" /></div><span class="post-cat">Acceso</span><h4>Cómo llegar por tierra, mar y aire</h4></a>
+        <a class="post rise" href="#"><div class="post-img"><img src="/img/cisnes.webp" alt="" /></div><span class="post-cat">Parques</span><h4>El Queulat desde Puerto Cisnes</h4></a>
+      </div>
+    </div>
+  </div>
+
+  <footer><div class="wrap">Muestra 3 de 3 · Cinemático — Bodoni Moda + Jost</div></footer>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const raiz = document.documentElement;
+  const btn = document.getElementById('tema');
+  const guardado = localStorage.getItem('tema-muestra-cine');
+  if (guardado) raiz.setAttribute('data-tema', guardado);
+  const pintar = () => { btn.textContent = raiz.getAttribute('data-tema') === 'claro' ? 'Oscuro' : 'Claro'; };
+  pintar();
+  btn.addEventListener('click', () => {
+    const nuevo = raiz.getAttribute('data-tema') === 'claro' ? 'oscuro' : 'claro';
+    raiz.setAttribute('data-tema', nuevo);
+    localStorage.setItem('tema-muestra-cine', nuevo);
+    pintar();
+  });
+
+  const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!quieto) {
+    gsap.to('.apertura .rise', { opacity:1, y:0, duration:1.1, ease:'power3.out', stagger:.14, delay:.25 });
+
+    // La apertura se aleja mientras entra el primer capítulo
+    gsap.to('.apertura-img', {
+      yPercent: 16, scale: 1.1, ease:'none',
+      scrollTrigger:{ trigger:'.apertura', start:'top top', end:'bottom top', scrub:true }
+    });
+    gsap.to('.apertura-txt', {
+      opacity: 0, y: -60, ease:'none',
+      scrollTrigger:{ trigger:'.apertura', start:'40% top', end:'bottom top', scrub:true }
+    });
+
+    // Cada capítulo: la foto se desplaza y el texto entra escalonado
+    gsap.utils.toArray('[data-cap]').forEach((cap) => {
+      gsap.fromTo(cap.querySelector('.cap-img img'),
+        { yPercent:-9 }, { yPercent:9, ease:'none',
+          scrollTrigger:{ trigger:cap, start:'top bottom', end:'bottom top', scrub:true } });
+
+      gsap.to(cap.querySelectorAll('.rise'), {
+        opacity:1, y:0, duration:1, ease:'power3.out', stagger:.13,
+        scrollTrigger:{ trigger:cap, start:'top 62%' }
+      });
+    });
+
+    gsap.utils.toArray('.intermedio .rise, .lecturas .rise').forEach((el) => {
+      gsap.to(el, { opacity:1, y:0, duration:.9, ease:'power3.out',
+        scrollTrigger:{ trigger:el, start:'top 88%' } });
+    });
+  } else {
+    document.querySelectorAll('.rise').forEach(el => { el.style.opacity=1; el.style.transform='none'; });
+  }
+</script>
+</body>
+</html>
