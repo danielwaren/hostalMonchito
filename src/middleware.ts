@@ -1,5 +1,5 @@
 import { defineMiddleware } from "astro:middleware";
-import { createServerClient, parseCookieHeader } from "@supabase/ssr";
+import { getSession } from "auth-astro/server";
 
 const ALLOWED_EMAILS = [
   "danielguz.ga@gmail.com",
@@ -20,38 +20,20 @@ export const onRequest = defineMiddleware(async (context, next) => {
   if (
     PUBLIC_PATHS.includes(pathname) ||
     pathname.startsWith("/blog") ||
-    pathname.startsWith("/api/auth/") ||
+    pathname.startsWith("/api/auth") ||
     pathname.startsWith("/_")
   ) {
     return next();
   }
 
-  const supabase = createServerClient(
-    import.meta.env.PUBLIC_SUPABASE_URL,
-    import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
-    {
-      cookies: {
-        getAll() {
-          return parseCookieHeader(context.request.headers.get("cookie") ?? "");
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            context.cookies.set(name, value, options)
-          );
-        },
-      },
-    }
-  );
+  const session = await getSession(context.request);
+  const email = session?.user?.email ?? "";
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user || !ALLOWED_EMAILS.includes(user.email ?? "")) {
+  if (!session?.user || !ALLOWED_EMAILS.includes(email)) {
     return context.redirect("/login");
   }
 
-  context.locals.user = user;
+  context.locals.user = session.user;
 
   return next();
 });

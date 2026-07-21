@@ -11,6 +11,7 @@
   "dependencies": {
     "@astrojs/react": "^4.4.1",
     "@astrojs/vercel": "^9.0.0",
+    "@auth/core": "^0.41.3",
     "@libsql/client": "^0.15.8",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-avatar": "^1.1.10",
@@ -30,6 +31,7 @@
     "@supabase/supabase-js": "^2.50.0",
     "@types/papaparse": "^5.3.16",
     "astro": "^5.15.3",
+    "auth-astro": "^4.2.0",
     "csv-parser": "^3.2.0",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",

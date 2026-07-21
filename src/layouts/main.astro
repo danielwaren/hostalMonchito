@@ -26,9 +26,9 @@ const {
 const user = Astro.locals.user;
 const sidebarUser = user
   ? {
-      name: user.user_metadata?.full_name ?? user.email ?? "Admin",
+      name: user.name ?? user.email ?? "Admin",
       email: user.email ?? "",
-      avatar: user.user_metadata?.avatar_url ?? "",
+      avatar: user.image ?? "",
     }
   : undefined;
 

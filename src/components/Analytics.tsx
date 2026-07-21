@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer, Cell,
@@ -68,14 +67,9 @@ export default function Analytics() {
     const cargar = async () => {
       setCargando(true);
       try {
-        const desde = new Date();
-        desde.setDate(desde.getDate() - rango);
-        const { data, error } = await supabase
-          .from("visitas")
-          .select("*")
-          .gte("created_at", desde.toISOString())
-          .order("created_at", { ascending: true });
-        if (error) console.error("Error cargando visitas:", error.message);
+        const res = await fetch(`/api/visitas?dias=${rango}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
         setVisitas(data ?? []);
       } catch (e) {
         console.error("Error inesperado:", e);

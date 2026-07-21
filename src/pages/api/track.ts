@@ -1,10 +1,7 @@
-import type { APIRoute } from "astro";
-import { createClient } from "@supabase/supabase-js";
+export const prerender = false;
 
-const supabase = createClient(
-  import.meta.env.PUBLIC_SUPABASE_URL,
-  import.meta.env.PUBLIC_SUPABASE_ANON_KEY
-);
+import type { APIRoute } from "astro";
+import { client } from "@/lib/db";
 
 function detectarDispositivo(ua: string): string {
   if (/mobile|android|iphone|ipad|ipod/i.test(ua)) return "móvil";
@@ -24,13 +21,10 @@ export const POST: APIRoute = async ({ request }) => {
       ? decodeURIComponent(request.headers.get("x-vercel-ip-city")!)
       : null;
 
-    await supabase.from("visitas").insert([{
-      pagina,
-      referente: referente || null,
-      dispositivo: detectarDispositivo(ua),
-      pais,
-      ciudad,
-    }]);
+    await client.execute({
+      sql: "INSERT INTO visitas (pagina, referente, dispositivo, pais, ciudad) VALUES (?, ?, ?, ?, ?)",
+      args: [pagina, referente || null, detectarDispositivo(ua), pais, ciudad],
+    });
 
     return new Response("ok", { status: 200 });
   } catch {

@@ -71,7 +71,7 @@ const {
 <script>
   window.addEventListener("load", () => {
     const esAdmin = document.cookie.split(";").some((c) =>
-      c.trim().startsWith("sb-kqtrrpqpillowaqmavpw-auth-token")
+      c.trim().toLowerCase().includes("authjs.session-token")
     );
     if (esAdmin) return;
     fetch("/api/track", {

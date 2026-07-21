@@ -1,5 +1,6 @@
 "use client"
 
+import { signOut } from "auth-astro/client"
 import {
   BadgeCheck,
   Bell,
@@ -102,13 +103,9 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <form method="POST" action="/api/auth/signout" className="w-full">
-                <button type="submit" className="flex items-center gap-2 w-full cursor-pointer">
-                  <LogOut className="size-4" />
-                  Cerrar sesión
-                </button>
-              </form>
+            <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
+              <LogOut className="size-4" />
+              Cerrar sesión
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
