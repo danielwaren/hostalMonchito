@@ -3,6 +3,7 @@ import { defineConfig } from "auth-astro";
 import Google from "@auth/core/providers/google";
 
 export default defineConfig({
+  trustHost: true,
   pages: {
     signIn: "/login",
     error: "/login",
