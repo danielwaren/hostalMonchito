@@ -15,6 +15,9 @@ const PUBLIC_PATHS = [
   // Lo llaman visitantes anónimos desde las páginas públicas: si se
   // protege, no se registra ninguna visita.
   "/api/track",
+  // Los tiene que poder leer Google sin sesión.
+  "/sitemap.xml",
+  "/robots.txt",
 ];
 
 export const onRequest = defineMiddleware(async (context, next) => {

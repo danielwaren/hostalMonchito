@@ -1,11 +1,15 @@
 ---
 import SeoSchema from './SeoSchema.astro';
 
+// El dominio real es con www: el ápex redirige. Si el canonical apunta al
+// ápex, Google recibe una URL que redirige y se confunde al indexar.
+const SITIO = "https://www.hostalmonchito.cl";
+
 const {
-  title = "Hostal El Monchito | Puerto Cisnes",
-  description = "Hospedaje en Puerto Cisnes con pensión completa para trabajadores y turistas en la Región de Aysén.",
-  image = "https://hostalmonchito.cl/img/logo.png",
-  url = "https://hostalmonchito.cl/",
+  title = "Hostal en Puerto Cisnes | Alojamiento y Pensión Completa – El Monchito",
+  description = "Hostal en Puerto Cisnes con pensión completa, restaurante y convenios para empresas. Alojamiento para trabajadores y turistas en la Región de Aysén.",
+  image = `${SITIO}/img/logo.png`,
+  url = new URL(Astro.url.pathname, SITIO).href,
 } = Astro.props;
 ---
 

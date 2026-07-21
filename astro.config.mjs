@@ -7,6 +7,7 @@ import auth from 'auth-astro';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://www.hostalmonchito.cl',
   integrations: [tailwind(), react(), auth()],
   output: 'server',
   adapter: vercel(),

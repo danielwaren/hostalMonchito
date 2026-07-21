@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Panel de administración y datos internos: no deben indexarse
+Disallow: /Dashboard
+Disallow: /analytics
+Disallow: /login
+Disallow: /api/
+Disallow: /v/
+Disallow: /clientes
+Disallow: /detalleCliente
+Disallow: /detalleGasto
+Disallow: /detalleVenta
+Disallow: /nuevaVenta
+Disallow: /nuevoGasto
+Disallow: /facturas
+Disallow: /tablafacturas
+Disallow: /Cartolas
+Disallow: /CartolaCsv
+Disallow: /Convertidor
+Disallow: /ArmarPizza
+Disallow: /DetalleServicios
+
+Sitemap: https://www.hostalmonchito.cl/sitemap.xml
