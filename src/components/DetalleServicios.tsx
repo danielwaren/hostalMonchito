@@ -58,22 +58,15 @@ function imprimirVoucher(cliente: string, servicios: ServicioRow[]) {
     day: "2-digit", month: "long", year: "numeric",
   });
 
-  const filasServicios = servicios
-    .filter((s) => calcSubtotal(s) > 0)
-    .map(
-      (s) => `
-      <tr>
-        <td class="fecha">${new Date(s.fecha + "T12:00:00").toLocaleDateString("es-CL", {
-          day: "2-digit", month: "short", year: "numeric",
-        })}</td>
-        <td class="centro">${s.almuerzo > 0 ? s.almuerzo : "—"}</td>
-        <td class="centro">${s.cena > 0 ? s.cena : "—"}</td>
-        <td class="centro">${s.alojamiento > 0 ? s.alojamiento : "—"}</td>
-        <td class="monto">${formatCLP(calcSubtotal(s))}</td>
-        <td class="monto bold">${formatCLP(calcTotalIVA(s))}</td>
-      </tr>`
-    )
-    .join("");
+  const voucher = generarHTMLVoucher(
+    cliente,
+    servicios,
+    generarFilasVoucher(servicios),
+    fechaEmision,
+    totalNeto,
+    totalIVAcalc,
+    totalBruto
+  );
 
   const html = `<!DOCTYPE html>
 <html lang="es">
@@ -81,621 +74,14 @@ function imprimirVoucher(cliente: string, servicios: ServicioRow[]) {
   <meta charset="UTF-8" />
   <title>Voucher – ${cliente} – Hostal Monchito</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap');
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 12px;
-      color: #1a1a1a;
-      background: #edeae3;
-      padding: 40px 0;
-    }
-
-    .page {
-      width: 780px;
-      margin: 0 auto;
-      background: #fff;
-      border: 1px solid #cec6b0;
-      border-radius: 3px;
-      overflow: hidden;
-      box-shadow: 0 6px 32px rgba(0,0,0,0.10);
-    }
-
-    /* ══ HEADER ══════════════════════════════════════════════════════════ */
-    .header {
-      background: #f5f0e8;
-      padding: 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* línea ornamental superior */
-    .header-ornament-top {
-      height: 3px;
-      background: repeating-linear-gradient(
-        90deg,
-        #7a6340 0px, #7a6340 6px,
-        transparent 6px, transparent 10px,
-        #9a8f78 10px, #9a8f78 16px,
-        transparent 16px, transparent 20px
-      );
-    }
-
-    .header-body {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 26px 40px 22px;
-    }
-
-    .brand-block { flex: 1; }
-
-    .brand-eyebrow {
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #7a6340;
-      margin-bottom: 6px;
-    }
-
-    .brand-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 700;
-      color: #2c2416;
-      line-height: 1.1;
-      letter-spacing: 0.3px;
-    }
-
-    .brand-name em {
-      font-style: italic;
-      color: #7a6340;
-    }
-
-    .brand-tagline {
-      font-size: 10px;
-      color: #9a8f78;
-      margin-top: 5px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    /* separador vertical */
-    .header-divider {
-      width: 1px;
-      height: 64px;
-      background: linear-gradient(to bottom, transparent, #b0a090, transparent);
-      margin: 0 32px;
-    }
-
-    .contact-block {
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    .contact-line {
-      font-size: 11px;
-      color: #b0a090;
-      line-height: 1.9;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 6px;
-    }
-
-    .contact-line .dot {
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: #7a6340;
-      display: inline-block;
-      flex-shrink: 0;
-    }
-
-    .contact-line a { color: #b0a090; text-decoration: none; }
-
-    /* línea ornamental inferior */
-    .header-ornament-bottom {
-      height: 2px;
-      background: linear-gradient(90deg, transparent 0%, #7a6340 30%, #9a8f78 60%, transparent 100%);
-    }
-
-    /* ══ DOC TITLE BAND ══════════════════════════════════════════════════ */
-    .doc-band {
-      background: #f7f4ee;
-      border-bottom: 1px solid #ddd6c5;
-      padding: 14px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .doc-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
-      font-weight: 600;
-      color: #162318;
-      letter-spacing: 0.5px;
-    }
-
-    .doc-date-block { text-align: right; }
-
-    .doc-date-label {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #9a8f78;
-    }
-
-    .doc-date-value {
-      font-size: 13px;
-      font-weight: 600;
-      color: #162318;
-      margin-top: 2px;
-    }
-
-    /* ══ CLIENTE ══════════════════════════════════════════════════════════ */
-    .client-section {
-      padding: 18px 40px;
-      background: #fff;
-      border-bottom: 1px solid #ede8df;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .client-avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: #f0ebe0;
-      border: 1.5px solid #9a8f78;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-      color: #2c2416;
-      flex-shrink: 0;
-      font-weight: 600;
-    }
-
-    .client-info { flex: 1; }
-
-    .client-label {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #9a8f78;
-      margin-bottom: 3px;
-    }
-
-    .client-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      font-weight: 600;
-      color: #162318;
-    }
-
-    /* ══ TABLA ══════════════════════════════════════════════════════════ */
-    .table-section { padding: 22px 40px; }
-
-    .section-title {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #9a8f78;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #ede8df;
-    }
-
-    table { width: 100%; border-collapse: collapse; }
-
-    thead th {
-      background: #f5f0e8;
-      color: #7a6340;
-      font-size: 9px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 9px 12px;
-      text-align: left;
-    }
-    thead th.centro { text-align: center; }
-    thead th.monto  { text-align: right; }
-
-    tbody tr { border-bottom: 1px solid #ede8df; }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:nth-child(even) { background: #faf8f4; }
-
-    td {
-      padding: 9px 12px;
-      color: #2a2a2a;
-      vertical-align: middle;
-      font-size: 12px;
-    }
-    td.centro { text-align: center; }
-    td.monto  { text-align: right; font-variant-numeric: tabular-nums; }
-    td.bold   { font-weight: 600; color: #162318; }
-
-    /* ══ RESUMEN ══════════════════════════════════════════════════════════ */
-    .summary-section { padding: 0 40px 22px; }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .summary-card {
-      background: #f7f4ee;
-      border: 1px solid #ddd6c5;
-      border-top: 3px solid #9a8f78;
-      border-radius: 3px;
-      padding: 12px 14px;
-      text-align: center;
-    }
-
-    .s-icon  { font-size: 18px; margin-bottom: 5px; }
-    .s-label {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #7a6f5a;
-    }
-    .s-qty {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: #162318;
-      line-height: 1.2;
-    }
-    .s-precio { font-size: 10px; color: #9a8f78; margin-top: 2px; }
-
-    /* ══ TOTALES + DEPÓSITO ══════════════════════════════════════════════ */
-    .bottom-section {
-      padding: 0 40px 24px;
-      display: grid;
-      grid-template-columns: 1fr 240px;
-      gap: 20px;
-      align-items: start;
-    }
-
-    /* caja depósito */
-    .deposit-box {
-      background: #f7f4ee;
-      border: 1px solid #ddd6c5;
-      border-left: 3px solid #7a6340;
-      border-radius: 3px;
-      padding: 14px 16px;
-    }
-
-    .deposit-title {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #9a8f78;
-      margin-bottom: 10px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #ddd6c5;
-    }
-
-    .deposit-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 5px;
-      font-size: 11px;
-      line-height: 1.5;
-    }
-
-    .deposit-row:last-child { margin-bottom: 0; }
-
-    .deposit-key {
-      color: #9a8f78;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .deposit-val {
-      color: #162318;
-      font-weight: 500;
-      text-align: right;
-    }
-
-    .deposit-val.accent { color: #7a6340; font-weight: 600; }
-
-    /* caja totales */
-    .totals-box {
-      border: 1px solid #ddd6c5;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .totals-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 14px;
-      font-size: 12px;
-      border-bottom: 1px solid #ede8df;
-    }
-
-    .totals-row:last-child { border-bottom: none; }
-    .totals-row .label { color: #7a6f5a; }
-    .totals-row .value { font-variant-numeric: tabular-nums; font-weight: 500; }
-
-    .totals-row.grand {
-      background: #f5f0e8;
-      font-size: 13px;
-      font-weight: 700;
-      border-top: 2px solid #7a6340;
-    }
-
-    .totals-row.grand .label { color: #9a8f78; }
-    .totals-row.grand .value { color: #7a6340; }
-
-    /* ══ FOOTER ══════════════════════════════════════════════════════════ */
-    .footer {
-      background: #f5f0e8;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .footer-ornament {
-      height: 2px;
-      background: linear-gradient(90deg, transparent 0%, #7a6340 30%, #9a8f78 60%, transparent 100%);
-    }
-
-    .footer-body {
-      padding: 16px 40px 14px;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .footer-contact {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .footer-contact-line {
-      font-size: 10px;
-      color: #9a8f78;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .footer-contact-line .fc-icon {
-      color: #7a6340;
-      font-size: 11px;
-    }
-
-    .footer-center {
-      text-align: center;
-    }
-
-    .footer-brand {
-      font-family: 'Playfair Display', serif;
-      font-size: 13px;
-      color: #7a6340;
-      letter-spacing: 0.5px;
-    }
-
-    .footer-note {
-      font-size: 9px;
-      color: #b0a090;
-      margin-top: 3px;
-      letter-spacing: 0.5px;
-    }
-
-    .footer-right {
-      text-align: right;
-    }
-
-    .footer-date-label {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #b0a090;
-      margin-bottom: 2px;
-    }
-
-    .footer-date-value {
-      font-size: 11px;
-      color: #9a8f78;
-    }
-
-    .footer-ornament-bottom {
-      height: 3px;
-      background: repeating-linear-gradient(
-        90deg,
-        #7a6340 0px, #7a6340 6px,
-        transparent 6px, transparent 10px,
-        #9a8f78 10px, #9a8f78 16px,
-        transparent 16px, transparent 20px
-      );
-    }
-
-    @media print {
-      body { background: #fff; padding: 0; }
-      .page { width: 100%; box-shadow: none; border: none; border-radius: 0; }
-    }
+    body { margin:0; padding:24px; background:#e6e2d9; display:flex; justify-content:center; }
+    @page { size:A4; margin:8mm; }
+    @media print { body { padding:0; background:#fff; } }
   </style>
 </head>
 <body>
-  <div class="page">
-
-    <!-- ══ HEADER ══ -->
-    <div class="header">
-      <div class="header-ornament-top"></div>
-      <div class="header-body">
-        <div class="brand-block">
-          <div class="brand-eyebrow">Establecimientos Turísticos</div>
-          <div class="brand-name">Hostal &amp; Restaurant <em>Monchito</em></div>
-          <div class="brand-tagline">Alimentos · Alojamiento · Confort</div>
-        </div>
-        <div class="header-divider"></div>
-        <div class="contact-block">
-          <div class="contact-line">
-            <span class="dot"></span>
-            Aguada de Dolores 1, Puerto Cisnes
-          </div>
-          <div class="contact-line">
-            <span class="dot"></span>
-            hostalmonchito2023@gmail.com
-          </div>
-          <div class="contact-line">
-            <span class="dot"></span>
-            +56 9 6224 9178
-          </div>
-        </div>
-      </div>
-      <div class="header-ornament-bottom"></div>
-    </div>
-
-    <!-- ══ BANDA TÍTULO DOC ══ -->
-    <div class="doc-band">
-      <div class="doc-title">Detalle de Servicios Prestados</div>
-      <div class="doc-date-block">
-        <div class="doc-date-label">Fecha de emisión</div>
-        <div class="doc-date-value">${fechaEmision}</div>
-      </div>
-    </div>
-
-    <!-- ══ CLIENTE ══ -->
-    <div class="client-section">
-      <div class="client-avatar">${cliente.charAt(0).toUpperCase()}</div>
-      <div class="client-info">
-        <div class="client-label">Cliente</div>
-        <div class="client-name">${cliente}</div>
-      </div>
-    </div>
-
-    <!-- ══ TABLA ══ -->
-    <div class="table-section">
-      <div class="section-title">Detalle de consumos por fecha</div>
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th class="centro">Almuerzos</th>
-            <th class="centro">Cenas</th>
-            <th class="centro">Alojamientos</th>
-            <th class="monto">Neto</th>
-            <th class="monto">Total c/IVA</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${filasServicios || `<tr><td colspan="6" style="text-align:center;color:#9a8f7a;padding:20px">Sin servicios registrados</td></tr>`}
-        </tbody>
-      </table>
-    </div>
-
-    <!-- ══ RESUMEN CONCEPTOS ══ -->
-    <div class="summary-section">
-      <div class="section-title">Resumen por concepto</div>
-      <div class="summary-grid">
-        <div class="summary-card">
-          <div class="s-icon">🍽️</div>
-          <div class="s-label">Almuerzos</div>
-          <div class="s-qty">${servicios.reduce((a, s) => a + s.almuerzo, 0)}</div>
-          <div class="s-precio">${formatCLP(PRECIO_ALMUERZO)} c/u</div>
-        </div>
-        <div class="summary-card">
-          <div class="s-icon">🌙</div>
-          <div class="s-label">Cenas</div>
-          <div class="s-qty">${servicios.reduce((a, s) => a + s.cena, 0)}</div>
-          <div class="s-precio">${formatCLP(PRECIO_CENA)} c/u</div>
-        </div>
-        <div class="summary-card">
-          <div class="s-icon">🛏️</div>
-          <div class="s-label">Alojamientos</div>
-          <div class="s-qty">${servicios.reduce((a, s) => a + s.alojamiento, 0)}</div>
-          <div class="s-precio">${formatCLP(PRECIO_ALOJAMIENTO)} c/u</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ TOTALES + DEPÓSITO ══ -->
-    <div class="bottom-section">
-      <div class="deposit-box">
-        <div class="deposit-title">Datos para transferencia / depósito</div>
-        <div class="deposit-row">
-          <span class="deposit-key">Titular</span>
-          <span class="deposit-val">Blanca Bertila Díaz Barría</span>
-        </div>
-        <div class="deposit-row">
-          <span class="deposit-key">RUT</span>
-          <span class="deposit-val">6.768.074-K</span>
-        </div>
-        <div class="deposit-row">
-          <span class="deposit-key">Banco</span>
-          <span class="deposit-val">Banco Estado</span>
-        </div>
-        <div class="deposit-row">
-          <span class="deposit-key">Tipo de cuenta</span>
-          <span class="deposit-val">Cuenta Corriente</span>
-        </div>
-        <div class="deposit-row">
-          <span class="deposit-key">N° de cuenta</span>
-          <span class="deposit-val accent">87000004888</span>
-        </div>
-      </div>
-
-      <div class="totals-box">
-        <div class="totals-row">
-          <span class="label">Subtotal neto</span>
-          <span class="value">${formatCLP(totalNeto)}</span>
-        </div>
-        <div class="totals-row">
-          <span class="label">IVA (19%)</span>
-          <span class="value">${formatCLP(totalIVAcalc)}</span>
-        </div>
-        <div class="totals-row grand">
-          <span class="label">TOTAL</span>
-          <span class="value">${formatCLP(totalBruto)}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ FOOTER ══ -->
-    <div class="footer">
-      <div class="footer-ornament"></div>
-      <div class="footer-body">
-        <div class="footer-contact">
-          <div class="footer-contact-line">
-            <span class="fc-icon">📍</span>
-            Aguada de Dolores 1, Puerto Cisnes
-          </div>
-          <div class="footer-contact-line">
-            <span class="fc-icon">✉</span>
-            hostalmonchito2023@gmail.com
-          </div>
-          <div class="footer-contact-line">
-            <span class="fc-icon">📞</span>
-            +56 9 6224 9178
-          </div>
-        </div>
-        <div class="footer-center">
-          <div class="footer-brand">Hostal &amp; Restaurant Monchito</div>
-          <div class="footer-note">Gracias por su preferencia</div>
-        </div>
-        <div class="footer-right">
-          <div class="footer-date-label">Emitido el</div>
-          <div class="footer-date-value">${fechaEmision}</div>
-        </div>
-      </div>
-      <div class="footer-ornament-bottom"></div>
-    </div>
-
-  </div>
-  <script>window.onload = () => window.print();</script>
+  ${voucher}
+  <script>window.addEventListener('load', () => setTimeout(() => window.print(), 400));<\/script>
 </body>
 </html>`;
 
@@ -723,23 +109,8 @@ async function compartirPDFWhatsApp(
       day: "2-digit", month: "long", year: "numeric",
     });
 
-    const filasServicios = servicios
-      .filter((s) => calcSubtotal(s) > 0)
-      .map((s) => `
-        <tr>
-          <td class="fecha">${new Date(s.fecha + "T12:00:00").toLocaleDateString("es-CL", {
-            day: "2-digit", month: "short", year: "numeric",
-          })}</td>
-          <td class="centro">${s.almuerzo > 0 ? s.almuerzo : "—"}</td>
-          <td class="centro">${s.cena > 0 ? s.cena : "—"}</td>
-          <td class="centro">${s.alojamiento > 0 ? s.alojamiento : "—"}</td>
-          <td class="monto">${formatCLP(calcSubtotal(s))}</td>
-          <td class="monto bold">${formatCLP(calcTotalIVA(s))}</td>
-        </tr>`)
-      .join("");
-
     const voucherHTML = generarHTMLVoucher(
-      cliente, servicios, filasServicios, fechaEmision,
+      cliente, servicios, generarFilasVoucher(servicios), fechaEmision,
       totalNeto, totalIVAcalc, totalBruto
     );
 
@@ -751,7 +122,18 @@ async function compartirPDFWhatsApp(
     document.body.appendChild(contenedor);
 
     await document.fonts.ready;
-    await new Promise((r) => setTimeout(r, 600));
+    // El logo tiene que estar cargado antes de capturar, o sale en blanco
+    await Promise.all(
+      Array.from(contenedor.querySelectorAll("img")).map((img) =>
+        img.complete
+          ? Promise.resolve()
+          : new Promise((r) => {
+              img.onload = r;
+              img.onerror = r;
+            })
+      )
+    );
+    await new Promise((r) => setTimeout(r, 400));
 
     const canvas = await html2canvas(contenedor, {
       scale: 2,
@@ -805,7 +187,27 @@ async function compartirPDFWhatsApp(
   }
 }
 
-// ─── HTML del voucher (extraído para reutilizar entre imprimir y PDF) ───────
+// ─── Filas de la tabla (compartidas entre impresión e imagen) ──────────────
+function generarFilasVoucher(servicios: ServicioRow[]): string {
+  return servicios
+    .filter((s) => calcSubtotal(s) > 0)
+    .map(
+      (s) => `
+      <tr>
+        <td class="fecha">${new Date(s.fecha + "T12:00:00").toLocaleDateString("es-CL", {
+          day: "2-digit", month: "short", year: "numeric",
+        })}</td>
+        <td class="c">${s.almuerzo > 0 ? s.almuerzo : "—"}</td>
+        <td class="c">${s.cena > 0 ? s.cena : "—"}</td>
+        <td class="c">${s.alojamiento > 0 ? s.alojamiento : "—"}</td>
+        <td class="r">${formatCLP(calcSubtotal(s))}</td>
+        <td class="r b">${formatCLP(calcTotalIVA(s))}</td>
+      </tr>`
+    )
+    .join("");
+}
+
+// ─── HTML del voucher (única fuente de verdad: impresión e imagen) ──────────
 function generarHTMLVoucher(
   cliente: string,
   servicios: ServicioRow[],
@@ -817,155 +219,193 @@ function generarHTMLVoucher(
 ): string {
   return `
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap');
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body, div { font-family: 'Source Sans 3', sans-serif; font-size: 12px; color: #1a1a1a; }
-    .page { width: 780px; background: #fff; }
-    .header { background: #f5f0e8; padding: 0; }
-    .header-ornament-top { height: 3px; background: repeating-linear-gradient(90deg,#7a6340 0px,#7a6340 6px,transparent 6px,transparent 10px,#9a8f78 10px,#9a8f78 16px,transparent 16px,transparent 20px); }
-    .header-body { display: flex; justify-content: space-between; align-items: center; padding: 26px 40px 22px; }
-    .brand-eyebrow { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #7a6340; margin-bottom: 6px; }
-    .brand-name { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #2c2416; line-height: 1.1; }
-    .brand-name em { font-style: italic; color: #7a6340; }
-    .brand-tagline { font-size: 10px; color: #9a8f78; margin-top: 5px; letter-spacing: 1.5px; text-transform: uppercase; }
-    .header-divider { width: 1px; height: 64px; background: linear-gradient(to bottom, transparent, #b0a090, transparent); margin: 0 32px; }
-    .contact-block { text-align: right; }
-    .contact-line { font-size: 11px; color: #b0a090; line-height: 1.9; display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
-    .dot { width: 3px; height: 3px; border-radius: 50%; background: #7a6340; display: inline-block; }
-    .header-ornament-bottom { height: 2px; background: linear-gradient(90deg, transparent 0%, #7a6340 30%, #9a8f78 60%, transparent 100%); }
-    .doc-band { background: #f7f4ee; border-bottom: 1px solid #ddd6c5; padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; }
-    .doc-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; color: #162318; }
-    .doc-date-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #9a8f78; }
-    .doc-date-value { font-size: 13px; font-weight: 600; color: #162318; margin-top: 2px; }
-    .client-section { padding: 18px 40px; background: #fff; border-bottom: 1px solid #ede8df; display: flex; align-items: center; gap: 16px; }
-    .client-avatar { width: 42px; height: 42px; border-radius: 50%; background: #f0ebe0; border: 1.5px solid #9a8f78; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 16px; color: #2c2416; font-weight: 600; flex-shrink: 0; }
-    .client-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #9a8f78; margin-bottom: 3px; }
-    .client-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: #162318; }
-    .table-section { padding: 22px 40px; }
-    .section-title { font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: #9a8f78; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #ede8df; }
-    table { width: 100%; border-collapse: collapse; }
-    thead th { background: #f5f0e8; color: #7a6340; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 9px 12px; text-align: left; }
-    thead th.centro { text-align: center; }
-    thead th.monto { text-align: right; }
-    tbody tr { border-bottom: 1px solid #ede8df; }
-    tbody tr:nth-child(even) { background: #faf8f4; }
-    td { padding: 9px 12px; color: #2a2a2a; vertical-align: middle; font-size: 12px; }
-    td.centro { text-align: center; }
-    td.monto { text-align: right; }
-    td.bold { font-weight: 600; color: #162318; }
-    .summary-section { padding: 0 40px 22px; }
-    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .summary-card { background: #f7f4ee; border: 1px solid #ddd6c5; border-top: 3px solid #9a8f78; border-radius: 3px; padding: 12px 14px; text-align: center; }
-    .s-icon { font-size: 18px; margin-bottom: 5px; }
-    .s-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.2px; color: #7a6f5a; }
-    .s-qty { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: #162318; line-height: 1.2; }
-    .s-precio { font-size: 10px; color: #9a8f78; margin-top: 2px; }
-    .bottom-section { padding: 0 40px 24px; display: grid; grid-template-columns: 1fr 240px; gap: 20px; align-items: start; }
-    .deposit-box { background: #f7f4ee; border: 1px solid #ddd6c5; border-left: 3px solid #7a6340; border-radius: 3px; padding: 14px 16px; }
-    .deposit-title { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #9a8f78; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #ddd6c5; }
-    .deposit-row { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 5px; font-size: 11px; line-height: 1.5; }
-    .deposit-key { color: #9a8f78; white-space: nowrap; }
-    .deposit-val { color: #162318; font-weight: 500; text-align: right; }
-    .deposit-val.accent { color: #7a6340; font-weight: 600; }
-    .totals-box { border: 1px solid #ddd6c5; border-radius: 3px; overflow: hidden; }
-    .totals-row { display: flex; justify-content: space-between; padding: 8px 14px; font-size: 12px; border-bottom: 1px solid #ede8df; }
-    .totals-row .label { color: #7a6f5a; }
-    .totals-row .value { font-weight: 500; }
-    .totals-row.grand { background: #f5f0e8; font-size: 13px; font-weight: 700; border-top: 2px solid #7a6340; }
-    .totals-row.grand .label { color: #9a8f78; }
-    .totals-row.grand .value { color: #7a6340; }
-    .footer { background: #f5f0e8; }
-    .footer-ornament { height: 2px; background: linear-gradient(90deg, transparent 0%, #7a6340 30%, #9a8f78 60%, transparent 100%); }
-    .footer-body { padding: 16px 40px 14px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
-    .footer-contact { display: flex; flex-direction: column; gap: 3px; }
-    .footer-contact-line { font-size: 10px; color: #9a8f78; display: flex; align-items: center; gap: 5px; }
-    .fc-icon { color: #7a6340; font-size: 11px; }
-    .footer-center { text-align: center; }
-    .footer-brand { font-family: 'Playfair Display', serif; font-size: 13px; color: #7a6340; }
-    .footer-note { font-size: 9px; color: #b0a090; margin-top: 3px; }
-    .footer-right { text-align: right; }
-    .footer-date-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #b0a090; margin-bottom: 2px; }
-    .footer-date-value { font-size: 11px; color: #9a8f78; }
-    .footer-ornament-bottom { height: 3px; background: repeating-linear-gradient(90deg,#7a6340 0px,#7a6340 6px,transparent 6px,transparent 10px,#9a8f78 10px,#9a8f78 16px,transparent 16px,transparent 20px); }
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap');
+    .v-page *, .v-page *::before, .v-page *::after { box-sizing:border-box; margin:0; padding:0; }
+    .v-page { width:780px; background:#fdfbf6; font-family:'DM Sans',sans-serif; font-size:12px; color:#2a2520; }
+
+    /* Cabecera */
+    .v-head { background:#1e463c; padding:26px 40px 20px; display:flex; align-items:center; }
+    .v-logo { width:92px; height:92px; border-radius:50%; background:#fdfbf6; padding:4px; flex-shrink:0; }
+    .v-logo img { width:100%; height:100%; border-radius:50%; display:block; }
+    .v-brand { padding-left:22px; flex:1; }
+    .v-brand-eyebrow { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:#c9b896; letter-spacing:.5px; }
+    .v-brand-name { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:600; color:#fdfbf6; line-height:1.05; letter-spacing:1px; }
+    .v-brand-sub { font-size:9px; letter-spacing:3.2px; text-transform:uppercase; color:#8fa89c; margin-top:6px; }
+    .v-contact { text-align:right; font-size:10.5px; color:#a8bdb1; line-height:1.95; padding-left:20px; }
+    .v-contact b { display:block; color:#c9b896; font-size:8.5px; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; font-weight:500; }
+
+    /* Onda separadora (eco del logo) */
+    .v-wave { display:block; width:100%; height:14px; }
+    .v-wave svg { display:block; width:100%; height:14px; }
+
+    /* Banda de documento */
+    .v-band { background:#f2ece0; padding:15px 40px; display:flex; align-items:center; border-bottom:1px solid #e0d7c6; }
+    .v-band-l { flex:1; }
+    .v-label { font-size:8.5px; letter-spacing:2.4px; text-transform:uppercase; color:#a08c6d; margin-bottom:4px; }
+    .v-band-title { font-family:'Cormorant Garamond',serif; font-size:21px; font-weight:600; color:#1e463c; line-height:1.15; }
+    .v-band-r { text-align:right; padding-left:24px; }
+    .v-band-date { font-size:13px; color:#4a4038; font-weight:500; }
+
+    /* Cliente */
+    .v-client { padding:16px 40px; display:flex; align-items:center; border-bottom:1px solid #efe8db; }
+    .v-avatar { width:44px; height:44px; border-radius:50%; background:#1e463c; color:#fdfbf6; font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; text-align:center; line-height:44px; flex-shrink:0; }
+    .v-client-txt { padding-left:15px; }
+    .v-client-name { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:#1e463c; line-height:1.2; }
+
+    /* Secciones */
+    .v-sec { padding:20px 40px 0; }
+    .v-sec-head { display:flex; align-items:center; margin-bottom:11px; }
+    .v-sec-title { font-size:8.5px; letter-spacing:2.4px; text-transform:uppercase; color:#a08c6d; white-space:nowrap; padding-right:12px; }
+    .v-sec-rule { flex:1; height:1px; background:#e6ddcc; }
+
+    /* Tabla */
+    .v-table { width:100%; border-collapse:collapse; }
+    .v-table thead th { background:#1e463c; color:#c9b896; font-size:8.5px; font-weight:500; text-transform:uppercase; letter-spacing:1.3px; padding:10px 12px; text-align:left; }
+    .v-table thead th.c { text-align:center; }
+    .v-table thead th.r { text-align:right; }
+    .v-table tbody td { padding:10px 12px; font-size:12px; color:#3a332c; border-bottom:1px solid #efe8db; }
+    .v-table tbody tr:nth-child(even) td { background:#faf6ee; }
+    .v-table td.c { text-align:center; }
+    .v-table td.r { text-align:right; }
+    .v-table td.b { font-weight:700; color:#1e463c; }
+    .v-table td.fecha { color:#6b6055; }
+    .v-empty { text-align:center; color:#a08c6d; padding:22px; font-size:12px; }
+
+    /* Resumen */
+    .v-cards { display:flex; }
+    .v-card { flex:1; background:#f7f2e8; border:1px solid #e6ddcc; border-top:2.5px solid #1e463c; padding:13px 10px; text-align:center; }
+    .v-card + .v-card { margin-left:10px; }
+    .v-card-label { font-size:8.5px; letter-spacing:1.8px; text-transform:uppercase; color:#a08c6d; }
+    .v-card-qty { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:600; color:#1e463c; line-height:1.15; }
+    .v-card-price { font-size:9.5px; color:#8a7d6c; }
+
+    /* Zona inferior */
+    .v-bottom { padding:20px 40px 24px; display:flex; align-items:flex-start; }
+    .v-deposit { flex:1; background:#f7f2e8; border:1px solid #e6ddcc; border-left:2.5px solid #a67c52; padding:14px 16px; }
+    .v-dep-title { font-size:8.5px; letter-spacing:2.2px; text-transform:uppercase; color:#a08c6d; padding-bottom:8px; margin-bottom:8px; border-bottom:1px solid #e6ddcc; }
+    .v-dep-row { display:flex; justify-content:space-between; font-size:11px; line-height:1.85; }
+    .v-dep-k { color:#8a7d6c; }
+    .v-dep-v { color:#3a332c; font-weight:500; text-align:right; }
+    .v-dep-v.acc { color:#a67c52; font-weight:700; font-size:12px; }
+
+    .v-totals { width:250px; margin-left:18px; border:1px solid #e6ddcc; }
+    .v-tot-row { display:flex; justify-content:space-between; padding:9px 15px; font-size:12px; border-bottom:1px solid #efe8db; }
+    .v-tot-row .k { color:#8a7d6c; }
+    .v-tot-row .v { color:#3a332c; font-weight:500; }
+    .v-tot-grand { background:#1e463c; padding:13px 15px; display:flex; justify-content:space-between; align-items:center; }
+    .v-tot-grand .k { font-size:9px; letter-spacing:2.4px; text-transform:uppercase; color:#8fa89c; }
+    .v-tot-grand .v { font-family:'Cormorant Garamond',serif; font-size:25px; font-weight:700; color:#fdfbf6; line-height:1; }
+
+    /* Pie */
+    .v-foot { background:#1e463c; padding:16px 40px 18px; display:flex; align-items:center; }
+    .v-foot-l { flex:1; font-size:10px; color:#a8bdb1; line-height:1.8; }
+    .v-foot-c { text-align:center; padding:0 20px; }
+    .v-foot-brand { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:17px; color:#c9b896; line-height:1.2; }
+    .v-foot-note { font-size:9px; color:#8fa89c; letter-spacing:1.5px; text-transform:uppercase; margin-top:3px; }
+    .v-foot-r { flex:1; text-align:right; font-size:9.5px; color:#8fa89c; line-height:1.8; }
+    .v-foot-r b { color:#a8bdb1; font-weight:500; }
   </style>
-  <div class="page">
-    <div class="header">
-      <div class="header-ornament-top"></div>
-      <div class="header-body">
-        <div class="brand-block">
-          <div class="brand-eyebrow">Establecimientos Turísticos</div>
-          <div class="brand-name">Hostal &amp; Restaurant <em>Monchito</em></div>
-          <div class="brand-tagline">Alimentos · Alojamiento · Confort</div>
-        </div>
-        <div class="header-divider"></div>
-        <div class="contact-block">
-          <div class="contact-line"><span class="dot"></span> Aguada de Dolores 1, Puerto Cisnes</div>
-          <div class="contact-line"><span class="dot"></span> hostalmonchito2023@gmail.com</div>
-          <div class="contact-line"><span class="dot"></span> +56 9 6224 9178</div>
-        </div>
+
+  <div class="v-page">
+
+    <div class="v-head">
+      <div class="v-logo"><img src="/img/logo.png" alt="Hostal Monchito" /></div>
+      <div class="v-brand">
+        <div class="v-brand-eyebrow">Residencial y Restaurant</div>
+        <div class="v-brand-name">Monchito</div>
+        <div class="v-brand-sub">Puerto Cisnes · Región de Aysén</div>
       </div>
-      <div class="header-ornament-bottom"></div>
+      <div class="v-contact">
+        <b>Contacto</b>
+        Aguada de Dolores 1<br />
+        hostalmonchito2023@gmail.com<br />
+        +56 9 6224 9178
+      </div>
     </div>
-    <div class="doc-band">
-      <div class="doc-title">Detalle de Servicios Prestados</div>
-      <div><div class="doc-date-label">Fecha de emisión</div><div class="doc-date-value">${fechaEmision}</div></div>
+
+    <div class="v-wave" style="background:#1e463c;">
+      <svg viewBox="0 0 780 14" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,7 Q32.5,0 65,7 T130,7 T195,7 T260,7 T325,7 T390,7 T455,7 T520,7 T585,7 T650,7 T715,7 T780,7 L780,14 L0,14 Z" fill="#fdfbf6"/>
+      </svg>
     </div>
-    <div class="client-section">
-      <div class="client-avatar">${cliente.charAt(0).toUpperCase()}</div>
-      <div><div class="client-label">Cliente</div><div class="client-name">${cliente}</div></div>
+
+    <div class="v-band">
+      <div class="v-band-l">
+        <div class="v-label">Comprobante</div>
+        <div class="v-band-title">Detalle de Servicios Prestados</div>
+      </div>
+      <div class="v-band-r">
+        <div class="v-label">Fecha de emisión</div>
+        <div class="v-band-date">${fechaEmision}</div>
+      </div>
     </div>
-    <div class="table-section">
-      <div class="section-title">Detalle de consumos por fecha</div>
-      <table>
+
+    <div class="v-client">
+      <div class="v-avatar">${cliente.charAt(0).toUpperCase()}</div>
+      <div class="v-client-txt">
+        <div class="v-label">Cliente</div>
+        <div class="v-client-name">${cliente}</div>
+      </div>
+    </div>
+
+    <div class="v-sec">
+      <div class="v-sec-head"><div class="v-sec-title">Consumos por fecha</div><div class="v-sec-rule"></div></div>
+      <table class="v-table">
         <thead><tr>
-          <th>Fecha</th><th class="centro">Almuerzos</th><th class="centro">Cenas</th>
-          <th class="centro">Alojamientos</th><th class="monto">Neto</th><th class="monto">Total c/IVA</th>
+          <th>Fecha</th><th class="c">Almuerzos</th><th class="c">Cenas</th>
+          <th class="c">Alojamientos</th><th class="r">Neto</th><th class="r">Total c/IVA</th>
         </tr></thead>
-        <tbody>${filasServicios || `<tr><td colspan="6" style="text-align:center;color:#9a8f7a;padding:20px">Sin servicios registrados</td></tr>`}</tbody>
+        <tbody>${filasServicios || `<tr><td colspan="6" class="v-empty">Sin servicios registrados</td></tr>`}</tbody>
       </table>
     </div>
-    <div class="summary-section">
-      <div class="section-title">Resumen por concepto</div>
-      <div class="summary-grid">
-        <div class="summary-card"><div class="s-icon">🍽️</div><div class="s-label">Almuerzos</div><div class="s-qty">${servicios.reduce((a, s) => a + s.almuerzo, 0)}</div><div class="s-precio">${formatCLP(PRECIO_ALMUERZO)} c/u</div></div>
-        <div class="summary-card"><div class="s-icon">🌙</div><div class="s-label">Cenas</div><div class="s-qty">${servicios.reduce((a, s) => a + s.cena, 0)}</div><div class="s-precio">${formatCLP(PRECIO_CENA)} c/u</div></div>
-        <div class="summary-card"><div class="s-icon">🛏️</div><div class="s-label">Alojamientos</div><div class="s-qty">${servicios.reduce((a, s) => a + s.alojamiento, 0)}</div><div class="s-precio">${formatCLP(PRECIO_ALOJAMIENTO)} c/u</div></div>
+
+    <div class="v-sec">
+      <div class="v-sec-head"><div class="v-sec-title">Resumen por concepto</div><div class="v-sec-rule"></div></div>
+      <div class="v-cards">
+        <div class="v-card"><div class="v-card-label">Almuerzos</div><div class="v-card-qty">${servicios.reduce((a, s) => a + s.almuerzo, 0)}</div><div class="v-card-price">${formatCLP(PRECIO_ALMUERZO)} c/u</div></div>
+        <div class="v-card"><div class="v-card-label">Cenas</div><div class="v-card-qty">${servicios.reduce((a, s) => a + s.cena, 0)}</div><div class="v-card-price">${formatCLP(PRECIO_CENA)} c/u</div></div>
+        <div class="v-card"><div class="v-card-label">Alojamientos</div><div class="v-card-qty">${servicios.reduce((a, s) => a + s.alojamiento, 0)}</div><div class="v-card-price">${formatCLP(PRECIO_ALOJAMIENTO)} c/u</div></div>
       </div>
     </div>
-    <div class="bottom-section">
-      <div class="deposit-box">
-        <div class="deposit-title">Datos para transferencia / depósito</div>
-        <div class="deposit-row"><span class="deposit-key">Titular</span><span class="deposit-val">Blanca Bertila Díaz Barría</span></div>
-        <div class="deposit-row"><span class="deposit-key">RUT</span><span class="deposit-val">6.768.074-K</span></div>
-        <div class="deposit-row"><span class="deposit-key">Banco</span><span class="deposit-val">Banco Estado</span></div>
-        <div class="deposit-row"><span class="deposit-key">Tipo de cuenta</span><span class="deposit-val">Cuenta Corriente</span></div>
-        <div class="deposit-row"><span class="deposit-key">N° de cuenta</span><span class="deposit-val accent">87000004888</span></div>
+
+    <div class="v-bottom">
+      <div class="v-deposit">
+        <div class="v-dep-title">Datos para transferencia / depósito</div>
+        <div class="v-dep-row"><span class="v-dep-k">Titular</span><span class="v-dep-v">Blanca Bertila Díaz Barría</span></div>
+        <div class="v-dep-row"><span class="v-dep-k">RUT</span><span class="v-dep-v">6.768.074-K</span></div>
+        <div class="v-dep-row"><span class="v-dep-k">Banco</span><span class="v-dep-v">Banco Estado</span></div>
+        <div class="v-dep-row"><span class="v-dep-k">Tipo de cuenta</span><span class="v-dep-v">Cuenta Corriente</span></div>
+        <div class="v-dep-row"><span class="v-dep-k">N° de cuenta</span><span class="v-dep-v acc">87000004888</span></div>
       </div>
-      <div class="totals-box">
-        <div class="totals-row"><span class="label">Subtotal neto</span><span class="value">${formatCLP(totalNeto)}</span></div>
-        <div class="totals-row"><span class="label">IVA (19%)</span><span class="value">${formatCLP(totalIVAcalc)}</span></div>
-        <div class="totals-row grand"><span class="label">TOTAL</span><span class="value">${formatCLP(totalBruto)}</span></div>
+      <div class="v-totals">
+        <div class="v-tot-row"><span class="k">Subtotal neto</span><span class="v">${formatCLP(totalNeto)}</span></div>
+        <div class="v-tot-row"><span class="k">IVA (19%)</span><span class="v">${formatCLP(totalIVAcalc)}</span></div>
+        <div class="v-tot-grand"><span class="k">Total</span><span class="v">${formatCLP(totalBruto)}</span></div>
       </div>
     </div>
-    <div class="footer">
-      <div class="footer-ornament"></div>
-      <div class="footer-body">
-        <div class="footer-contact">
-          <div class="footer-contact-line"><span class="fc-icon">📍</span> Aguada de Dolores 1, Puerto Cisnes</div>
-          <div class="footer-contact-line"><span class="fc-icon">✉</span> hostalmonchito2023@gmail.com</div>
-          <div class="footer-contact-line"><span class="fc-icon">📞</span> +56 9 6224 9178</div>
-        </div>
-        <div class="footer-center">
-          <div class="footer-brand">Hostal &amp; Restaurant Monchito</div>
-          <div class="footer-note">Gracias por su preferencia</div>
-        </div>
-        <div class="footer-right">
-          <div class="footer-date-label">Emitido el</div>
-          <div class="footer-date-value">${fechaEmision}</div>
-        </div>
-      </div>
-      <div class="footer-ornament-bottom"></div>
+
+    <div class="v-wave" style="background:#fdfbf6;">
+      <svg viewBox="0 0 780 14" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,7 Q32.5,14 65,7 T130,7 T195,7 T260,7 T325,7 T390,7 T455,7 T520,7 T585,7 T650,7 T715,7 T780,7 L780,14 L0,14 Z" fill="#1e463c"/>
+      </svg>
     </div>
+
+    <div class="v-foot">
+      <div class="v-foot-l">
+        Aguada de Dolores 1, Puerto Cisnes<br />
+        hostalmonchito2023@gmail.com<br />
+        +56 9 6224 9178
+      </div>
+      <div class="v-foot-c">
+        <div class="v-foot-brand">Gracias por su preferencia</div>
+        <div class="v-foot-note">Hostal &amp; Restaurant Monchito</div>
+      </div>
+      <div class="v-foot-r">
+        <b>Emitido el</b><br />
+        ${fechaEmision}
+      </div>
+    </div>
+
   </div>`;
 }
 
